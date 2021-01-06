@@ -7,7 +7,7 @@ import {
   getAnimatingBottomBar,
   AnimationType,
 } from 'react-native-animating-bottom-tab-bar';
-import {TabBarIcons} from './TabBarIcons';
+
 import AnimatingBottomBarContext from './AnimatingBottomBarContext';
 
 const RouteName = {

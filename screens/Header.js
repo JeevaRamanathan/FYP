@@ -15,15 +15,14 @@ class HeaderBar extends React.Component {
             backgroundColor: '#ed4950',
             justifyContent: 'space-around',
           }}
-          // placement="center"
           headerTintColor="red"
           leftComponent={
             <LottieView
               source={require('../assets/Bus.json')}
-              loop={false}
-              autoPlay={false}
+              loop={true}
+              autoPlay={true}
               progress={0}
-              speed={0}
+              speed={1}
               style={{
                 width: 90,
                 height: 90,
@@ -39,13 +38,11 @@ class HeaderBar extends React.Component {
             placement: 'center',
             style: {
               color: 'white',
-              // flex: 3,
               fontSize: 21,
               marginTop: 4,
               fontFamily: 'Acme-Regular',
             },
           }}
-          // rightComponent={{icon: 'home', color: '#fff'}}
         />
       </>
     );
