@@ -3,6 +3,7 @@ import Splash from '../screens/Splash';
 import AppContainer from './bottomtabnavigation/navigation';
 import Location from '../screens/Location';
 import BusList from '../screens/BusList';
+import RouteList from '../screens/RouteList';
 import SelectSource from '../screens/SelectSource';
 import SelectDestination from '../screens/SelectDestination';
 import React from 'react';
@@ -60,6 +61,10 @@ const StackNavigation = createStackNavigator(
         },
       },
     },
+    RouteList:{
+      screen:RouteList,
+
+    }
   },
   {
     initialRouteName: 'Splash',

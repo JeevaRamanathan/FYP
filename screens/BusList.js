@@ -6,6 +6,7 @@ import {
   Modal,
   ActivityIndicator,
   Image,
+  TouchableOpacity,
   ScrollView,
 } from 'react-native';
 import {withTheme} from 'react-native-elements';
@@ -144,6 +145,7 @@ class BusList extends React.Component {
               </View>
             </View>
           </View>
+          <TouchableOpacity activeOpacity={0.5} onPress={()=>this.props.navigation.navigate('RouteList')}>
           <View
             style={{
               height: 70,
@@ -152,7 +154,6 @@ class BusList extends React.Component {
               borderRadius: 3,
               marginRight: 15,
               backgroundColor: 'white',
-
               elevation: 5,
               shadowOpacity: 0.5,
               shadowRadius: 5,
@@ -212,6 +213,7 @@ class BusList extends React.Component {
               </View>
             </View>
           </View>
+          </TouchableOpacity>
           <View
             style={{
               borderBottomColor: '#aaaa',
