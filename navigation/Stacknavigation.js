@@ -6,6 +6,7 @@ import BusList from '../screens/BusList';
 import SelectSource from '../screens/SelectSource';
 import SelectDestination from '../screens/SelectDestination';
 import React from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const StackNavigation = createStackNavigator(
@@ -40,7 +41,7 @@ const StackNavigation = createStackNavigator(
         headerShown: null,
       },
     },
-      SDestination: {
+    SDestination: {
       screen: SelectDestination,
       navigationOptions: {
         headerShown: null,
@@ -49,7 +50,14 @@ const StackNavigation = createStackNavigator(
     BusList: {
       screen: BusList,
       navigationOptions: {
-        headerShown: null,
+        title: 'Bus List',
+        headerStyle: {
+          backgroundColor: '#ed4950',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
       },
     },
   },

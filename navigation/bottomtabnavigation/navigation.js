@@ -12,7 +12,7 @@ import AnimatingBottomBarContext from './AnimatingBottomBarContext';
 
 const RouteName = {
   Home: 'Routes',
-  Location: 'Location',
+  Location: 'Bus Number',
   Bus: 'Bus',
 };
 const NavigationScreens = {
@@ -52,8 +52,8 @@ const NavigationParameter = [
     label: RouteName.Location,
     routeName: RouteName.Location,
     icons: {
-      selected: require('../../assets/location.png'),
-      unselected: require('../../assets/location.png'),
+      selected: require('../../assets/buslist_icon.png'),
+      unselected: require('../../assets/buslist_icon.png'),
     },
     activeIconScale: 1,
     yTranslation: 8,

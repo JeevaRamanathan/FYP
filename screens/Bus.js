@@ -1,4 +1,5 @@
 import React from 'react';
+import Floating from '../utils/floatingAction';
 import {View, Text} from 'react-native';
 import HeaderBar from './Header';
 class Bus extends React.Component {
@@ -7,10 +8,13 @@ class Bus extends React.Component {
   }
   render() {
     return (
-      <View>
-         <HeaderBar />
-        <Text>Bus</Text>
-      </View>
+      <>
+        <View>
+          <HeaderBar />
+          <Text>Bus</Text>
+        </View>
+        <Floating />
+      </>
     );
   }
 }

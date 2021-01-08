@@ -132,12 +132,16 @@ class Routes extends React.Component {
           </View>
           <TouchableOpacity
             disabled={this.state.disable}
-            activeOpacity={0.5}
+            activeOpacity={0.7}
             style={[
               styles.button,
               {backgroundColor: this.state.disable ? '#6dc0b8' : '#00a896'},
             ]}
-            onPress={() => this.props.navigation.navigate('BusList')}>
+            onPress={() =>
+              this.props.navigation.navigate('BusList', {
+                s: this.state.source,d:this.state.destination
+              })
+            }>
             <Text
               style={[
                 styles.text1,

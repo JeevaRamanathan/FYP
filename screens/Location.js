@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import Floating from '../utils/floatingAction';
 import HeaderBar from './Header';
 class Location extends React.Component {
   constructor(props) {
@@ -7,10 +8,13 @@ class Location extends React.Component {
   }
   render() {
     return (
+      <>
       <View>
         <HeaderBar />
         <Text>Location</Text>
       </View>
+      <Floating />
+      </>
     );
   }
 }
