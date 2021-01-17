@@ -69,7 +69,11 @@ class Routes extends React.Component {
   render() {
     return (
       <>
+      <StatusBar backgroundColor="yellow" />
+      <View>
         <HeaderBar />
+      </View>
+       
         {/* <View style={{paddingBottom: 10, flex: 1}}> */}
         <ScrollView contentContainerStyle={{paddingBottom: 60}}>
           <View style={styles.container}>

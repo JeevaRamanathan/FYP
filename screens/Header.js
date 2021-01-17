@@ -12,7 +12,7 @@ class HeaderBar extends React.Component {
       <>
         <Header
           containerStyle={{
-            backgroundColor: '#ed4950',
+            backgroundColor: '#FFFF00',
             justifyContent: 'space-around',
           }}
           headerTintColor="red"
