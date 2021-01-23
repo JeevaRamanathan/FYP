@@ -11,10 +11,10 @@ class Splash extends React.Component {
     // console.log(this.props);
     return (
       <View style={styles.screen}>
-        <ImageBackground
+        {/* <ImageBackground
           style={{height: '100%', width: '100%'}}
           resizeMode="stretch"
-          source={require('../assets/bg.jpg')}>
+          source={require('../assets/bg.jpg')}> */}
           <View style={styles.image}>
             <LottieView
               source={require('../assets/splash.json')}
@@ -31,7 +31,7 @@ class Splash extends React.Component {
               />
             </View>
           </View>
-        </ImageBackground>
+        {/* </ImageBackground> */}
       </View>
     );
   }
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ebc550',
   },
   bottom: {
     width: '100%',

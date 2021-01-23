@@ -24,6 +24,7 @@ import Floating from '../utils/floatingAction';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
+// import ImagePicker from 'react-native-image-picker';
 
 class Routes extends React.Component {
   constructor(props) {
@@ -32,8 +33,11 @@ class Routes extends React.Component {
       source: null,
       destination: null,
       disable: true,
+    
     };
   }
+
+
 
   source = () => {
     this.props.navigation.navigate('SSource', {
@@ -69,20 +73,19 @@ class Routes extends React.Component {
   render() {
     return (
       <>
-      <StatusBar backgroundColor="yellow" />
-      <View>
-        <HeaderBar />
-      </View>
-       
+        <StatusBar backgroundColor="yellow" />
+        <View>
+          <HeaderBar />
+        </View>
+
         {/* <View style={{paddingBottom: 10, flex: 1}}> */}
         <ScrollView contentContainerStyle={{paddingBottom: 60}}>
           <View style={styles.container}>
             <View style={{flexDirection: 'row'}}>
               <Entypo
-                name="location-pin"
+                name="location-pin" 
                 size={30}
-                style={styles.location}>
-              </Entypo>
+                style={styles.location}></Entypo>
               <TouchableOpacity
                 activeOpacity={2}
                 style={styles.text}
@@ -93,7 +96,7 @@ class Routes extends React.Component {
                   editable={false}>
                   {this.state.source}
                 </TextInput>
-                {/* <Text style={styles.text3}>{this.state.source}</Text> */}
+            
               </TouchableOpacity>
             </View>
             <TouchableOpacity
@@ -144,7 +147,8 @@ class Routes extends React.Component {
             ]}
             onPress={() =>
               this.props.navigation.navigate('BusList', {
-                s: this.state.source,d:this.state.destination
+                s: this.state.source,
+                d: this.state.destination,
               })
             }>
             <Text
@@ -157,6 +161,7 @@ class Routes extends React.Component {
           </TouchableOpacity>
         </ScrollView>
 
+       
         <Floating />
       </>
     );

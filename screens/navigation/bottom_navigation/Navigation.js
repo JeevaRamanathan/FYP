@@ -1,5 +1,5 @@
 import Routes from '../../Routes';
-import Location from '../../Location';
+import BusNumber from '../../BusNumber';
 import Bus from '../../Bus';
 import {createAppContainer} from 'react-navigation';
 import {
@@ -9,12 +9,12 @@ import {
 
 const RouteName = {
   Home: 'Routes',
-  Location: 'Bus Number',
+  BusNumber: 'Bus Number',
   Bus: 'Bus',
 };
 const NavigationScreens = {
   [RouteName.Home]: Routes,
-  [RouteName.Location]: Location,
+  [RouteName.BusNumber]: BusNumber,
   [RouteName.Bus]: Bus,
 };
 
@@ -28,8 +28,8 @@ const NavigationParameter = [
     },
     activeIconScale: 1,
     yTranslation: 8,
-    activeTintColor: 'white',
-    inactiveTintColor: 'white',
+    activeTintColor: '#22333b',
+    inactiveTintColor: '#22333b',
     activeTextStyle: {
       color: 'white',
       // fontWeight: 'bold',
@@ -46,16 +46,16 @@ const NavigationParameter = [
   },
 
   {
-    label: RouteName.Location,
-    routeName: RouteName.Location,
+    label: RouteName.BusNumber,
+    routeName: RouteName.BusNumber,
     icons: {
       selected: require('../../../assets/buslist_icon.png'),
       unselected: require('../../../assets/buslist_icon.png'),
     },
     activeIconScale: 1,
     yTranslation: 8,
-    activeTintColor: 'white',
-    inactiveTintColor: 'white',
+    activeTintColor: '#22333b',
+    inactiveTintColor: '#22333b',
     activeTextStyle: {
       color: 'white',
       // fontWeight: 'bold',
@@ -78,8 +78,8 @@ const NavigationParameter = [
     },
     activeIconScale: 1,
     yTranslation: 8,
-    activeTintColor: 'white',
-    inactiveTintColor: 'white',
+    activeTintColor: '#22333b',
+    inactiveTintColor: '#22333b',
     activeTextStyle: {
       color: 'white',
       // fontWeight: 'bold',
@@ -96,7 +96,7 @@ const NavigationParameter = [
 ];
 
 const bottomBarConfig = {
-  backgroundColor: '#ed4950',
+  backgroundColor: '#ebc550',
   height: 50,
   bottom: 0,
   curveWidth: 82,

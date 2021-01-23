@@ -232,13 +232,13 @@ class BusList extends React.Component {
 export default BusList;
 const styles = StyleSheet.create({
   top: {
-    backgroundColor: '#ed4950',
+    backgroundColor: '#ebc550',
     height: 40,
     width: '100%',
     justifyContent: 'center', //Centered vertically
   },
   text: {
-    color: 'white',
+    color: '#22333b',
     fontSize: 16,
     padding: 10,
     fontFamily: 'SourceSansPro-Regular',
