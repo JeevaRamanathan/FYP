@@ -1,35 +1,37 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View,ScrollView} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import database from '@react-native-firebase/database';
 import StepIndicator from 'react-native-step-indicator';
-import { ScrollView } from 'react-native-gesture-handler';
+
 import Entypo from 'react-native-vector-icons/Entypo';
 
 
 const labels = ["Cart","Delivery Address v Delivery AddressDelivery Address gre rtytr rr ","Order Summary","Payment Method","Track","Its s"];
 const customStyles = {
   stepIndicatorSize: 25,
-  currentStepIndicatorSize:30,
+  currentStepIndicatorSize:25,
   separatorStrokeWidth: 2,
   currentStepStrokeWidth: 3,
-  stepStrokeCurrentColor: '#fe7013',
+  stepStrokeCurrentColor: '#ebc550',
   stepStrokeWidth: 3,
   stepStrokeFinishedColor: 'black ',
-  stepStrokeUnFinishedColor: '#aaaaaa',
-  separatorFinishedColor: '#fe7013',
-  separatorUnFinishedColor: '#aaaaaa',
-  stepIndicatorFinishedColor: '#fe7013',
-  stepIndicatorUnFinishedColor: '#ffffff',
-  stepIndicatorCurrentColor: '#ffffff',
+  stepStrokeUnFinishedColor: '#ebc550',
+  separatorFinishedColor: 'black',
+  separatorUnFinishedColor: 'black',
+  stepIndicatorFinishedColor: 'black',
+  stepIndicatorUnFinishedColor: '#22333b',
+  stepIndicatorCurrentColor: '#22333b',
   stepIndicatorLabelFontSize: 13,
   currentStepIndicatorLabelFontSize: 13,
   stepIndicatorLabelCurrentColor: '#fe7013',
   stepIndicatorLabelFinishedColor: '#ffffff',
   stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-  labelColor: '#999999',
+  labelColor: 'black',
   labelSize: 15,
-  currentStepLabelColor: '#fe7013'
+  currentStepLabelColor: 'black',
+  lableFontFamily:'SourceSansPro-Regular',
+  
 }
 
 export default class BusNumberRouteList extends React.Component {
@@ -90,7 +92,8 @@ this.p();
                 fontSize: 20,
                 fontFamily: 'SourceSansPro-Regular',
                 borderRadius: 15,
-                color: '#89909a',
+                // color: '#89909a',
+                color:'white'
               }}
               onValueChange={(itemValue, itemIndex) =>this.setState({selectedValue:itemValue})}>
                   {this.state.route_details.map((a,i)=>{
@@ -109,6 +112,7 @@ this.p();
             </Picker>
          {console.log(arr)}
           </View>
+          </View>
           <View
             style={{backgroundColor: '#ebc550',
             height: 40,
@@ -118,16 +122,21 @@ this.p();
               <Text>{this.state.route_details[Number(this.state.selectedValue)]['source']} - {this.state.route_details[Number(this.state.selectedValue)]['destination']}
               {this.state.route_details[Number(this.state.selectedValue)]['via']==''?'':'('+this.state.route_details[Number(this.state.selectedValue)].via+")"}
                </Text>
-                  </View>
+            </View>
                 
-        </View>
+        
          {/* {len=Number(this.state.route_details[Number(this.state.selectedValue)].intermediate.length)} */}
-          <View style={{marginLeft:30,height:'80%',marginRight:80}}>
+         
+      <View style={{marginTop:25,left:15,bottom:20}}>
+      {/* <View style={{marginLeft:30,height:'80%',marginRight:80,marginTop:50}}> */}
+      
+        <ScrollView>
+          
         <StepIndicator
         
         renderStepIndicator={()=>   <Entypo
           name="location-pin"
-          size={20}
+          size={15}
           style={{color: '#aaa'}}
         />
 }
@@ -135,8 +144,16 @@ this.p();
          stepCount={Number(this.state.route_details[Number(this.state.selectedValue)].intermediate.length)}
          customStyles={customStyles}
          labels={this.state.route_details[Number(this.state.selectedValue)].intermediate}
+         renderLabel={function (position, stepStatus, label, currentPosition){
+                  return (
+                    <View style={{padding:15}}>
+                         <Text style={{color: 'black',fontSize:13, position: 'absolute', left:0,padding:3}}>{position.label}</Text>
+                    </View>
+                  ) 
+          }}
     />
-    {/* </ScrollView> */}
+    </ScrollView>
+    
     </View>
        
          
