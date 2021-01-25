@@ -5,6 +5,7 @@ import database from '@react-native-firebase/database';
 import StepIndicator from 'react-native-step-indicator';
 
 import Entypo from 'react-native-vector-icons/Entypo';
+import MapFloating from '../utils/mapFloating'
 
 
 const labels = ["Cart","Delivery Address v Delivery AddressDelivery Address gre rtytr rr ","Order Summary","Payment Method","Track","Its s"];
@@ -23,14 +24,16 @@ const customStyles = {
   stepIndicatorUnFinishedColor: '#22333b',
   stepIndicatorCurrentColor: '#22333b',
   stepIndicatorLabelFontSize: 13,
-  currentStepIndicatorLabelFontSize: 13,
+  currentStepIndicatorLabelFontSize: 15,
   stepIndicatorLabelCurrentColor: '#fe7013',
   stepIndicatorLabelFinishedColor: '#ffffff',
   stepIndicatorLabelUnFinishedColor: '#aaaaaa',
   labelColor: 'black',
-  labelSize: 15,
+  labelSize:15,
   currentStepLabelColor: 'black',
   lableFontFamily:'SourceSansPro-Regular',
+  labelAlign:'flex-start',
+
   
 }
 
@@ -62,6 +65,7 @@ this.p();
     arr.push('1')
     return (
       <>
+      
       {this.state.route_details.length==0?<View></View>:
       <>
         <View
@@ -118,17 +122,18 @@ this.p();
             height: 40,
             marginTop:-2,
             width: '100%',
-            justifyContent: 'center', }}>
-              <Text>{this.state.route_details[Number(this.state.selectedValue)]['source']} - {this.state.route_details[Number(this.state.selectedValue)]['destination']}
+            justifyContent: 'center',
+            }}>
+              <Text style={{fontFamily:'SourceSansPro-Regular',textAlign:'center'}}>{this.state.route_details[Number(this.state.selectedValue)]['source']} - {this.state.route_details[Number(this.state.selectedValue)]['destination']}
               {this.state.route_details[Number(this.state.selectedValue)]['via']==''?'':'('+this.state.route_details[Number(this.state.selectedValue)].via+")"}
-               </Text>
+                </Text>
             </View>
                 
         
-         {/* {len=Number(this.state.route_details[Number(this.state.selectedValue)].intermediate.length)} */}
+
          
-      <View style={{marginTop:25,left:15,bottom:20}}>
-      {/* <View style={{marginLeft:30,height:'80%',marginRight:80,marginTop:50}}> */}
+      <View style={{marginLeft:10,marginTop:25,marginBottom:100}}>
+
       
         <ScrollView>
           
@@ -146,17 +151,17 @@ this.p();
          labels={this.state.route_details[Number(this.state.selectedValue)].intermediate}
          renderLabel={function (position, stepStatus, label, currentPosition){
                   return (
-                    <View style={{padding:15}}>
-                         <Text style={{color: 'black',fontSize:13, position: 'absolute', left:0,padding:3}}>{position.label}</Text>
+                    <View style={{paddingLeft:10,paddingBottom:22,paddingTop:22}}>
+                         <Text>{position.label}</Text>
                     </View>
                   ) 
           }}
     />
     </ScrollView>
-    
+          
     </View>
-       
-         
+     
+    <MapFloating/>
     </>
   }
 
