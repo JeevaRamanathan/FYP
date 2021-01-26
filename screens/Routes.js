@@ -69,7 +69,7 @@ class Routes extends React.Component {
   render() {
     return (
       <>
-      <StatusBar backgroundColor="yellow" />
+      <StatusBar translucent={true} />
       <View>
         <HeaderBar />
       </View>
