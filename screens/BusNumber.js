@@ -7,59 +7,6 @@ import {ListItem, Avatar, SearchBar} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import database from '@react-native-firebase/database';
 
-const list = [
-  {
-    name: 'A116',
-    // avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'P',
-  },
-  {
-    name: 'B116',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'P',
-  },
-  {
-    name: 'C122',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'P',
-  },
-  {
-    name: '88C',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'P',
-  },
-  {
-    name: 'P621',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'G',
-  },
-  {
-    name: 'OC3',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'P',
-  },
-  {
-    name: 'N121',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'G',
-  },
-  {
-    name: 'RS1',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'G',
-  },
-  {
-    name: 'RS2',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'P',
-  },
-  {
-    name: 'S121',
-    subtitle: 'This Bust travels in 5 routes',
-    type: 'P',
-  },
-];
 
 class BusNumber extends React.Component {
   constructor(props) {

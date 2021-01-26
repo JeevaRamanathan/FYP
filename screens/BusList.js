@@ -9,20 +9,22 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {withTheme} from 'react-native-elements';
+import {ListItem} from 'react-native-elements';
 import HeaderBar from './Header';
 import LottieView from 'lottie-react-native';
 class BusList extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      s:''
+    }
   }
   render() {
     return (
       <>
         <View style={styles.top}>
           <Text style={styles.text}>
-            ChartamBusStand - Central Bus Stand
-            {/* {this.props.navigation.state.params.s} -{' '}
+            g-fg            {/* {this.props.navigation.state.params.s} -{' '}
             {this.props.navigation.state.params.d} */}
           </Text>
         </View>
@@ -37,193 +39,36 @@ class BusList extends React.Component {
           /> */}
         {/* </View> */}
         <ScrollView>
-          <View
-            style={{
-              flexDirection: 'row',
-              padding: 15,
-              paddingBottom: 20,
-            }}>
-            <View style={styles.container}>
-              <View style={{flexDirection: 'row'}}>
-                <LottieView
-                  source={require('../assets/Bus.json')}
-                  loop={true}
-                  autoPlay={false}
-                  style={{height: 50, width: 50}}
-                />
-                <Text style={styles.text1}>Route Details</Text>
-              </View>
-              <View
-                style={{
-                  borderBottomColor: '#aaa',
-                  marginLeft: 5,
-                  marginRight: 5,
-                  borderBottomWidth: 1,
-                }}
-              />
-              <View style={{flexDirection: 'row', padding: 20}}>
-                <Image
-                  source={require('../assets/chronometer.png')}
-                  style={{height: 20, width: 20}}
-                />
-                <Text
-                  style={{
-                    fontFamily: 'SourceSansPro-Regular',
-                    textAlignVertical: 'bottom',
-                    fontWeight: 'bold',
-                    color: '#000',
-                    fontSize: 15,
-                  }}>
-                  Travel Time
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'SourceSansPro-Regular',
-                    textAlignVertical: 'bottom',
-                    fontWeight: 'bold',
-                    color: '#aaa',
-                    fontSize: 10,
-                  }}>
-                  (Approx)
-                </Text>
+        <ListItem bottomDivider>
+                    <Image
+                      source={require('../assets/busno.png')}
+                      style={{height: 30, width: 30, borderRadius: 10}}
+                    />
+        <ListItem.Content>
+                      <ListItem.Title>
+                        <View syle={{flexDirection: 'row'}}>
+                          <Text
+                            style={{
+                              fontFamily: 'SourceSansPro-Regular',
+                              fontSize: 17,
+                              fontWeight: 'bold',
+                            }}>
+                        BusNumber
+                          </Text>
+                        </View>
+                      </ListItem.Title>
+                      <ListItem.Subtitle>
+                        <Text
+                          style={{
+                            fontFamily: 'SourceSansPro-Regular',
+                          }}>
+                        Route - Route
+                        </Text>
+                      </ListItem.Subtitle>
+                    </ListItem.Content>
+                  </ListItem>
+                 
 
-                <Text
-                  style={{
-                    fontFamily: 'SourceSansPro-Regular',
-                    textAlignVertical: 'bottom',
-                    textAlign: 'right',
-                    fontWeight: 'bold',
-                    color: 'black',
-                    position: 'absolute',
-                    right: 20,
-                    top: 20,
-                    fontSize: 15,
-                  }}>
-                  {'-            '}
-                  20 minutes
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  padding: 20,
-                  paddingTop: 0,
-                  elevation: 17,
-                  shadowOpacity: 0.5,
-                  shadowRadius: 5,
-                }}>
-                <Image
-                  source={require('../assets/distance.png')}
-                  style={{height: 20, width: 20}}
-                />
-                <Text
-                  style={{
-                    fontFamily: 'SourceSansPro-Regular',
-                    textAlignVertical: 'bottom',
-                    fontWeight: 'bold',
-                    color: '#000',
-                    fontSize: 15,
-                  }}>
-                  Distance
-                </Text>
-
-                <Text
-                  style={{
-                    fontFamily: 'SourceSansPro-Regular',
-                    textAlignVertical: 'bottom',
-                    textAlign: 'right',
-                    fontWeight: 'bold',
-                    color: 'black',
-                    position: 'absolute',
-                    right: 20,
-                    top: 0,
-                    fontSize: 15,
-                  }}>
-                  {'-                       '}2 km{' '}
-                </Text>
-              </View>
-            </View>
-          </View>
-          <TouchableOpacity activeOpacity={0.5} onPress={()=>this.props.navigation.navigate('RouteList')}>
-          <View
-            style={{
-              height: 70,
-              // width: '100%',
-              marginLeft: 15,
-              borderRadius: 3,
-              marginRight: 15,
-              backgroundColor: 'white',
-              elevation: 5,
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-            }}>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{
-                  marginLeft: 10,
-                  paddingRight: 10,
-                  marginTop: '5%',
-                  width: 80,
-                }}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    fontFamily: 'SourceSansPro-Regular',
-                  }}>
-                  P116
-                </Text>
-              </View>
-              <View
-                style={{
-                  borderLeftColor: '#ed4950',
-                  // width: 20,
-                  height: 60,
-                  marginTop: 5,
-                  // marginBottom: 5,
-                  borderLeftWidth: 2,
-                }}
-              />
-              <View
-                style={{
-                  flexDirection: 'column',
-                  width: '70%',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    fontFamily: 'SourceSansPro-Regular',
-                  }}>
-                  Thillai Nagar 11th cross - Central Bus Stand
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    // marginTop: 3,
-                    color: 'green',
-                    fontStyle: 'italic',
-                    fontWeight: 'bold',
-                    fontFamily: 'SourceSansPro-Regular',
-                  }}>
-                  Arriving in next 2 minutes
-                </Text>
-              </View>
-            </View>
-          </View>
-          </TouchableOpacity>
-          <View
-            style={{
-              borderBottomColor: '#aaaa',
-              marginLeft: 15,
-              marginTop: 3,
-              marginBottom: 3,
-              marginRight: 15,
-              borderBottomWidth: 1,
-            }}
-          />
         </ScrollView>
       </>
     );
@@ -242,6 +87,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 10,
     fontFamily: 'SourceSansPro-Regular',
+    textAlign:'center'
   },
   container: {
     height: 140,
