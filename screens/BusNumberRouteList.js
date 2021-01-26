@@ -32,6 +32,7 @@ const customStyles = {
   currentStepLabelColor: 'black',
   lableFontFamily:'SourceSansPro-Regular',
   
+  
 }
 
 export default class BusNumberRouteList extends React.Component {
@@ -127,7 +128,7 @@ this.p();
         
          {/* {len=Number(this.state.route_details[Number(this.state.selectedValue)].intermediate.length)} */}
          
-      <View style={{marginTop:25,left:15,bottom:20}}>
+      <View style={{marginTop:25,left:15,marginBottom:120,marginRight:30,}}>
       {/* <View style={{marginLeft:30,height:'80%',marginRight:80,marginTop:50}}> */}
       
         <ScrollView>
@@ -146,8 +147,11 @@ this.p();
          labels={this.state.route_details[Number(this.state.selectedValue)].intermediate}
          renderLabel={function (position, stepStatus, label, currentPosition){
                   return (
-                    <View style={{padding:15}}>
-                         <Text style={{color: 'black',fontSize:13, position: 'absolute', left:0,padding:3}}>{position.label}</Text>
+                    <View style={{padding:15,AlignContent:'center',}}>
+                         <Text style={{color: 'black',fontSize:13, position: 'absolute', left:0,padding:3,textAlign:'center',justifyContent: "space-evenly",
+    flexDirection: "row",
+    flex: 1,
+    flexWrap: "wrap"}}>{position.label}</Text>
                     </View>
                   ) 
           }}
@@ -155,6 +159,7 @@ this.p();
     </ScrollView>
     
     </View>
+    
        
          
     </>
