@@ -83,7 +83,7 @@ const StackNavigation = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'BusList',
+    initialRouteName: 'Home',
   },
 );
 export default StackNavigation;

@@ -12,20 +12,64 @@ import {
 import {ListItem} from 'react-native-elements';
 import HeaderBar from './Header';
 import LottieView from 'lottie-react-native';
+import database from '@react-native-firebase/database';
 class BusList extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      s:''
+      source:this.props.navigation.state.params.s,
+      destination:this.props.navigation.state.params.d,
+      routes:[],
+      bus:[],
     }
+  }
+  componentDidMount() {
+    database()
+      .ref('Routes')
+      .on('value', (snapshot) => {
+        snapshot.forEach(element => {
+          if (element.val().toandfro==1 && element.val().intermediate.includes(this.state.source) && element.val().intermediate.includes(this.state.destination))
+            {
+              this.state.routes.push(element.val().route_id)
+              // console.log("-",element.val().route_id);
+                  // database()
+                  // .ref('bus')
+                  // .on('value', (snapshot1) => {
+                  //   snapshot1.forEach((element1) =>
+                  //   {
+                  //     // console.log(element1.val().route_id," ----- ",element.val().route_id );
+                  //     // console.log(typeof(element.val().route_id));
+                  //     if (element1.val().route_id.includes(element.val().route_id))
+                  //     {
+                  //       console.log(element1.val());
+                  //       // this.state.bus.push(element1.val())
+                  //     let  a= this.state.bus
+                  //       a.push(element1.val())
+                  //       this.setState({bus:a})
+                  //     }
+                  //   });
+
+                  // });
+            }
+            else if(element.val().toandfro==0 && element.val().intermediate.includes(this.state.source) && element.val().intermediate.includes(this.state.destination) && (element.val().intermediate.indexOf(this.state.source) < element.val().intermediate.indexOf(this.state.destination)) )
+            {
+              this.state.routes.push(element.val().route_id)
+              // console.log("^^^^^^",element.val().intermediate.indexOf(this.state.source));
+            }
+        });
+        console.log(this.state.routes);
+        // console.log(this.state.bus);
+        // this.setState({values: snapshot.val()});
+        // this.setState({filterSearchValues: snapshot.val()});
+      });
   }
   render() {
     return (
       <>
         <View style={styles.top}>
           <Text style={styles.text}>
-            g-fg            {/* {this.props.navigation.state.params.s} -{' '}
-            {this.props.navigation.state.params.d} */}
+            {this.props.navigation.state.params.s} -{' '}
+            {this.props.navigation.state.params.d}
           </Text>
         </View>
         {/* <View style={{height: '100%', width: '100%'}}> */}
