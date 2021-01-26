@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "78001082827",
+    "firebase_url": "https://tbg-433b5-default-rtdb.firebaseio.com",
+    "project_id": "tbg-433b5",
+    "storage_bucket": "tbg-433b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78001082827:android:8271d68271b25e0652a64e",
+        "android_client_info": {
+          "package_name": "com.tbg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78001082827-7j3jvm8f5anlnqb4mb7ps8cffh1r68fa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtM0IHIxmRfCqnI-L2mFSifOgmEQcU8qs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "78001082827-7j3jvm8f5anlnqb4mb7ps8cffh1r68fa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

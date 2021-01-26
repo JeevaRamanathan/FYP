@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Button,
-  BackHandler,
-  Alert,
-  ScrollView,
-} from 'react-native';
-import HeaderBar from './Header';
-import {Checkbox, Toolbar} from 'react-native-material-ui';
-import {SearchBar} from 'react-native-elements';
+import {View, Text, ScrollView} from 'react-native';
+
+import database from '@react-native-firebase/database';
+
+import {Toolbar} from 'react-native-material-ui';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -21,32 +15,18 @@ class SelectDestination extends React.Component {
     super(props);
     this.state = {
       search: '',
-      destinationValues: [
-        {key: 0, value: 'Thillainagar 11th cross'},
-        {key: 1, value: 'Anna Salai'},
-        {key: 2, value: 'Srirangam'},
-        {key: 3, value: 'ChartamBusStand'},
-        {key: 4, value: 'CentralBusStand'},
-        {key: 5, value: 'Samayapuram'},
-        {key: 6, value: 'Woraiyur'},
-        {key: 7, value: 'Ant'},
-        {key: 8, value: 'Place'},
-        {key: 9, value: 'Thillainagar 11th cross'},
-        {key: 10, value: 'Anna Salai'},
-        {key: 21, value: 'Srirangam'},
-        {key: 31, value: 'ChartamBusStand'},
-        {key: 41, value: 'CentralBusStand'},
-        {key: 51, value: 'Samayapuram'},
-        {key: 61, value: 'Woraiyur'},
-        {key: 71, value: 'Ant'},
-        {key: 81, value: 'Place'},
-      ],
+      destinationValues: [],
       filteredDestinationValue: [],
     };
   }
 
   componentDidMount() {
-    this.setState({filteredDestinationValue: this.state.destinationValues});
+    database()
+      .ref('busstop')
+      .on('value', (snapshot) => {
+        this.setState({filteredDestinationValue: snapshot.val()});
+        this.setState({destinationValues: snapshot.val()});
+      });
   }
 
   destination(text) {
@@ -56,9 +36,7 @@ class SelectDestination extends React.Component {
   search(value) {
     if (value) {
       const newData = this.state.destinationValues.filter(function (item) {
-        const itemData = item.value
-          ? item.value.toUpperCase()
-          : ''.toUpperCase();
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
         const textData = value.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -84,7 +62,7 @@ class SelectDestination extends React.Component {
             }}
             style={{
               container: {
-                backgroundColor: '#ED4950',
+                backgroundColor: '#ebc550',
               },
             }}
             searchValue={this.state.searchValue}
@@ -102,12 +80,11 @@ class SelectDestination extends React.Component {
                   borderBottomWidth: 1,
                 }}
                 key={i}
-                onPress={() => this.destination(values.value)}>
+                onPress={() => this.destination(values.name)}>
                 <View
                   style={{
                     margin: 12,
                     flexDirection: 'row',
-                    flexWrap: 'wrap',
                   }}>
                   <Entypo
                     name="location-pin"
@@ -119,11 +96,11 @@ class SelectDestination extends React.Component {
                     style={{
                       textAlignVertical: 'center',
                       marginLeft: 7,
-                      fontSize: 19,
+                      fontSize: 17,
                       fontWeight: '800',
                       fontFamily: 'SourceSansPro-Regular',
                     }}>
-                    {values.value}
+                    {values.name}
                   </Text>
                 </View>
               </TouchableOpacity>

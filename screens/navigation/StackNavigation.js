@@ -4,6 +4,7 @@ import AppContainer from './bottom_navigation/Navigation';
 // import Location from '../Location';
 import BusList from '../BusList';
 import RouteList from '../RouteList';
+import BusNumberRouteList from '../BusNumberRouteList';
 import SelectSource from '../SelectSource';
 import SelectDestination from '../SelectDestination';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -47,26 +48,41 @@ const StackNavigation = createStackNavigator(
         headerShown: null,
       },
     },
-    BusList: {
-      screen: BusList,
+
+    BusNumberRouteList: {
+      screen: BusNumberRouteList,
       navigationOptions: {
-        title: 'Bus List',
+        title: 'Bus Details',
+
         headerStyle: {
-          backgroundColor: '#ed4950',
+          backgroundColor: '#ebc550',
         },
-        headerTintColor: '#fff',
+        headerTintColor: '#22333b',
         headerTitleStyle: {
           fontFamily: 'Acme-Regular',
         },
       },
     },
-    RouteList:{
-      screen:RouteList,
 
-    }
+    BusList: {
+      screen: BusList,
+      navigationOptions: {
+        title: 'Bus List',
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+    RouteList: {
+      screen: RouteList,
+    },
   },
   {
-    initialRouteName: 'Splash',
+    initialRouteName: 'Home',
   },
 );
 export default StackNavigation;

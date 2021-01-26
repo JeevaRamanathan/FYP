@@ -18,56 +18,41 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {NavigationActions} from 'react-navigation';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from 'axios';
+import database from '@react-native-firebase/database';
+
 class SelectSource extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       search: '',
       a: [],
-      sourceValues: [
-        {key: 0, value: 'Thillainagar 11th cross'},
-        {key: 1, value: 'Anna Salai'},
-        {key: 2, value: 'Srirangam'},
-        {key: 3, value: 'ChartamBusStand'},
-        {key: 4, value: 'CentralBusStand'},
-        {key: 5, value: 'Samayapuram'},
-        {key: 6, value: 'Woraiyur'},
-        {key: 7, value: 'Ant'},
-        {key: 8, value: 'Place'},
-        {key: 9, value: 'Thillainagar 11th cross'},
-        {key: 10, value: 'Anna Salai'},
-        {key: 21, value: 'Srirangam'},
-        {key: 31, value: 'ChartamBusStand'},
-        {key: 41, value: 'CentralBusStand'},
-        {key: 51, value: 'Samayapuram'},
-        {key: 61, value: 'Woraiyur'},
-        {key: 71, value: 'Ant'},
-        {key: 81, value: 'Place'},
-      ],
+      sourceValues: [],
       filteredSourceValue: [],
     };
   }
   componentDidMount() {
-    this.setState({filteredSourceValue: this.state.sourceValues});
+    database()
+      .ref('busstop')
+      .on('value', (snapshot) => {
+        this.setState({filteredSourceValue: snapshot.val()});
+        this.setState({sourceValues: snapshot.val()});
+      });
   }
   search(value) {
     if (value) {
       const newData = this.state.sourceValues.filter(function (item) {
-        const itemData = item.value
-          ? item.value.toUpperCase()
-          : ''.toUpperCase();
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
         const textData = value.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
-      this.setState({filtereSourcedValue: newData});
+      this.setState({filteredSourceValue: newData});
     } else {
-      this.setState({filtereSourcedValue: this.state.sourceValues});
+      this.setState({filteredSourceValue: this.state.sourceValues});
     }
   }
   source(text) {
     this.props.navigation.state.params.handleSource(text);
     this.props.navigation.goBack();
-   
   }
 
   render() {
@@ -86,7 +71,7 @@ class SelectSource extends React.Component {
             }}
             style={{
               container: {
-                backgroundColor: '#ED4950',
+                backgroundColor: '#ebc550', 
               },
             }}
           />
@@ -103,12 +88,11 @@ class SelectSource extends React.Component {
                   borderBottomWidth: 1,
                 }}
                 key={i}
-                onPress={() => this.source(values.value)}>
+                onPress={() => this.source(values.name)}>
                 <View
                   style={{
                     margin: 12,
                     flexDirection: 'row',
-                    flexWrap: 'wrap',
                   }}>
                   <Entypo
                     name="location-pin"
@@ -120,11 +104,11 @@ class SelectSource extends React.Component {
                     style={{
                       textAlignVertical: 'center',
                       marginLeft: 7,
-                      fontSize: 19,
+                      fontSize: 17,
                       fontWeight: '800',
                       fontFamily: 'SourceSansPro-Regular',
                     }}>
-                    {values.value}
+                    {values.name}
                   </Text>
                 </View>
               </TouchableOpacity>
