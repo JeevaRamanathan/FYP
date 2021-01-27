@@ -21,16 +21,20 @@ class BusList extends React.Component {
       destination:this.props.navigation.state.params.d,
       routes:[],
       bus:[],
+      arr:[],
+      rid:[],
+      flag:0
     }
   }
   componentDidMount() {
+    let flag=0;
     database()
       .ref('Routes')
       .on('value', (snapshot) => {
         snapshot.forEach(element => {
           if (element.val().toandfro==1 && element.val().intermediate.includes(this.state.source) && element.val().intermediate.includes(this.state.destination))
             {
-              this.state.routes.push(element.val().route_id)
+              this.state.routes.push(element.val())
               // console.log("-",element.val().route_id);
                   // database()
                   // .ref('bus')
@@ -53,17 +57,62 @@ class BusList extends React.Component {
             }
             else if(element.val().toandfro==0 && element.val().intermediate.includes(this.state.source) && element.val().intermediate.includes(this.state.destination) && (element.val().intermediate.indexOf(this.state.source) < element.val().intermediate.indexOf(this.state.destination)) )
             {
-              this.state.routes.push(element.val().route_id)
-              // console.log("^^^^^^",element.val().intermediate.indexOf(this.state.source));
+              this.state.routes.push(element.val()) 
             }
         });
-        console.log(this.state.routes);
-        // console.log(this.state.bus);
-        // this.setState({values: snapshot.val()});
-        // this.setState({filterSearchValues: snapshot.val()});
+        // if(this.state.routes.length>1){
+        // for (var i=0;i<this.state.routes.length;i++){
+        //       if(this.state.routes[i].via!='')
+        //       {
+                
+        //         var t= this.state.routes[i].intermediate
+        //         var arr=t.splice(this.state.routes[i].intermediate.indexOf(this.state.source),this.state.routes[i].intermediate.indexOf(this.state.destination))
+        //         let  a= this.state.arr
+        //         a.push(arr)
+        //         this.setState({arr:a})
+        //         let b=this.state.rid
+        //         b.push(this.state.routes[i].route_id)
+        //         this.setState({rid:b})
+        //       }
+             
+        //   }
+        // }
+        // else{
+        //   this.state.rid.push(this.state.routes[0].route_id)
+        //   // console.log(this.state.rid);
+
+        // }
+         
+        for (var i=0;i<this.state.routes.length;i++){
+          var t= this.state.routes[i].intermediate
+               var arr=t.slice(this.state.routes[i].intermediate.indexOf(this.state.source),this.state.routes[i].intermediate.indexOf(this.state.destination)+1)
+                let  a= this.state.arr
+                a.push(arr)
+                this.setState({arr:a})
+                let b=this.state.rid
+                b.push(this.state.routes[i].route_id)
+                this.setState({rid:b})
+        }
+
+          for(var j=0;j<this.state.arr.length-1;j++){
+            if(JSON.stringify(this.state.arr[0])!=JSON.stringify(this.state.arr[j+1])){
+              this.print();
+            }
+            else{
+              console.log(this.state.rid+"- route_id");
+            }
+          }
       });
+      
+
+  }
+  print=()=>{
+    for(var k=0;k<this.state.routes.length;k++){
+      console.log(this.state.routes[k].via+"-route_id:"+this.state.routes[k].route_id);
+    }
   }
   render() {
+
     return (
       <>
         <View style={styles.top}>
