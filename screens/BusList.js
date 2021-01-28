@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Image,
   TouchableOpacity,
-  ScrollView,
+  ScrollView,Alert
 } from 'react-native';
 import {ListItem} from 'react-native-elements';
 import HeaderBar from './Header';
@@ -85,6 +85,7 @@ class BusList extends React.Component {
          
         for (var i=0;i<this.state.routes.length;i++){
           var t= this.state.routes[i].intermediate
+         
                var arr=t.slice(this.state.routes[i].intermediate.indexOf(this.state.source),this.state.routes[i].intermediate.indexOf(this.state.destination)+1)
                 let  a= this.state.arr
                 a.push(arr)
@@ -92,9 +93,11 @@ class BusList extends React.Component {
                 let b=this.state.rid
                 b.push(this.state.routes[i].route_id)
                 this.setState({rid:b})
+                 
         }
-
+           if(this.state.arr.length!=1){
           for(var j=0;j<this.state.arr.length-1;j++){
+            
             if(JSON.stringify(this.state.arr[0])!=JSON.stringify(this.state.arr[j+1])){
               this.print();
             }
@@ -102,9 +105,12 @@ class BusList extends React.Component {
               console.log(this.state.rid+"- route_id");
             }
           }
+           }else{
+            console.log(this.state.routes[0].route_id);
+           }
+       
       });
-      
-
+         
   }
   print=()=>{
     for(var k=0;k<this.state.routes.length;k++){
