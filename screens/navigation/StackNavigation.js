@@ -4,6 +4,7 @@ import AppContainer from './bottom_navigation/Navigation';
 // import Location from '../Location';
 import BusList from '../BusList';
 import RouteList from '../RouteList';
+import Bot from '../Bot';
 import BusNumberRouteList from '../BusNumberRouteList';
 import SelectSource from '../SelectSource';
 import SelectDestination from '../SelectDestination';
@@ -49,6 +50,8 @@ const StackNavigation = createStackNavigator(
       },
     },
 
+   
+
     BusNumberRouteList: {
       screen: BusNumberRouteList,
       navigationOptions: {
@@ -77,8 +80,14 @@ const StackNavigation = createStackNavigator(
         },
       },
     },
+
+  
+
     RouteList: {
       screen: RouteList,
+    },
+    Bot: {
+      screen: Bot,
     },
   },
   {

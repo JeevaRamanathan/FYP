@@ -24,6 +24,7 @@ import Floating from '../utils/floatingAction';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 // import ImagePicker from 'react-native-image-picker';
 
 class Routes extends React.Component {
@@ -160,8 +161,18 @@ class Routes extends React.Component {
             </Text>
           </TouchableOpacity>
         </ScrollView>
-
-       
+        {/* <TouchableOpacity activeOpacity={0.5} onPress={()=>this.props.navigation.navigate('Bot')}>
+        <View style={{height: '40%', width: '30%',left:'35%'}}>
+           
+            <LottieView
+              source={require('../assets/bot.json')}
+              loop={true}
+              autoPlay={true}
+              progress={0}
+              speed={3}
+            />
+          </View>
+          </TouchableOpacity> */}
         <Floating />
       </>
     );
