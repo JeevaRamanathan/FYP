@@ -13,6 +13,7 @@ import {ListItem} from 'react-native-elements';
 import HeaderBar from './Header';
 import LottieView from 'lottie-react-native';
 import database from '@react-native-firebase/database';
+import { and } from 'react-native-reanimated';
 class BusList extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +24,8 @@ class BusList extends React.Component {
       bus:[],
       arr:[],
       rid:[],
+      via:[],
+      finalBusVia:[],
       flag:0
     }
   }
@@ -93,22 +96,79 @@ class BusList extends React.Component {
                 let b=this.state.rid
                 b.push(this.state.routes[i].route_id)
                 this.setState({rid:b})
+                let c=this.state.via
+                c.push(this.state.routes[i].via)
+                this.setState({via:c})
+                this.state.finalBusVia.push([])
                  
         }
-           if(this.state.arr.length!=1){
-          for(var j=0;j<this.state.arr.length-1;j++){
-            
-            if(JSON.stringify(this.state.arr[0])!=JSON.stringify(this.state.arr[j+1])){
-              this.print();
-            }
-            else{
-              console.log(this.state.rid+"- route_id");
-            }
+        console.log(this.state.rid);
+        console.log('---');
+        console.log(this.state.arr);
+        console.log(this.state.via);
+        console.log(this.state.finalBusVia);
+        // console.log(typeof(this.state.finalBusVia[0]));
+        // console.log("*",typeof(this.state.finalBusVia[1]));
+        // console.log("&",typeof(this.state.finalBusVia[2]));
+
+        if(this.state.arr.length!=1)
+        {
+          // console.log("&&&&");
+          for(var i=0;i<this.state.arr.length;i++)//for routes
+          {
+            // console.log("***");
+            for(var j=0;j<this.state.via[i].length;j++)// for via
+            {
+              // console.log(this.state.arr[i]+"---------0");
+              for(var k=0;k<this.state.arr[i].length;k++)
+              {
+                if(this.state.arr[i][k].includes(this.state.via[i][j]) && !this.state.finalBusVia[i].includes(this.state.via[i][j]) && this.state.via[i][j]!=this.state.source && this.state.via[i][j]!=this.state.destination && !this.state.source.includes(this.state.via[i][j]) && !this.state.destination.includes(this.state.via[i][j]))
+                  {
+                    this.state.finalBusVia[i].push(this.state.via[i][j])
+                  // let temp=this.state.finalBusVia[i]
+                  // console.log(this.state.finalBusVia[0],"---",typeof(this.state.finalBusVia[0]));
+                  // temp.push(this.state.via[i][j])
+                  // this.setState({finalBusVia[i]:temp})
+                  // console.log(this.state.via[j]);
+                }
+              }
+            } 
+            // console.log(this.state.source);
+            // this.state.finalBusVia[i].splice(this.state.finalBusVia[i].indexOf(this.state.source), 1);
+            // this.state.finalBusVia[i].splice(this.state.finalBusVia[i].indexOf(this.state.destination), 1);
           }
-           }else{
+          console.log(this.state.finalBusVia);
+          // this.state.finalBusArray.push(this.state.routes[this.state.arr.length-1].route_id)
+          // for(var j=0;j<this.state.arr.length-1;j++)
+          // {
+          //   // var flag=true;
+          //   for(var k=j+1;k<this.state.arr.length;k++)
+          //   {
+          //     for(var iteration=0)
+          //     if(JSON.stringify(this.state.arr[j])!=JSON.stringify(this.state.arr[k]) )
+          //     {
+          //       // flag=false
+          //       // if(k==this.state.arr.length-1)
+          //       // {
+          //       //   flag1=false
+          //       // }
+          //       // this.print();
+          //     }
+          //     // else{
+          //     //   console.log(this.state.rid+"- route_id");
+          //     // }
+          //   }
+          //   // if (flag)
+          //   // {
+          //   //   this.state.finalBusArray.push(this.state.routes[j].route_id)
+          //   // }
+          // }
+        }
+        else
+        {
+            // this.state.finalBusArray.push(this.state.routes[0].route_id)
             console.log(this.state.routes[0].route_id);
-           }
-       
+        }
       });
          
   }
