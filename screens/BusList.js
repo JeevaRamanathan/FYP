@@ -3,123 +3,154 @@ import {
   View,
   Text,
   StyleSheet,
-  Modal,
   ActivityIndicator,
   Image,
+  Button,
   TouchableOpacity,
-  ScrollView,Alert
+  ScrollView,
+  Alert,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import {ListItem} from 'react-native-elements';
 import HeaderBar from './Header';
 import LottieView from 'lottie-react-native';
 import database from '@react-native-firebase/database';
+import {and} from 'react-native-reanimated';
 class BusList extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      source:this.props.navigation.state.params.s,
-      destination:this.props.navigation.state.params.d,
-      routes:[],
-      bus:[],
-      arr:[],
-      rid:[],
-      flag:0
+    this.state = {
+      source: this.props.navigation.state.params.s,
+      destination: this.props.navigation.state.params.d,
+      routes: [],
+      bus: [],
+      arr: [],
+      rid: [],
+      via: [],
+      finalBusVia: [],
+      refinalBusVia: [],
+      flag: 0,
+      modal: false,
+      busList: [],
+    };
+  }
+  viaBusNo(i) {
+    // console.log(this.state.bus[i]);
+    for (var l = 0; l < this.state.bus[i].length; l++) {
+      database()
+        .ref('bus')
+        .on('value', (snapshot) => {
+          snapshot.forEach((e) => {
+            // if (e.val().route_id.includes(this.state.bus[i][l])) {
+            //   // console.log(e.val());
+            // }
+            console.log(e.val().route_id.includes(this.state.bus[i][l]));
+          });
+        });
     }
   }
   componentDidMount() {
-    let flag=0;
+    let flag = 0;
     database()
       .ref('Routes')
       .on('value', (snapshot) => {
-        snapshot.forEach(element => {
-          if (element.val().toandfro==1 && element.val().intermediate.includes(this.state.source) && element.val().intermediate.includes(this.state.destination))
-            {
-              this.state.routes.push(element.val())
-              // console.log("-",element.val().route_id);
-                  // database()
-                  // .ref('bus')
-                  // .on('value', (snapshot1) => {
-                  //   snapshot1.forEach((element1) =>
-                  //   {
-                  //     // console.log(element1.val().route_id," ----- ",element.val().route_id );
-                  //     // console.log(typeof(element.val().route_id));
-                  //     if (element1.val().route_id.includes(element.val().route_id))
-                  //     {
-                  //       console.log(element1.val());
-                  //       // this.state.bus.push(element1.val())
-                  //     let  a= this.state.bus
-                  //       a.push(element1.val())
-                  //       this.setState({bus:a})
-                  //     }
-                  //   });
-
-                  // });
-            }
-            else if(element.val().toandfro==0 && element.val().intermediate.includes(this.state.source) && element.val().intermediate.includes(this.state.destination) && (element.val().intermediate.indexOf(this.state.source) < element.val().intermediate.indexOf(this.state.destination)) )
-            {
-              this.state.routes.push(element.val()) 
-            }
+        snapshot.forEach((element) => {
+          if (
+            element.val().toandfro == 1 &&
+            element.val().intermediate.includes(this.state.source) &&
+            element.val().intermediate.includes(this.state.destination)
+          ) {
+            this.state.routes.push(element.val());
+          } else if (
+            element.val().toandfro == 0 &&
+            element.val().intermediate.includes(this.state.source) &&
+            element.val().intermediate.includes(this.state.destination) &&
+            element.val().intermediate.indexOf(this.state.source) <
+              element.val().intermediate.indexOf(this.state.destination)
+          ) {
+            this.state.routes.push(element.val());
+          }
         });
-        // if(this.state.routes.length>1){
-        // for (var i=0;i<this.state.routes.length;i++){
-        //       if(this.state.routes[i].via!='')
-        //       {
-                
-        //         var t= this.state.routes[i].intermediate
-        //         var arr=t.splice(this.state.routes[i].intermediate.indexOf(this.state.source),this.state.routes[i].intermediate.indexOf(this.state.destination))
-        //         let  a= this.state.arr
-        //         a.push(arr)
-        //         this.setState({arr:a})
-        //         let b=this.state.rid
-        //         b.push(this.state.routes[i].route_id)
-        //         this.setState({rid:b})
-        //       }
-             
-        //   }
-        // }
-        // else{
-        //   this.state.rid.push(this.state.routes[0].route_id)
-        //   // console.log(this.state.rid);
 
-        // }
-         
-        for (var i=0;i<this.state.routes.length;i++){
-          var t= this.state.routes[i].intermediate
-         
-               var arr=t.slice(this.state.routes[i].intermediate.indexOf(this.state.source),this.state.routes[i].intermediate.indexOf(this.state.destination)+1)
-                let  a= this.state.arr
-                a.push(arr)
-                this.setState({arr:a})
-                let b=this.state.rid
-                b.push(this.state.routes[i].route_id)
-                this.setState({rid:b})
-                 
+        for (var i = 0; i < this.state.routes.length; i++) {
+          var t = this.state.routes[i].intermediate;
+
+          var arr = t.slice(
+            this.state.routes[i].intermediate.indexOf(this.state.source),
+            this.state.routes[i].intermediate.indexOf(this.state.destination) +
+              1,
+          );
+          let a = this.state.arr;
+          a.push(arr);
+          this.setState({arr: a});
+          let b = this.state.rid;
+          b.push(this.state.routes[i].route_id);
+          this.setState({rid: b});
+          let c = this.state.via;
+          c.push(this.state.routes[i].via);
+          this.setState({via: c});
+          this.state.finalBusVia.push([]);
         }
-        console.log(this.state.arr)
-           if(this.state.arr.length!=1){
-          for(var j=0;j<this.state.arr.length-1;j++){
-            
-            if(JSON.stringify(this.state.arr[0])!=JSON.stringify(this.state.arr[j+1])){
-              this.print();
-            }
-            else{
-              console.log(this.state.rid+"- route_id");
+
+        if (this.state.arr.length != 1) {
+          for (
+            var i = 0;
+            i < this.state.arr.length;
+            i++ //for routes
+          ) {
+            for (
+              var j = 0;
+              j < this.state.via[i].length;
+              j++ // for via
+            ) {
+              for (var k = 0; k < this.state.arr[i].length; k++) {
+                if (
+                  this.state.arr[i][k].includes(this.state.via[i][j]) &&
+                  !this.state.finalBusVia[i].includes(this.state.via[i][j]) &&
+                  this.state.via[i][j] != this.state.source &&
+                  this.state.via[i][j] != this.state.destination &&
+                  !this.state.source.includes(this.state.via[i][j]) &&
+                  !this.state.destination.includes(this.state.via[i][j])
+                ) {
+                  this.state.finalBusVia[i].push(this.state.via[i][j]);
+                }
+              }
             }
           }
-           }else{
-            console.log(this.state.routes[0].route_id);
-           }
-       
-      });
-         
-  }
-  print=()=>{
-    for(var k=0;k<this.state.routes.length;k++){
-      console.log(this.state.routes[k].via+"-route_id:"+this.state.routes[k].route_id);
-    }
-  }
-  render() {
 
+          let stringArray = this.state.finalBusVia.map(JSON.stringify);
+          let dupes = {};
+          stringArray.forEach((item, index) => {
+            dupes[item] = dupes[item] || [];
+            dupes[item].push(index);
+          });
+          for (let name in dupes) {
+            console.log(
+              name +
+                '->indexes->' +
+                dupes[name] +
+                '->count->' +
+                dupes[name].length,
+            );
+            this.state.bus.push(dupes[name]);
+            this.state.refinalBusVia.push(JSON.parse(name));
+          }
+
+          console.log(this.state.bus);
+          console.log(this.state.refinalBusVia);
+          let bb = this.state.finalBusVia.filter((item) => item.length != 0);
+
+          if (bb.length == 0 || this.state.refinalBusVia.length == 1) {
+          } else {
+            this.setState({modal: !this.state.modal});
+          }
+        } else {
+          console.log(this.state.routes[0].route_id);
+        }
+      });
+  }
+
+  render() {
     return (
       <>
         <View style={styles.top}>
@@ -138,37 +169,90 @@ class BusList extends React.Component {
             speed={3}
           /> */}
         {/* </View> */}
-        <ScrollView>
-        <ListItem bottomDivider>
-                    <Image
-                      source={require('../assets/busno.png')}
-                      style={{height: 30, width: 30, borderRadius: 10}}
-                    />
-        <ListItem.Content>
-                      <ListItem.Title>
-                        <View syle={{flexDirection: 'row'}}>
+
+        <Modal
+          isVisible={this.state.modal}
+          onBackButtonPress={() => this.props.navigation.navigate('Home')}>
+          <View style={{alignContent: 'center'}}>
+            <View style={{backgroundColor: 'white'}}>
+              <View style={{backgroundColor: '#ebc550', height: 35}}>
+                <Text
+                  style={{
+                    fontFamily: 'SourceSansPro-Regular',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    textAlignVertical: 'center',
+                  }}>
+                  Multiple Routes Available to reach your destination
+                </Text>
+              </View>
+              <ScrollView>
+                {this.state.refinalBusVia.map((index, i) => {
+                  return (
+                    <ListItem bottomDivider onPress={() => this.viaBusNo(i)}>
+                      <Image
+                        source={require('../assets/multiple.png')}
+                        style={{height: 30, width: 30, borderRadius: 10}}
+                      />
+                      <ListItem.Content>
+                        <ListItem.Title>
+                          <View syle={{flexDirection: 'row'}}>
+                            <Text
+                              style={{
+                                fontFamily: 'SourceSansPro-Regular',
+                                fontSize: 17,
+                                fontWeight: 'bold',
+                              }}>
+                              Via
+                            </Text>
+                          </View>
+                        </ListItem.Title>
+                        <ListItem.Subtitle>
                           <Text
                             style={{
                               fontFamily: 'SourceSansPro-Regular',
-                              fontSize: 17,
-                              fontWeight: 'bold',
                             }}>
-                        BusNumber
+                            {index.join(', ')}
                           </Text>
-                        </View>
-                      </ListItem.Title>
-                      <ListItem.Subtitle>
-                        <Text
-                          style={{
-                            fontFamily: 'SourceSansPro-Regular',
-                          }}>
-                        Route - Route
-                        </Text>
-                      </ListItem.Subtitle>
-                    </ListItem.Content>
-                  </ListItem>
-                 
+                        </ListItem.Subtitle>
+                      </ListItem.Content>
+                    </ListItem>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
 
+        <ScrollView>
+          <ListItem bottomDivider>
+            <Image
+              source={require('../assets/busno.png')}
+              style={{height: 30, width: 30, borderRadius: 10}}
+            />
+            <ListItem.Content>
+              <ListItem.Title>
+                <View syle={{flexDirection: 'row'}}>
+                  <Text
+                    style={{
+                      fontFamily: 'SourceSansPro-Regular',
+                      fontSize: 17,
+                      fontWeight: 'bold',
+                    }}>
+                    BusNumber
+                  </Text>
+                </View>
+              </ListItem.Title>
+              <ListItem.Subtitle>
+                <Text
+                  style={{
+                    fontFamily: 'SourceSansPro-Regular',
+                  }}>
+                  Route - Route
+                </Text>
+              </ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
         </ScrollView>
       </>
     );
@@ -187,7 +271,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 10,
     fontFamily: 'SourceSansPro-Regular',
-    textAlign:'center'
+    textAlign: 'center',
   },
   container: {
     height: 140,

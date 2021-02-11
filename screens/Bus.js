@@ -11,47 +11,45 @@ const list = [
   {
     name: 'Thillainagar 11th cross',
     // avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: '10 buses run in this route'
+    subtitle: '10 buses run in this route',
   },
   {
     name: 'Anna Salai',
-    subtitle: '5 buses run in this route'
+    subtitle: '5 buses run in this route',
   },
   {
     name: 'Srirangam',
-    subtitle: '2 buses run in this route'
+    subtitle: '2 buses run in this route',
   },
   {
     name: 'ChartamBusStand',
-    subtitle: '5 buses run in this route'
-  },{
+    subtitle: '5 buses run in this route',
+  },
+  {
     name: 'CentralBusStand',
-    subtitle: '3 buses run in this route'
+    subtitle: '3 buses run in this route',
   },
   {
     name: 'Samayapuram',
-    subtitle: '5 buses run in this route'
+    subtitle: '5 buses run in this route',
   },
   {
     name: 'Woraiyur',
-    subtitle: '5 buses run in this route'
+    subtitle: '5 buses run in this route',
   },
   {
     name: 'Thillainagar 1st cross',
-    subtitle: '7 buses run in this route'
+    subtitle: '7 buses run in this route',
   },
   {
     name: 'KMC,Tennur',
-    subtitle: '5 buses run in this route'
+    subtitle: '5 buses run in this route',
   },
   {
     name: 'Tennur',
-    subtitle: '5 buses run in this route'
+    subtitle: '5 buses run in this route',
   },
-]
-
-
-
+];
 
 class Bus extends React.Component {
   constructor(props) {
@@ -61,7 +59,6 @@ class Bus extends React.Component {
       values: [],
       filterSearchValues: [],
     };
-    
   }
 
   componentDidMount() {
@@ -77,9 +74,7 @@ class Bus extends React.Component {
     this.setState({search});
     if (search) {
       const newData = this.state.filterSearchValues.filter(function (item) {
-        const itemData = item.name
-          ? item.name.toUpperCase()
-          : ''.toUpperCase();
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
         const textData = search.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -90,7 +85,6 @@ class Bus extends React.Component {
   };
 
   render() {
-   
     return (
       <>
         <View>
@@ -167,12 +161,3 @@ class Bus extends React.Component {
   }
 }
 export default Bus;
-
-
-
-
-
-
-
-
-

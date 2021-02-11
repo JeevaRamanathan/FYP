@@ -4,7 +4,7 @@ import AppContainer from './bottom_navigation/Navigation';
 // import Location from '../Location';
 import BusList from '../BusList';
 import RouteList from '../RouteList';
-import Bot from '../Bot';
+import Map from '../Map';
 import BusNumberRouteList from '../BusNumberRouteList';
 import SelectSource from '../SelectSource';
 
@@ -87,8 +87,8 @@ const StackNavigation = createStackNavigator(
     RouteList: {
       screen: RouteList,
     },
-    Bot: {
-      screen: Bot,
+    Map: {
+      screen: Map,
     },
   },
   {

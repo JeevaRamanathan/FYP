@@ -71,7 +71,7 @@ class SelectSource extends React.Component {
             }}
             style={{
               container: {
-                backgroundColor: '#ebc550', 
+                backgroundColor: '#ebc550',
               },
             }}
           />

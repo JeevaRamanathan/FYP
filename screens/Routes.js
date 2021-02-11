@@ -34,11 +34,8 @@ class Routes extends React.Component {
       source: null,
       destination: null,
       disable: true,
-    
     };
   }
-
-
 
   source = () => {
     this.props.navigation.navigate('SSource', {
@@ -84,7 +81,7 @@ class Routes extends React.Component {
           <View style={styles.container}>
             <View style={{flexDirection: 'row'}}>
               <Entypo
-                name="location-pin" 
+                name="location-pin"
                 size={30}
                 style={styles.location}></Entypo>
               <TouchableOpacity
@@ -97,7 +94,6 @@ class Routes extends React.Component {
                   editable={false}>
                   {this.state.source}
                 </TextInput>
-            
               </TouchableOpacity>
             </View>
             <TouchableOpacity
@@ -161,18 +157,6 @@ class Routes extends React.Component {
             </Text>
           </TouchableOpacity>
         </ScrollView>
-        {/* <TouchableOpacity activeOpacity={0.5} onPress={()=>this.props.navigation.navigate('Bot')}>
-        <View style={{height: '40%', width: '30%',left:'35%'}}>
-           
-            <LottieView
-              source={require('../assets/bot.json')}
-              loop={true}
-              autoPlay={true}
-              progress={0}
-              speed={3}
-            />
-          </View>
-          </TouchableOpacity> */}
         <Floating />
       </>
     );
