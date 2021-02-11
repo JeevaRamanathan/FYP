@@ -29,10 +29,9 @@ class BusNumber extends React.Component {
   updateSearch = (search) => {
     this.setState({search});
     if (search) {
-      const newData = this.state.filterSearchValues.filter(function (item) {
-        const itemData = item.busname
-          ? item.busname.toUpperCase()
-          : ''.toUpperCase();
+      const newData = this.state.filterSearchValues.filter(function (item, i) {
+        const itemData =
+          item.b + {i}.busname ? item.busname.toUpperCase() : ''.toUpperCase();
         const textData = search.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -43,7 +42,6 @@ class BusNumber extends React.Component {
   };
 
   render() {
-    console.log(this.state.values.length);
     return (
       <>
         <View>
@@ -73,12 +71,12 @@ class BusNumber extends React.Component {
         ) : (
           <ScrollView>
             <View style={{paddingBottom: 50}}>
-              {this.state.filterSearchValues.map((l, i) => (
+              {Object.keys(this.state.filterSearchValues).map((l, i) => (
                 <TouchableOpacity
                   key={i}
                   onPress={() =>
                     this.props.navigation.navigate('BusNumberRouteList', {
-                      data: {value: l.route_id},
+                      data: {value: this.state.filterSearchValues[l].route_id},
                     })
                   }>
                   <ListItem bottomDivider>
@@ -95,7 +93,7 @@ class BusNumber extends React.Component {
                               fontSize: 17,
                               fontWeight: 'bold',
                             }}>
-                            {l.busname}
+                            {this.state.filterSearchValues[l].busname}
                           </Text>
                         </View>
                       </ListItem.Title>
@@ -104,7 +102,9 @@ class BusNumber extends React.Component {
                           style={{
                             fontFamily: 'SourceSansPro-Regular',
                           }}>
-                          Travels in {l.route_id.length} routes.
+                          Travels in{' '}
+                          {this.state.filterSearchValues[l].route_id.length}{' '}
+                          routes.
                         </Text>
                       </ListItem.Subtitle>
                     </ListItem.Content>
