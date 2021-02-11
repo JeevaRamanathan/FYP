@@ -95,6 +95,7 @@ class BusList extends React.Component {
                 this.setState({rid:b})
                  
         }
+        console.log(this.state.arr)
            if(this.state.arr.length!=1){
           for(var j=0;j<this.state.arr.length-1;j++){
             
