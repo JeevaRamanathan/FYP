@@ -33,11 +33,8 @@ class Routes extends React.Component {
       source: null,
       destination: null,
       disable: true,
-    
     };
   }
-
-
 
   source = () => {
     this.props.navigation.navigate('SSource', {
@@ -83,7 +80,7 @@ class Routes extends React.Component {
           <View style={styles.container}>
             <View style={{flexDirection: 'row'}}>
               <Entypo
-                name="location-pin" 
+                name="location-pin"
                 size={30}
                 style={styles.location}></Entypo>
               <TouchableOpacity
@@ -96,7 +93,6 @@ class Routes extends React.Component {
                   editable={false}>
                   {this.state.source}
                 </TextInput>
-            
               </TouchableOpacity>
             </View>
             <TouchableOpacity
@@ -161,7 +157,6 @@ class Routes extends React.Component {
           </TouchableOpacity>
         </ScrollView>
 
-       
         <Floating />
       </>
     );

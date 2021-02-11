@@ -7,7 +7,6 @@ import {ListItem, Avatar, SearchBar} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import database from '@react-native-firebase/database';
 
-
 class BusNumber extends React.Component {
   constructor(props) {
     super(props);

@@ -15,22 +15,22 @@ class Splash extends React.Component {
           style={{height: '100%', width: '100%'}}
           resizeMode="stretch"
           source={require('../assets/bg.jpg')}> */}
-          <View style={styles.image}>
-            <LottieView
-              source={require('../assets/splash.json')}
-              loop={true}
-              autoPlay={true}
-              progress={0}
-              speed={2}
+        <View style={styles.image}>
+          <LottieView
+            source={require('../assets/splash.json')}
+            loop={true}
+            autoPlay={true}
+            progress={0}
+            speed={2}
+          />
+          <View style={styles.bottom}>
+            <Text style={styles.text1}>Town Bus</Text>
+            <AnimationTypingText
+              nav={this.props}
+              text="Exclusively for TN 45"
             />
-            <View style={styles.bottom}>
-              <Text style={styles.text1}>Town Bus</Text>
-              <AnimationTypingText
-                nav={this.props}
-                text="Exclusively for TN 45"
-              />
-            </View>
           </View>
+        </View>
         {/* </ImageBackground> */}
       </View>
     );
