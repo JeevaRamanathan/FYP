@@ -32,23 +32,20 @@ class BusList extends React.Component {
       flag: 0,
       modal: false,
       busList: [],
+      selectedBusId: [],
     };
   }
   viaBusNo(i) {
-    // console.log(this.state.bus[i]);
-    for (var l = 0; l < this.state.bus[i].length; l++) {
-      database()
-        .ref('bus')
-        .on('value', (snapshot) => {
-          snapshot.forEach((e) => {
-            // if (e.val().route_id.includes(this.state.bus[i][l])) {
-            //   // console.log(e.val());
-            // }
-            console.log(e.val().route_id.includes(this.state.bus[i][l]));
-          });
-        });
+    database()
+      .ref(`Routes/r${i}`)
+      .on('value', (snapshot) => {
+        this.setState({selectedBusId: snapshot.val().bus_id});
+      });
+    for (var i = 0; i < this.state.selectedBusId.length; i++) {
+      console.log(this.state.selectedBusId[i]);
     }
   }
+
   componentDidMount() {
     let flag = 0;
     database()
@@ -151,6 +148,7 @@ class BusList extends React.Component {
   }
 
   render() {
+    console.log(this.state.selectedBusId);
     return (
       <>
         <View style={styles.top}>
@@ -189,7 +187,10 @@ class BusList extends React.Component {
               <ScrollView>
                 {this.state.refinalBusVia.map((index, i) => {
                   return (
-                    <ListItem bottomDivider onPress={() => this.viaBusNo(i)}>
+                    <ListItem
+                      bottomDivider
+                      key={i}
+                      onPress={() => this.viaBusNo(i)}>
                       <Image
                         source={require('../assets/multiple.png')}
                         style={{height: 30, width: 30, borderRadius: 10}}

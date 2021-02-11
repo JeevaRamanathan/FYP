@@ -68,20 +68,21 @@ class Bus extends React.Component {
         this.setState({values: snapshot.val()});
         this.setState({filterSearchValues: snapshot.val()});
       });
+    console.log(this.state.filterSearchValues);
   }
 
   updateSearch = (search) => {
-    this.setState({search});
-    if (search) {
-      const newData = this.state.filterSearchValues.filter(function (item) {
-        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-        const textData = search.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      this.setState({filterSearchValues: newData});
-    } else {
-      this.setState({filterSearchValues: this.state.values});
-    }
+    // this.setState({search});
+    // if (search) {
+    //   const newData = this.state.filterSearchValues.filter(function (item) {
+    //     const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+    //     const textData = search.toUpperCase();
+    //     return itemData.indexOf(textData) > -1;
+    //   });
+    //   this.setState({filterSearchValues: newData});
+    // } else {
+    //   this.setState({filterSearchValues: this.state.values});
+    // }
   };
 
   render() {
