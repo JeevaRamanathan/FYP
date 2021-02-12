@@ -35,15 +35,33 @@ class BusList extends React.Component {
       selectedBusId: [],
     };
   }
-  viaBusNo(i) {
-    database()
-      .ref(`Routes/r${i}`)
-      .on('value', (snapshot) => {
-        this.setState({selectedBusId: snapshot.val().bus_id});
-      });
-    for (var i = 0; i < this.state.selectedBusId.length; i++) {
-      console.log(this.state.selectedBusId[i]);
+  viaBusNo = (i) => {
+    console.log(i);
+    var arr = [];
+    console.log(this.state.rid + '---00');
+    for (var j = 0; j < this.state.bus[i].length; j++) {
+      database()
+        .ref(`Routes/r${this.state.rid[this.state.bus[i][j]]}`)
+        .on('value', (snap) => {
+          arr = this.state.selectedBusId;
+          arr.push(snap.val().bus_id);
+          console.log(arr + '____');
+
+          this.setState({selectedBusId: arr});
+        });
     }
+    this.print();
+    // database()
+    //   .ref(`Routes/r${i}`)
+    //   .on('value', (snapshot) => {
+    //     this.setState({selectedBusId: snapshot.val().bus_id});
+    //   });
+    // for (var i = 0; i < this.state.selectedBusId.length; i++) {
+    //   console.log(this.state.selectedBusId[i]);
+    // }
+  };
+  async print() {
+    await console.log(this.state.selectedBusId + '_+_+_++');
   }
 
   componentDidMount() {
@@ -114,7 +132,8 @@ class BusList extends React.Component {
               }
             }
           }
-
+          console.log(this.state.finalBusVia);
+          console.log(this.state.rid);
           let stringArray = this.state.finalBusVia.map(JSON.stringify);
           let dupes = {};
           stringArray.forEach((item, index) => {
@@ -134,7 +153,7 @@ class BusList extends React.Component {
           }
 
           console.log(this.state.bus);
-          console.log(this.state.refinalBusVia);
+          console.log(this.state.refinalBusVia + '__');
           let bb = this.state.finalBusVia.filter((item) => item.length != 0);
 
           if (bb.length == 0 || this.state.refinalBusVia.length == 1) {
@@ -148,7 +167,6 @@ class BusList extends React.Component {
   }
 
   render() {
-    console.log(this.state.selectedBusId);
     return (
       <>
         <View style={styles.top}>
