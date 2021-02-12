@@ -9,6 +9,7 @@ import BusNumberRouteList from '../BusNumberRouteList';
 import SelectSource from '../SelectSource';
 
 import SelectDestination from '../SelectDestination';
+
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import {TouchableOpacity} from 'react-native';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -89,7 +90,21 @@ const StackNavigation = createStackNavigator(
     },
     Map: {
       screen: Map,
+      navigationOptions: {
+        title: 'Map',
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+     
     },
+
+    
+
   },
   {
     initialRouteName: 'Home',

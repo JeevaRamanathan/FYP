@@ -6,7 +6,14 @@ import Feather from 'react-native-vector-icons/Feather';
 
   
 export default class MapFloating extends React.Component {
+  constructor(props) {
+    super(props);
+      
+    };
+    
   render() {
+    
+   
     return (
       <FloatingAction
        
@@ -23,7 +30,9 @@ export default class MapFloating extends React.Component {
         onPressBackdrop={()=>console.log("55")}
         // distanceToEdge={{ vertical: '50', horizontal: '30'}}
         onPressMain={() => {
-          console.log(`Map`);
+          this.props.value.navigation.navigate('Map')
+          // console.log(`Map`);
+          
         }}
       />
     );

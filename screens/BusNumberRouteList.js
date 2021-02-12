@@ -205,7 +205,7 @@ export default class BusNumberRouteList extends React.Component {
               </ScrollView>
             </View>
 
-            <MapFloating />
+            <MapFloating  value={this.props}/>
           </>
         )}
       </>

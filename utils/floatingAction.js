@@ -53,6 +53,7 @@ export default class Floating extends React.Component {
         // distanceToEdge={{ vertical: '50', horizontal: '30'}}
         onPressItem={(name) => {
           console.log(`selected button: ${name}`);
+          
         }}
       />
     );
