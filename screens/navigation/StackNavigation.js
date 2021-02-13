@@ -6,7 +6,7 @@ import BusList from '../BusList';
 import RouteList from '../RouteList';
 import BusNumberRouteList from '../BusNumberRouteList';
 import SelectSource from '../SelectSource';
-
+import RouteSearchRouteList from '../RouteSearchRouteList';
 import SelectDestination from '../SelectDestination';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import {TouchableOpacity} from 'react-native';
@@ -52,6 +52,21 @@ const StackNavigation = createStackNavigator(
 
     BusNumberRouteList: {
       screen: BusNumberRouteList,
+      navigationOptions: {
+        title: 'Bus Details',
+
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+
+    RouteSearchRouteList: {
+      screen: RouteSearchRouteList,
       navigationOptions: {
         title: 'Bus Details',
 

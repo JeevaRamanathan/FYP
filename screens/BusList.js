@@ -16,6 +16,7 @@ import HeaderBar from './Header';
 import LottieView from 'lottie-react-native';
 import database from '@react-native-firebase/database';
 import {and} from 'react-native-reanimated';
+import SourceDes from './sourceDes';
 class BusList extends React.Component {
   constructor(props) {
     super(props);
@@ -33,39 +34,58 @@ class BusList extends React.Component {
       modal: false,
       busList: [],
       selectedBusId: [],
+      finalBusDetails: [],
+      finalRid: [],
     };
   }
-  viaBusNo = (i) => {
-    console.log(i);
-    var arr = [];
-    console.log(this.state.rid + '---00');
+  multipleBus(a, l) {
+    console.log(a + '}{}{');
+    this.setState({selectedBusId: a}, () => {
+      for (var j = 0; j < a[0].length; j++) {
+        var arr = this.state.finalRid;
+        arr.push(l);
+        this.setState({finalRid: arr});
+        database()
+          .ref(`bus/b${a[0][j]}`)
+          .on('value', (snap1) => {
+            var newArr = this.state.finalBusDetails;
+            newArr.push(snap1.val());
+            this.setState({finalBusDetails: newArr});
+          });
+      }
+    });
+  }
+
+  singleBus(i, l) {
+    for (var j = 0; j < i[0].length; j++) {
+      var arr = this.state.finalRid;
+      arr.push(l);
+      this.setState({finalRid: arr});
+      database()
+        .ref(`bus/b${i[0][j]}`)
+        .on('value', (snap1) => {
+          var newArr = this.state.finalBusDetails;
+          newArr.push(snap1.val());
+          this.setState({finalBusDetails: newArr});
+        });
+    }
+  }
+
+  viaBusNo(i) {
     for (var j = 0; j < this.state.bus[i].length; j++) {
+      let a = this.state.rid[this.state.bus[i][j]];
       database()
         .ref(`Routes/r${this.state.rid[this.state.bus[i][j]]}`)
         .on('value', (snap) => {
-          arr = this.state.selectedBusId;
+          var arr = [];
           arr.push(snap.val().bus_id);
-          console.log(arr + '____');
-
-          this.setState({selectedBusId: arr});
+          this.multipleBus(arr, a);
         });
     }
-    this.print();
-    // database()
-    //   .ref(`Routes/r${i}`)
-    //   .on('value', (snapshot) => {
-    //     this.setState({selectedBusId: snapshot.val().bus_id});
-    //   });
-    // for (var i = 0; i < this.state.selectedBusId.length; i++) {
-    //   console.log(this.state.selectedBusId[i]);
-    // }
-  };
-  async print() {
-    await console.log(this.state.selectedBusId + '_+_+_++');
+    this.setState({modal: false});
   }
 
   componentDidMount() {
-    let flag = 0;
     database()
       .ref('Routes')
       .on('value', (snapshot) => {
@@ -153,15 +173,36 @@ class BusList extends React.Component {
           }
 
           console.log(this.state.bus);
-          console.log(this.state.refinalBusVia + '__');
+          console.log(this.state.refinalBusVia.length + '_5_');
           let bb = this.state.finalBusVia.filter((item) => item.length != 0);
 
           if (bb.length == 0 || this.state.refinalBusVia.length == 1) {
+            //single route
+            for (var l = 0; l < this.state.bus[0].length; l++) {
+              let a1 = this.state.rid[this.state.bus[0][l]];
+              database()
+                .ref(`Routes/r${this.state.rid[this.state.bus[0][l]]}`)
+                .on('value', (snap) => {
+                  var arr = [];
+                  arr.push(snap.val().bus_id);
+                  this.singleBus(arr, a1);
+                });
+            }
           } else {
+            //multiple routes
             this.setState({modal: !this.state.modal});
           }
         } else {
+          //single route with single value
           console.log(this.state.routes[0].route_id);
+          database()
+            .ref(`Routes/r${this.state.routes[0].route_id}`)
+            .on('value', (snap) => {
+              var arr = [];
+              arr.push(snap.val().bus_id);
+              console.log(arr);
+              this.singleBus(arr, this.state.routes[0].route_id);
+            });
         }
       });
   }
@@ -244,34 +285,56 @@ class BusList extends React.Component {
         </Modal>
 
         <ScrollView>
-          <ListItem bottomDivider>
-            <Image
-              source={require('../assets/busno.png')}
-              style={{height: 30, width: 30, borderRadius: 10}}
-            />
-            <ListItem.Content>
-              <ListItem.Title>
-                <View syle={{flexDirection: 'row'}}>
-                  <Text
-                    style={{
-                      fontFamily: 'SourceSansPro-Regular',
-                      fontSize: 17,
-                      fontWeight: 'bold',
-                    }}>
-                    BusNumber
-                  </Text>
-                </View>
-              </ListItem.Title>
-              <ListItem.Subtitle>
-                <Text
-                  style={{
-                    fontFamily: 'SourceSansPro-Regular',
-                  }}>
-                  Route - Route
-                </Text>
-              </ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
+          {this.state.finalBusDetails.length == 0 ? (
+            <></>
+          ) : (
+            <>
+              {this.state.finalBusDetails.map((value, i) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('RouteSearchRouteList', {
+                        value: this.state.finalRid[i],
+                        source: this.state.source,
+                        destination: this.state.destination,
+                        name: value.busname,
+                      })
+                    }>
+                    <ListItem bottomDivider key={i}>
+                      {console.log(this.state.finalRid)}
+                      <Image
+                        source={require('../assets/busno.png')}
+                        style={{height: 30, width: 30, borderRadius: 10}}
+                      />
+                      {console.log(this.state.finalBusDetails)}
+                      <ListItem.Content>
+                        <ListItem.Title>
+                          <View syle={{flexDirection: 'row'}}>
+                            <Text
+                              style={{
+                                fontFamily: 'SourceSansPro-Regular',
+                                fontSize: 17,
+                                fontWeight: 'bold',
+                              }}>
+                              {value.busname}
+                            </Text>
+                          </View>
+                        </ListItem.Title>
+                        <ListItem.Subtitle>
+                          <Text
+                            style={{
+                              fontFamily: 'SourceSansPro-Regular',
+                            }}>
+                            <SourceDes value={this.state.finalRid[i]} />
+                          </Text>
+                        </ListItem.Subtitle>
+                      </ListItem.Content>
+                    </ListItem>
+                  </TouchableOpacity>
+                );
+              })}
+            </>
+          )}
         </ScrollView>
       </>
     );
@@ -287,7 +350,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#22333b',
-    fontSize: 16,
+    fontWeight: 'bold',
+    fontSize: 15,
     padding: 10,
     fontFamily: 'SourceSansPro-Regular',
     textAlign: 'center',

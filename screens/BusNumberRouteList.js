@@ -7,14 +7,7 @@ import StepIndicator from 'react-native-step-indicator';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MapFloating from '../utils/mapFloating';
 
-const labels = [
-  'Cart',
-  'Delivery Address v Delivery AddressDelivery Address gre rtytr rr ',
-  'Order Summary',
-  'Payment Method',
-  'Track',
-  'Its s',
-];
+
 const customStyles = {
   stepIndicatorSize: 25,
   currentStepIndicatorSize: 25,
