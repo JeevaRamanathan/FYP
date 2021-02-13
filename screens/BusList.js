@@ -33,17 +33,59 @@ class BusList extends React.Component {
       modal: false,
       busList: [],
       selectedBusId: [],
+      dummyVariable:''
     };
   }
-  viaBusNo(i) {
-    database()
-      .ref(`Routes/r${i}`)
-      .on('value', (snapshot) => {
-        this.setState({selectedBusId: snapshot.val().bus_id});
-      });
-    for (var i = 0; i < this.state.selectedBusId.length; i++) {
-      console.log(this.state.selectedBusId[i]);
-    }
+  async fn(i)
+  {
+    var arr = [];
+    for (var j = 0; j < this.state.bus[i].length; j++) {
+       database()
+       .ref(`Routes/r${this.state.rid[this.state.bus[i][j]]}`)
+       .on('value', (snap) => {
+         arr = this.state.selectedBusId;
+         arr.push(snap.val().bus_id);
+         console.log(arr + '____');
+         var min1 = new Date().getMinutes()
+         var sec2 = new Date().getMilliseconds();
+         console.log(min1,sec2);
+         this.setState({selectedBusId: arr});
+         this.state.dummyVariable="Lsts"
+         console.log(this.state.selectedBusId+"}}}"+this.state.selectedBusId.length);
+       });
+      
+   }
+  }
+  async viaBusNo(i){
+    console.log(i);
+    
+    // var min = new Date().getMinutes()
+    // var sec = new Date().getMilliseconds();
+    // console.log(min,sec);
+    // console.log(this.state.rid + '---00');
+    // this.state.dummyVariable="BUs"
+    await this.fn(i);
+    
+   console.log(this.state.selectedBusId+"******************"+this.state.selectedBusId.length);
+    // this.print();
+    // console.log(this.state.dummyVariable);
+    console.log(this.state.selectedBusId+"898989898989898");
+    // database()
+    //   .ref(`Routes/r${i}`)
+    //   .on('value', (snapshot) => {
+    //     this.setState({selectedBusId: snapshot.val().bus_id});
+    //   });
+    // for (var i = 0; i < this.state.selectedBusId.length; i++) {
+    //   console.log(this.state.selectedBusId[i]);
+    // }
+  };
+  print() {
+    var min = new Date().getMinutes()
+    var sec = new Date().getMilliseconds();
+    console.log(min,sec);
+   console.log(this.state.selectedBusId + '_+_+_++');
+    console.log(this.state.dummyVariable);
+
   }
 
   componentDidMount() {
@@ -114,7 +156,8 @@ class BusList extends React.Component {
               }
             }
           }
-
+          console.log(this.state.finalBusVia);
+          console.log(this.state.rid);
           let stringArray = this.state.finalBusVia.map(JSON.stringify);
           let dupes = {};
           stringArray.forEach((item, index) => {
@@ -134,7 +177,7 @@ class BusList extends React.Component {
           }
 
           console.log(this.state.bus);
-          console.log(this.state.refinalBusVia);
+          console.log(this.state.refinalBusVia + '__');
           let bb = this.state.finalBusVia.filter((item) => item.length != 0);
 
           if (bb.length == 0 || this.state.refinalBusVia.length == 1) {
@@ -148,7 +191,6 @@ class BusList extends React.Component {
   }
 
   render() {
-    console.log(this.state.selectedBusId);
     return (
       <>
         <View style={styles.top}>
