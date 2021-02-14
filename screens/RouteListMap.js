@@ -174,44 +174,7 @@ class RouteListMap extends React.Component {
       source: this.props.navigation.state.params.value1.source,
       destination: this.props.navigation.state.params.value1.destination,
       coordinates: [],
-      finalCoordinates: [
-        {
-          id: 0,
-          name: 'Chatram Bus Stand',
-          latitude: 10.83186117670343,
-          longitude: 78.69337928581724,
-        },
-        {
-          id: 1,
-          name: 'Teppakulam',
-          latitude: 10.827138213751232,
-          longitude: 78.69298701467521,
-        },
-        {
-          id: 2,
-          name: 'Thillai Nagar,1st cross',
-          latitude: 10.825743440833644,
-          longitude: 78.68340399981496,
-        },
-        {
-          id: 3,
-          name: 'Thillai Nagar,5th cross',
-          latitude: 10.823334959043205,
-          longitude: 78.6834094191161,
-        },
-        {
-          id: 4,
-          name: 'Thillai Nagar,10th cross',
-          latitude: 10.821077220680621,
-          longitude: 78.68345250672813,
-        },
-        {
-          id: 5,
-          name: 'Thillai Nagar,11th cross',
-          latitude: 10.818232412131437,
-          longitude: 78.68357314653281,
-        },
-      ],
+      finalCoordinates: [],
     };
   }
   componentDidMount() {
@@ -251,10 +214,6 @@ class RouteListMap extends React.Component {
               }}
               style={styles.map}
               customMapStyle={mapNight}>
-              {console.log(
-                this.state.finalCoordinates[13],
-                this.state.finalCoordinates.length,
-              )}
               <Polyline
                 coordinates={this.state.finalCoordinates}
                 strokeWidth={4}
@@ -263,33 +222,54 @@ class RouteListMap extends React.Component {
 
               {this.state.finalCoordinates.map((marker) => (
                 <>
-                  {marker.name == this.state.source ? (
-                    <Marker
-                      key={marker.name}
-                      coordinate={{
-                        latitude: marker.latitude,
-                        longitude: marker.longitude,
-                      }}
-                      title={marker.name}>
-                      <Image
-                        source={require('../assets/source.png')}
-                        style={{height: 40, width: 30}}
-                      />
-                    </Marker>
-                  ) : (
-                    <Marker
-                      key={marker.name}
-                      coordinate={{
-                        latitude: marker.latitude,
-                        longitude: marker.longitude,
-                      }}
-                      title={marker.name}>
-                      <Image
-                        source={require('../assets/appicon.png')}
-                        style={{height: 40, width: 30}}
-                      />
-                    </Marker>
-                  )}
+                  {(() => {
+                    if (marker.name == this.state.source) {
+                      return (
+                        <Marker
+                          key={marker.name}
+                          coordinate={{
+                            latitude: marker.latitude,
+                            longitude: marker.longitude,
+                          }}
+                          title={marker.name}>
+                          <Image
+                            source={require('../assets/source.png')}
+                            style={{height: 40, width: 30}}
+                          />
+                        </Marker>
+                      );
+                    } else if (marker.name == this.state.destination) {
+                      return (
+                        <Marker
+                          key={marker.name}
+                          coordinate={{
+                            latitude: marker.latitude,
+                            longitude: marker.longitude,
+                          }}
+                          title={marker.name}>
+                          <Image
+                            source={require('../assets/d.png')}
+                            style={{height: 40, width: 30}}
+                          />
+                        </Marker>
+                      );
+                    } else {
+                      return (
+                        <Marker
+                          key={marker.name}
+                          coordinate={{
+                            latitude: marker.latitude,
+                            longitude: marker.longitude,
+                          }}
+                          title={marker.name}>
+                          <Image
+                            source={require('../assets/appicon.png')}
+                            style={{height: 40, width: 30}}
+                          />
+                        </Marker>
+                      );
+                    }
+                  })()}
                 </>
               ))}
             </MapView>

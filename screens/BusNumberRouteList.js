@@ -60,6 +60,7 @@ export default class BusNumberRouteList extends React.Component {
   render() {
     let arr = [];
     arr.push('1');
+    console.log(this.state.selectedValue);
     return (
       <>
         {this.state.route_details.length == 0 ? (
@@ -198,7 +199,7 @@ export default class BusNumberRouteList extends React.Component {
               </ScrollView>
             </View>
 
-            <MapFloating value={this.props} name={'Map'} />
+            <MapFloating value={this.props} value1={this.state} name={'Map'} />
           </>
         )}
       </>
