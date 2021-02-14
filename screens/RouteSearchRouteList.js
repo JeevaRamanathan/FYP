@@ -50,78 +50,91 @@ export default class RouteSearchRouteList extends React.Component {
   }
 
   render() {
-    
     return (
       <>
-        <View
-          style={{
-            height: 50,
-            width: '100%',
-            backgroundColor: '#393e42',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              fontFamily: 'SourceSansPro-Regular',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 18,
-            }}>
-            {this.props.navigation.state.params.name}
-          </Text>
-        </View>
-        <View
-          style={{
-            backgroundColor: '#ebc550',
-            height: 40,
-            width: '100%',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              color: '#22333b',
-              fontFamily: 'SourceSansPro-Regular',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 15,
-            }}>
-            {this.state.source} - {this.state.destination}
-          </Text>
-        </View>
+        {this.state.intermediate.length == 0 ? (
+          <></>
+        ) : (
+          <>
+            <View
+              style={{
+                height: 50,
+                width: '100%',
+                backgroundColor: '#393e42',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontFamily: 'SourceSansPro-Regular',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                }}>
+                {this.props.navigation.state.params.name}
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: '#ebc550',
+                height: 40,
+                width: '100%',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  color: '#22333b',
+                  fontFamily: 'SourceSansPro-Regular',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                }}>
+                {this.state.source} - {this.state.destination}
+              </Text>
+            </View>
 
-        <View style={{marginLeft: 10, marginTop: 25, marginBottom: 100}}>
-          <ScrollView>
-            <StepIndicator
-              renderStepIndicator={() => (
-                <Entypo name="location-pin" size={15} style={{color: '#aaa'}} />
-              )}
-              direction="vertical"
-              stepCount={this.state.intermediate.length}
-              customStyles={customStyles1}
-              labels={this.state.intermediate}
-              renderLabel={function (
-                position,
-                stepStatus,
-                label,
-                currentPosition,
-              ) {
-                return (
-                  <View
-                    style={{
-                      paddingLeft: 10,
-                      paddingBottom: 22,
-                      paddingTop: 22,
-                    }}>
-                    <Text>{position.label}</Text>
-                  </View>
-                );
-              }}
-            />
-          </ScrollView>
-        </View>
+            <View style={{marginLeft: 10, marginTop: 25, marginBottom: 100}}>
+              <ScrollView>
+                <StepIndicator
+                  renderStepIndicator={() => (
+                    <Entypo
+                      name="location-pin"
+                      size={15}
+                      style={{color: '#aaa'}}
+                    />
+                  )}
+                  direction="vertical"
+                  stepCount={this.state.intermediate.length}
+                  customStyles={customStyles1}
+                  labels={this.state.intermediate}
+                  renderLabel={function (
+                    position,
+                    stepStatus,
+                    label,
+                    currentPosition,
+                  ) {
+                    return (
+                      <View
+                        style={{
+                          paddingLeft: 10,
+                          paddingBottom: 22,
+                          paddingTop: 22,
+                        }}>
+                        <Text>{position.label}</Text>
+                      </View>
+                    );
+                  }}
+                />
+              </ScrollView>
+            </View>
+          </>
+        )}
 
-        <MapFloating />
+        <MapFloating
+          value={this.props}
+          value1={this.state}
+          name={'RouteListMap'}
+        />
       </>
     );
   }

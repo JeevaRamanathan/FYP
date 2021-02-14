@@ -4,10 +4,13 @@ import AppContainer from './bottom_navigation/Navigation';
 // import Location from '../Location';
 import BusList from '../BusList';
 import RouteList from '../RouteList';
+import Map from '../Map';
 import BusNumberRouteList from '../BusNumberRouteList';
 import SelectSource from '../SelectSource';
 import RouteSearchRouteList from '../RouteSearchRouteList';
 import SelectDestination from '../SelectDestination';
+import RouteListMap from '../RouteListMap';
+
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import {TouchableOpacity} from 'react-native';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -93,8 +96,35 @@ const StackNavigation = createStackNavigator(
         },
       },
     },
+
     RouteList: {
       screen: RouteList,
+    },
+    Map: {
+      screen: Map,
+      navigationOptions: {
+        title: 'Map',
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+    RouteListMap: {
+      screen: RouteListMap,
+      navigationOptions: {
+        title: 'Map',
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
     },
   },
   {

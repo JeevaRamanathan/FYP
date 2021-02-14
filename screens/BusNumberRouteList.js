@@ -7,7 +7,6 @@ import StepIndicator from 'react-native-step-indicator';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MapFloating from '../utils/mapFloating';
 
-
 const customStyles = {
   stepIndicatorSize: 25,
   currentStepIndicatorSize: 25,
@@ -125,7 +124,7 @@ export default class BusNumberRouteList extends React.Component {
             <View
               style={{
                 backgroundColor: '#ebc550',
-                height: 40,
+                height: 50,
                 marginTop: -2,
                 width: '100%',
                 justifyContent: 'center',
@@ -134,6 +133,7 @@ export default class BusNumberRouteList extends React.Component {
                 style={{
                   fontFamily: 'SourceSansPro-Regular',
                   textAlign: 'center',
+                  fontSize: 13,
                 }}>
                 {
                   this.state.route_details[Number(this.state.selectedValue)][
@@ -198,7 +198,7 @@ export default class BusNumberRouteList extends React.Component {
               </ScrollView>
             </View>
 
-            <MapFloating  />
+            <MapFloating value={this.props} name={'Map'} />
           </>
         )}
       </>
