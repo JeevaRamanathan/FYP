@@ -2,6 +2,9 @@ import React from 'react';
 import {Text, View,ScrollView,Image,StyleSheet} from 'react-native';
 import Header from './Header';
 import MapView,{PROVIDER_GOOGLE,Marker,Polyline} from 'react-native-maps';
+
+navigator.geolocation = require('@react-native-community/geolocation');
+
 class CurrentLocation extends React.Component {  
 
     constructor(props) {

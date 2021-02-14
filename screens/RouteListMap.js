@@ -174,44 +174,7 @@ class RouteListMap extends React.Component {
       source: this.props.navigation.state.params.value1.source,
       destination: this.props.navigation.state.params.value1.destination,
       coordinates: [],
-      finalCoordinates: [
-        {
-          id: 0,
-          name: 'Chatram Bus Stand',
-          latitude: 10.83186117670343,
-          longitude: 78.69337928581724,
-        },
-        {
-          id: 1,
-          name: 'Teppakulam',
-          latitude: 10.827138213751232,
-          longitude: 78.69298701467521,
-        },
-        {
-          id: 2,
-          name: 'Thillai Nagar,1st cross',
-          latitude: 10.825743440833644,
-          longitude: 78.68340399981496,
-        },
-        {
-          id: 3,
-          name: 'Thillai Nagar,5th cross',
-          latitude: 10.823334959043205,
-          longitude: 78.6834094191161,
-        },
-        {
-          id: 4,
-          name: 'Thillai Nagar,10th cross',
-          latitude: 10.821077220680621,
-          longitude: 78.68345250672813,
-        },
-        {
-          id: 5,
-          name: 'Thillai Nagar,11th cross',
-          latitude: 10.818232412131437,
-          longitude: 78.68357314653281,
-        },
-      ],
+      finalCoordinates: [],
     };
   }
   componentDidMount() {
