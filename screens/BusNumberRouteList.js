@@ -91,7 +91,6 @@ export default class BusNumberRouteList extends React.Component {
                     marginLeft: 10,
                     marginRight: 10,
                     width: '95%',
-                    fontSize: 20,
                     fontFamily: 'SourceSansPro-Regular',
                     borderRadius: 15,
                     // color: '#89909a',
@@ -119,7 +118,6 @@ export default class BusNumberRouteList extends React.Component {
                     );
                   })}
                 </Picker>
-                {console.log(arr)}
               </View>
             </View>
             <View
