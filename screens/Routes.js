@@ -157,7 +157,7 @@ class Routes extends React.Component {
             </Text>
           </TouchableOpacity>
         </ScrollView>
-        <Floating />
+        <Floating value={this.props} />
       </>
     );
   }

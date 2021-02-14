@@ -17,6 +17,7 @@
     "@react-native-firebase/database": "^10.4.1",
     "accordion-collapse-react-native": "^0.4.0",
     "axios": "^0.21.1",
+    "geolib": "^3.3.1",
     "lottie-react-native": "^3.5.0",
     "react": "^16.14.0",
     "react-native": "^0.63.4",
@@ -38,7 +39,6 @@
     "react-native-svg": "^12.1.0",
     "react-native-update-gradle": "^1.2.0",
     "react-native-vector-icons": "^7.1.0",
-    "react-native-webview": "^11.2.3",
     "react-navigation": "^4.4.3",
     "react-navigation-stack": "^2.10.2",
     "react-navigation-tabs": "^2.10.1"

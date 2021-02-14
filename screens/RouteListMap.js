@@ -3,7 +3,7 @@ import {Text, View, ScrollView, Image, StyleSheet} from 'react-native';
 import Header from './Header';
 import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
 import database from '@react-native-firebase/database';
-import {WebView} from 'react-native-webview';
+
 const mapNight = [
   {
     elementType: 'geometry',

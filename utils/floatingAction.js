@@ -7,7 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 const actions = [
   {
     text: 'Where Am I?',
-    name: 'bt_whereami',
+    name: 'CurrentLocation',
     color: '#fc777d',
     icon: <Entypo name="location-pin" size={20} color="white" />,
     position: 3,
@@ -52,7 +52,8 @@ export default class Floating extends React.Component {
         distanceToEdge={{vertical: 59, horizontal: 30}}
         // distanceToEdge={{ vertical: '50', horizontal: '30'}}
         onPressItem={(name) => {
-          console.log(`selected button: ${name}`);
+          this.props.value.navigation.navigate(name);
+          
           
         }}
       />

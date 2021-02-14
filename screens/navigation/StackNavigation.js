@@ -10,6 +10,7 @@ import SelectSource from '../SelectSource';
 import RouteSearchRouteList from '../RouteSearchRouteList';
 import SelectDestination from '../SelectDestination';
 import RouteListMap from '../RouteListMap';
+import CurrentLocation from '../CurrentLocation'
 
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import {TouchableOpacity} from 'react-native';
@@ -125,6 +126,21 @@ const StackNavigation = createStackNavigator(
           fontFamily: 'Acme-Regular',
         },
       },
+    },
+
+    CurrentLocation:
+    {
+      screen:CurrentLocation,
+      navigationOptions:{
+        title:'Nearest bus stop',
+        headerStyle:{
+          backgroundColor:"#ebc550"
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      }
     },
   },
   {

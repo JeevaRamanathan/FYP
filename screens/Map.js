@@ -185,36 +185,7 @@ class Map extends React.Component {
       ],
       coordinates: [],
       finalCoordinates: [
-        {
-          id: 30,
-          latitude: 10.857842721306016,
-          longitude: 78.68735702477241,
-          name: 'Sri Rangam',
-        },
-        {
-          id: 29,
-          latitude: 10.834755318618997,
-          longitude: 78.6949129997402,
-          name: 'Anna Statue',
-        },
-        {
-          id: 27,
-          latitude: 10.844237380853151,
-          longitude: 78.69772871780793,
-          name: 'Mambzha Salai',
-        },
-        {
-          id: 28,
-          latitude: 10.84752971862511,
-          longitude: 78.68990717847949,
-          name: 'Amma Mandapam',
-        },
-        {
-          id: 1,
-          latitude: 10.83186117670343,
-          longitude: 78.69337928581724,
-          name: 'Chatram Bus Stand',
-        },
+      
       ],
     };
   }
@@ -232,9 +203,10 @@ class Map extends React.Component {
             res.push(obj[this.state.intermediate[i]]);
           }
         });
-        console.log(res);
-        // this.setState({finalCoordinates: res});
+        
+        this.setState({finalCoordinates: res});
       });
+     
   }
   render() {
     return (
