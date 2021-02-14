@@ -26,12 +26,14 @@ export default class MapFloating extends React.Component {
         // distanceToEdge={{ vertical: '50', horizontal: '30'}}
         onPressMain={() => {
           this.props.name == 'Map'
-            ? this.props.value.navigation.navigate(this.props.name)
+            ? this.props.value.navigation.navigate(this.props.name, {
+                value: this.props.value,
+                value1: this.props.value1,
+              })
             : this.props.value.navigation.navigate(this.props.name, {
                 value: this.props.value,
                 value1: this.props.value1,
               });
-          // console.log(`Map`);
         }}
       />
     );
