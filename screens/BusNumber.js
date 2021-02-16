@@ -23,18 +23,23 @@ class BusNumber extends React.Component {
       .on('value', (snapshot) => {
         this.setState({values: snapshot.val()});
         this.setState({filterSearchValues: snapshot.val()});
+        console.log(this.state.filterSearchValues);
       });
   }
 
   updateSearch = (search) => {
-    this.setState({search});
+    console.log(search);
+    this.setState({search: search});
     if (search) {
-      const newData = this.state.filterSearchValues.filter(function (item, i) {
-        const itemData =
-          item.b + {i}.busname ? item.busname.toUpperCase() : ''.toUpperCase();
-        const textData = search.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
+      const newData = Object.values(this.state.filterSearchValues).filter(
+        function (item, i) {
+          const itemData = item.busname
+            ? item.busname.toUpperCase()
+            : ''.toUpperCase();
+          const textData = search.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        },
+      );
       this.setState({filterSearchValues: newData});
     } else {
       this.setState({filterSearchValues: this.state.values});
