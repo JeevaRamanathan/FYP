@@ -6,6 +6,7 @@ import BusList from '../BusList';
 import RouteList from '../RouteList';
 import Map from '../Map';
 import BusNumberRouteList from '../BusNumberRouteList';
+import BusStageRouteList from '../BusStageRouteList';
 import BusNumberStageList from '../BusNumberStageList';
 import SelectSource from '../SelectSource';
 import RouteSearchRouteList from '../RouteSearchRouteList';
@@ -69,6 +70,21 @@ const StackNavigation = createStackNavigator(
 
     BusNumberStageList: {
       screen: BusNumberStageList,
+      navigationOptions: {
+        title: 'Bus Details',
+
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+
+    BusStageRouteList: {
+      screen: BusStageRouteList,
       navigationOptions: {
         title: 'Bus Details',
 

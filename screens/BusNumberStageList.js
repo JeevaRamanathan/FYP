@@ -40,7 +40,7 @@ export default class BusNumberRouteList extends React.Component {
   }
   render() {
     //map the this.state.busDetails
-    //in onPress pass the route id to the next page
+    //in onPress pass the route id to the next page like this
 
     // this.props.navigation.navigate('page to naviate', {
     //   data: {value: ....state......route_id},
