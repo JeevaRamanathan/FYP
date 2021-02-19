@@ -1,67 +1,50 @@
 import React from 'react';
-import {View, Text, ScrollView, Image} from 'react-native';
-import Floating from '../utils/floatingAction';
-import HeaderBar from './Header';
+import {Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
+import database from '@react-native-firebase/database';
 import LottieView from 'lottie-react-native';
 import {ListItem, Avatar, SearchBar} from 'react-native-elements';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import database from '@react-native-firebase/database';
-
-class BusNumber extends React.Component {
+export default class BusNumberRouteList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
-      values: [],
-      filterSearchValues: [],
+      busStage: this.props.navigation.state.params.data.value.name,
+      initialRoute: [],
+      busId: [],
+      busDetails: [],
     };
   }
-
   componentDidMount() {
     database()
-      .ref('bus')
-      .on('value', (snapshot) => {
-        this.setState({values: snapshot.val()});
-        this.setState({filterSearchValues: snapshot.val()});
+      .ref('Routes/')
+      .on('value', (snap) => {
+        this.setState({initialRoute: snap.val()}, () =>
+          Object.values(this.state.initialRoute).forEach((element) => {
+            if (element.intermediate.includes(this.state.busStage)) {
+              this.state.busId.push(element.bus_id);
+            }
+          }),
+        );
+        var mer = [].concat.apply([], this.state.busId);
+        this.setState({busId: mer}, () => {
+          var b = [...new Set(this.state.busId)];
+          for (var i = 0; i < b.length; i++) {
+            database()
+              .ref(`bus/b${b[i]}`)
+              .on('value', (snap) => {
+                var a = this.state.busDetails;
+                a.push(snap.val());
+                this.setState({busDetails: a});
+              });
+          }
+        });
       });
   }
-
-  updateSearch = (search) => {
-    this.setState({search});
-
-    if (search) {
-      const newData = Object.values(this.state.filterSearchValues).filter(
-        function (item) {
-          const itemData = item.busname
-            ? item.busname.toUpperCase()
-            : ''.toUpperCase();
-          const textData = search.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        },
-      );
-      this.setState({filterSearchValues: newData});
-    } else {
-      this.setState({filterSearchValues: this.state.values});
-    }
-  };
-
   render() {
-    return (
-      <>
-        <View>
-          <HeaderBar />
-        </View>
-        <View>
-          <SearchBar
-            round
-            style={{fontFamily: 'SourceSansPro-Regular', fontSize: 17}}
-            searchIcon={{size: 26}}
-            placeholder="Enter a bus number..."
-            onChangeText={this.updateSearch}
-            value={this.state.search}
-          />
-        </View>
-        {this.state.values.length == 0 ? (
+  
+    return <>
+
+     
+        {this.state.busDetails.length == 0 ? (
           <View style={{height: '80%', width: '100%'}}>
             {/* Activity Indicator until it fetches the data*/}
             <LottieView
@@ -75,12 +58,12 @@ class BusNumber extends React.Component {
         ) : (
           <ScrollView>
             <View style={{paddingBottom: 50}}>
-              {Object.keys(this.state.filterSearchValues).map((l, i) => (
+              {Object.keys(this.state.busDetails).map((l, i) => (
                 <TouchableOpacity
                   key={i}
                   onPress={() =>
                     this.props.navigation.navigate('BusNumberRouteList', {
-                      data: {value: this.state.filterSearchValues[l].route_id},
+                      data: {value: this.state.busDetails[l].route_id},
                     })
                   }>
                   <ListItem bottomDivider>
@@ -97,30 +80,27 @@ class BusNumber extends React.Component {
                               fontSize: 17,
                               fontWeight: 'bold',
                             }}>
-                            {this.state.filterSearchValues[l].busname}
+                            {this.state.busDetails[l].busname}
                           </Text>
                         </View>
                       </ListItem.Title>
                       <ListItem.Subtitle>
-                        <Text
+                        {/* <Text
                           style={{
                             fontFamily: 'SourceSansPro-Regular',
                           }}>
                           Travels in{' '}
-                          {this.state.filterSearchValues[l].route_id.length}{' '}
+                          {this.state.busDetails[l].route_id.length}{' '}
                           routes.
-                        </Text>
+                        </Text> */}
                       </ListItem.Subtitle>
                     </ListItem.Content>
                   </ListItem>
                 </TouchableOpacity>
-              ))}
+            ))}
             </View>
           </ScrollView>
         )}
-        <Floating />
-      </>
-    );
+    </>;
   }
 }
-export default BusNumber;

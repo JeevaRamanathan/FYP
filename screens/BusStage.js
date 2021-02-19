@@ -7,51 +7,7 @@ import {ListItem, Avatar, SearchBar} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import database from '@react-native-firebase/database';
 
-const list = [
-  {
-    name: 'Thillainagar 11th cross',
-    // avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: '10 buses run in this route',
-  },
-  {
-    name: 'Anna Salai',
-    subtitle: '5 buses run in this route',
-  },
-  {
-    name: 'Srirangam',
-    subtitle: '2 buses run in this route',
-  },
-  {
-    name: 'ChartamBusStand',
-    subtitle: '5 buses run in this route',
-  },
-  {
-    name: 'CentralBusStand',
-    subtitle: '3 buses run in this route',
-  },
-  {
-    name: 'Samayapuram',
-    subtitle: '5 buses run in this route',
-  },
-  {
-    name: 'Woraiyur',
-    subtitle: '5 buses run in this route',
-  },
-  {
-    name: 'Thillainagar 1st cross',
-    subtitle: '7 buses run in this route',
-  },
-  {
-    name: 'KMC,Tennur',
-    subtitle: '5 buses run in this route',
-  },
-  {
-    name: 'Tennur',
-    subtitle: '5 buses run in this route',
-  },
-];
-
-class Bus extends React.Component {
+class BusStage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,21 +24,20 @@ class Bus extends React.Component {
         this.setState({values: snapshot.val()});
         this.setState({filterSearchValues: snapshot.val()});
       });
-    console.log(this.state.filterSearchValues);
   }
 
   updateSearch = (search) => {
-    // this.setState({search});
-    // if (search) {
-    //   const newData = this.state.filterSearchValues.filter(function (item) {
-    //     const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-    //     const textData = search.toUpperCase();
-    //     return itemData.indexOf(textData) > -1;
-    //   });
-    //   this.setState({filterSearchValues: newData});
-    // } else {
-    //   this.setState({filterSearchValues: this.state.values});
-    // }
+    this.setState({search});
+    if (search) {
+      const newData = this.state.filterSearchValues.filter(function (item) {
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const textData = search.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      this.setState({filterSearchValues: newData});
+    } else {
+      this.setState({filterSearchValues: this.state.values});
+    }
   };
 
   render() {
@@ -119,8 +74,8 @@ class Bus extends React.Component {
                 <TouchableOpacity
                   key={i}
                   onPress={() =>
-                    this.props.navigation.navigate('BusNumberRouteList', {
-                      data: {value: l.route_id},
+                    this.props.navigation.navigate('BusNumberStageList', {
+                      data: {value: l},
                     })
                   }>
                   <ListItem bottomDivider>
@@ -129,9 +84,10 @@ class Bus extends React.Component {
                       style={{height: 30, width: 30, borderRadius: 10}}
                     />
                     <ListItem.Content>
-                      <ListItem.Title>
-                        <View syle={{flexDirection: 'row'}}>
+                      <View style={{marginTop: 16}}>
+                        <ListItem.Title>
                           <Text
+                            multiline
                             style={{
                               fontFamily: 'SourceSansPro-Regular',
                               fontSize: 17,
@@ -139,8 +95,8 @@ class Bus extends React.Component {
                             }}>
                             {l.name}
                           </Text>
-                        </View>
-                      </ListItem.Title>
+                        </ListItem.Title>
+                      </View>
                       <ListItem.Subtitle>
                         <Text
                           style={{
@@ -161,4 +117,4 @@ class Bus extends React.Component {
     );
   }
 }
-export default Bus;
+export default BusStage;

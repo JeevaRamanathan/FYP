@@ -231,11 +231,12 @@ class RouteListMap extends React.Component {
                             latitude: marker.latitude,
                             longitude: marker.longitude,
                           }}
-                          title={marker.name}>
-                          <Image
-                            source={require('../assets/source.png')}
-                            style={{height: 40, width: 30}}
-                          />
+                          title={marker.name}
+                          pinColor="green">
+                          {/* <Image
+                            source={require('../assets/busno.png')}
+                            style={{height: 30, width: 30}}
+                          /> */}
                         </Marker>
                       );
                     } else if (marker.name == this.state.destination) {
@@ -246,11 +247,12 @@ class RouteListMap extends React.Component {
                             latitude: marker.latitude,
                             longitude: marker.longitude,
                           }}
-                          title={marker.name}>
-                          <Image
-                            source={require('../assets/d.png')}
+                          title={marker.name}
+                          >
+                          {/* <Image
+                            source={require('../assets/flag.png')}
                             style={{height: 40, width: 30}}
-                          />
+                          /> */}
                         </Marker>
                       );
                     } else {

@@ -10,22 +10,11 @@ import {
   Image,
   Keyboard,
   ScrollView,
-  Easing,
-  Button,
-  Animated,
-  ToastAndroid,
-  Alert,
 } from 'react-native';
-import {NavigationActions, withNavigation} from 'react-navigation';
-import * as Animatable from 'react-native-animatable';
+
 import HeaderBar from './Header';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import Floating from '../utils/floatingAction';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {NavigationContainer} from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
-// import ImagePicker from 'react-native-image-picker';
 
 class Routes extends React.Component {
   constructor(props) {
@@ -89,6 +78,7 @@ class Routes extends React.Component {
                 style={styles.text}
                 onPress={() => this.source()}>
                 <TextInput
+                  multiline
                   style={styles.text3}
                   placeholder="Source"
                   editable={false}>
@@ -118,7 +108,7 @@ class Routes extends React.Component {
                 size={30}
                 style={{
                   color: '#00a896',
-                  marginTop: 31,
+                  textAlignVertical: 'center',
                   marginLeft: 20,
                 }}></Entypo>
 
@@ -127,6 +117,7 @@ class Routes extends React.Component {
                 style={styles.text}
                 onPress={() => this.destination()}>
                 <TextInput
+                  multiline
                   style={styles.text3}
                   placeholder="Destination"
                   editable={false}>
@@ -169,7 +160,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 20,
-    height: 240,
+    height: 250,
     width: '90%',
     backgroundColor: 'white',
     borderRadius: 5,
@@ -180,7 +171,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   text: {
-    height: 50,
+    height: 60,
     width: '92%',
     marginTop: 21,
     marginBottom: 21,
@@ -189,6 +180,7 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
     marginLeft: -35,
     borderWidth: 2,
+    justifyContent: 'center',
     fontFamily: 'SourceSansPro-Regular',
     borderBottomColor: 'grey',
     borderTopColor: 'grey',
@@ -197,23 +189,22 @@ const styles = StyleSheet.create({
   },
   text3: {
     fontSize: 17,
+    padding: -5,
     color: 'black',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    textAlignVertical: 'center',
+
     fontFamily: 'SourceSansPro-Regular',
   },
   text1: {
+    textAlignVertical: 'center',
     textAlign: 'center',
     marginTop: 13,
     color: 'white',
     fontSize: 17,
+
     fontFamily: 'SourceSansPro-Regular',
     fontWeight: 'bold',
   },
   button: {
-    // backgroundColor: '#00a896',
     height: 50,
     width: '90%',
     borderRadius: 5,
@@ -235,7 +226,8 @@ const styles = StyleSheet.create({
   },
   location: {
     color: '#ed5748',
-    marginTop: 31,
+    textAlignVertical: 'center',
+
     marginLeft: 20,
   },
 });

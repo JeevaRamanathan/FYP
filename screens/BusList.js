@@ -39,7 +39,6 @@ class BusList extends React.Component {
     };
   }
   multipleBus(a, l) {
-    console.log(a + '}{}{');
     this.setState({selectedBusId: a}, () => {
       for (var j = 0; j < a[0].length; j++) {
         var arr = this.state.finalRid;

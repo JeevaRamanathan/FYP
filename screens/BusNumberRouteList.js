@@ -1,10 +1,12 @@
 import React from 'react';
-import {Text, View, ScrollView} from 'react-native';
-import {Picker} from '@react-native-community/picker';
+import {Text, View, ScrollView, Image} from 'react-native';
 import database from '@react-native-firebase/database';
 import StepIndicator from 'react-native-step-indicator';
-
+import {CustomPicker} from 'react-native-custom-picker';
+import {ListItem} from 'react-native-elements';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
 import MapFloating from '../utils/mapFloating';
 
 const customStyles = {
@@ -52,15 +54,97 @@ export default class BusNumberRouteList extends React.Component {
           this.setState({route_details: arr});
         });
     }
-    this.p();
   }
-  p = () => {
-    console.log(this.state.route_details);
-  };
+  renderOption(settings) {
+    const {item, getLabel} = settings;
+    return (
+      <>
+        <ListItem bottomDivider>
+          <Image
+            source={require('../assets/multiple.png')}
+            style={{height: 30, width: 30, borderRadius: 10}}
+          />
+          <ListItem.Content>
+            <ListItem.Title>
+              <Text
+                style={{
+                  fontFamily: 'SourceSansPro-Regular',
+                  fontSize: 17,
+                  fontWeight: 'bold',
+                  marginRight: 10,
+                }}>
+                {getLabel(item.source + ' - ' + item.destination)}
+              </Text>
+            </ListItem.Title>
+            <ListItem.Subtitle>
+              <Text
+                style={{
+                  fontFamily: 'SourceSansPro-Regular',
+                }}>
+                {item.via != '' ? '(' + item.via + ')' : ''}
+              </Text>
+            </ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
+      </>
+    );
+  }
+
+  renderHeader() {
+    return (
+      <>
+        <View style={{alignContent: 'center'}}>
+          <View style={{backgroundColor: 'white'}}>
+            <View style={{backgroundColor: '#ebc550', height: 35}}>
+              <Text
+                style={{
+                  fontFamily: 'SourceSansPro-Regular',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                }}>
+                Routes
+              </Text>
+            </View>
+          </View>
+        </View>
+      </>
+    );
+  }
+  renderField(settings) {
+    const {selectedItem, defaultText, getLabel, clear} = settings;
+    return (
+      <>
+        <View
+          style={{
+            paddingLeft: 15,
+            paddingRight: 15,
+          }}>
+          <Text
+            style={{
+              color: '#89909a',
+              textAlign: 'center',
+            }}>
+            {getLabel(defaultText)}
+          </Text>
+        </View>
+        <AntDesign
+          name="caretdown"
+          size={13}
+          style={{
+            right: 15,
+            position: 'absolute',
+            marginTop: 3,
+            color: '#89909a',
+          }}
+        />
+      </>
+    );
+  }
   render() {
     let arr = [];
     arr.push('1');
-    console.log(this.state.selectedValue);
+
     return (
       <>
         {this.state.route_details.length == 0 ? (
@@ -83,43 +167,39 @@ export default class BusNumberRouteList extends React.Component {
                   width: '95%',
                   borderRadius: 18,
                   backgroundColor: '#303338',
+
+                  justifyContent: 'center',
                 }}>
-                <Picker
-                  selectedValue={this.state.selectedValue}
-                  style={{
-                    height: 50,
-                    marginLeft: 10,
-                    marginRight: 10,
-                    width: '95%',
-                    fontSize: 20,
-                    fontFamily: 'SourceSansPro-Regular',
-                    borderRadius: 15,
-                    // color: '#89909a',
-                    color: 'white',
+                <CustomPicker
+                  modalAnimationType="slide"
+                  style={{color: '#89909a'}}
+                  clearImage={this.clearImage}
+                  placeholder={
+                    this.state.route_details[Number(this.state.selectedValue)]
+                      .source +
+                    ' - ' +
+                    this.state.route_details[Number(this.state.selectedValue)]
+                      .destination
+                  }
+                  // getLabel={(mapitem) =>
+                  //   this.state.route_details[Number(this.state.selectedValue)]
+                  //     .source +
+                  //   ' - ' +
+                  //   this.state.route_details[Number(this.state.selectedValue)]
+                  //     .destination
+                  // }
+                  options={this.state.route_details}
+                  optionTemplate={this.renderOption}
+                  headerTemplate={this.renderHeader}
+                  fieldTemplate={this.renderField}
+                  onValueChange={(itemValue, itemIndex) => {
+                    this.setState({
+                      selectedValue: this.state.route_details.indexOf(
+                        itemValue,
+                      ),
+                    });
                   }}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({selectedValue: itemValue})
-                  }>
-                  {this.state.route_details.map((a, i) => {
-                    return (
-                      <Picker.Item
-                        key={i}
-                        label={
-                          a.via != ''
-                            ? a.source +
-                              ' - ' +
-                              a.destination +
-                              '(' +
-                              a.via +
-                              ')'
-                            : a.source + ' - ' + a.destination
-                        }
-                        value={i}
-                      />
-                    );
-                  })}
-                </Picker>
-                {console.log(arr)}
+                />
               </View>
             </View>
             <View
