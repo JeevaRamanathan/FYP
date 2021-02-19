@@ -1,6 +1,6 @@
 import Routes from '../../Routes';
 import BusNumber from '../../BusNumber';
-import Bus from '../../Bus';
+import BusStage from '../../BusStage';
 import {createAppContainer} from 'react-navigation';
 import {
   getAnimatingBottomBar,
@@ -10,12 +10,12 @@ import {
 const RouteName = {
   Home: 'Routes',
   BusNumber: 'Bus Number',
-  Bus: 'Bus',
+  BusStage: 'BusStage',
 };
 const NavigationScreens = {
   [RouteName.Home]: Routes,
   [RouteName.BusNumber]: BusNumber,
-  [RouteName.Bus]: Bus,
+  [RouteName.BusStage]: BusStage,
 };
 
 const NavigationParameter = [
@@ -32,17 +32,14 @@ const NavigationParameter = [
     inactiveTintColor: '#22333b',
     activeTextStyle: {
       color: 'white',
-      // fontWeight: 'bold',
       fontFamily: 'Acme-Regular',
     },
     inactiveTextStyle: {
       color: 'white',
-      // fontWeight: 'bold',
+
       fontFamily: 'Acme-Regular',
     },
     activeBGColor: 'black',
-    // lottieSource: require('./message.json'),
-    // isLottieTab: true,
   },
 
   {
@@ -58,20 +55,17 @@ const NavigationParameter = [
     inactiveTintColor: '#22333b',
     activeTextStyle: {
       color: 'white',
-      // fontWeight: 'bold',
+
       fontFamily: 'Acme-Regular',
     },
     inactiveTextStyle: {
       color: 'white',
-      // fontWeight: 'bold',
       fontFamily: 'Acme-Regular',
     },
-    // lottieSource: require('./message.json'),
-    // isLottieTab: true,
   },
   {
     label: 'Bus Stop',
-    routeName: RouteName.Bus,
+    routeName: RouteName.BusStage,
     icons: {
       selected: require('../../../assets/Busstop.png'),
       unselected: require('../../../assets/Busstop.png'),
@@ -82,16 +76,14 @@ const NavigationParameter = [
     inactiveTintColor: '#22333b',
     activeTextStyle: {
       color: 'white',
-      // fontWeight: 'bold',
+
       fontFamily: 'Acme-Regular',
     },
     inactiveTextStyle: {
       color: 'white',
-      // fontWeight: 'bold',
+
       fontFamily: 'Acme-Regular',
     },
-    // lottieSource: require('./message.json'),
-    // isLottieTab: true,
   },
 ];
 

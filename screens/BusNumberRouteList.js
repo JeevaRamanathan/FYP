@@ -1,6 +1,5 @@
 import React from 'react';
-import {Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
-import {Picker} from '@react-native-community/picker';
+import {Text, View, ScrollView, Image} from 'react-native';
 import database from '@react-native-firebase/database';
 import StepIndicator from 'react-native-step-indicator';
 import {CustomPicker} from 'react-native-custom-picker';
@@ -182,7 +181,7 @@ export default class BusNumberRouteList extends React.Component {
                     this.state.route_details[Number(this.state.selectedValue)]
                       .destination
                   }
-                  // getLabel={(item) =>
+                  // getLabel={(mapitem) =>
                   //   this.state.route_details[Number(this.state.selectedValue)]
                   //     .source +
                   //   ' - ' +

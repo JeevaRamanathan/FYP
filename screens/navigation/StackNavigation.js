@@ -1,20 +1,18 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import Splash from '../Splash';
 import AppContainer from './bottom_navigation/Navigation';
-// import Location from '../Location';
+
 import BusList from '../BusList';
 import RouteList from '../RouteList';
 import Map from '../Map';
 import BusNumberRouteList from '../BusNumberRouteList';
+import BusNumberStageList from '../BusNumberStageList';
 import SelectSource from '../SelectSource';
 import RouteSearchRouteList from '../RouteSearchRouteList';
 import SelectDestination from '../SelectDestination';
 import RouteListMap from '../RouteListMap';
-import CurrentLocation from '../CurrentLocation'
+import CurrentLocation from '../CurrentLocation';
 
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// import {TouchableOpacity} from 'react-native';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const StackNavigation = createStackNavigator(
   {
     Splash: {
@@ -56,6 +54,21 @@ const StackNavigation = createStackNavigator(
 
     BusNumberRouteList: {
       screen: BusNumberRouteList,
+      navigationOptions: {
+        title: 'Bus Details',
+
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+
+    BusNumberStageList: {
+      screen: BusNumberStageList,
       navigationOptions: {
         title: 'Bus Details',
 
@@ -128,19 +141,18 @@ const StackNavigation = createStackNavigator(
       },
     },
 
-    CurrentLocation:
-    {
-      screen:CurrentLocation,
-      navigationOptions:{
-        title:'Nearest bus stop',
-        headerStyle:{
-          backgroundColor:"#ebc550"
+    CurrentLocation: {
+      screen: CurrentLocation,
+      navigationOptions: {
+        title: 'Nearest bus stop',
+        headerStyle: {
+          backgroundColor: '#ebc550',
         },
         headerTintColor: '#22333b',
         headerTitleStyle: {
           fontFamily: 'Acme-Regular',
         },
-      }
+      },
     },
   },
   {
