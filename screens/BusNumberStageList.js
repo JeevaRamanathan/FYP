@@ -40,10 +40,8 @@ export default class BusNumberRouteList extends React.Component {
       });
   }
   render() {
-  
-    return <>
-
-     
+    return (
+      <>
         {this.state.busDetails.length == 0 ? (
           <View style={{height: '80%', width: '100%'}}>
             {/* Activity Indicator until it fetches the data*/}
@@ -72,18 +70,20 @@ export default class BusNumberRouteList extends React.Component {
                       style={{height: 30, width: 30, borderRadius: 10}}
                     />
                     <ListItem.Content>
-                      <ListItem.Title>
-                        <View syle={{flexDirection: 'row'}}>
-                          <Text
-                            style={{
-                              fontFamily: 'SourceSansPro-Regular',
-                              fontSize: 17,
-                              fontWeight: 'bold',
-                            }}>
-                            {this.state.busDetails[l].busname}
-                          </Text>
-                        </View>
-                      </ListItem.Title>
+                      <View style={{marginTop: 16}}>
+                        <ListItem.Title>
+                          <View syle={{flexDirection: 'row'}}>
+                            <Text
+                              style={{
+                                fontFamily: 'SourceSansPro-Regular',
+                                fontSize: 17,
+                                fontWeight: 'bold',
+                              }}>
+                              {this.state.busDetails[l].busname}
+                            </Text>
+                          </View>
+                        </ListItem.Title>
+                      </View>
                       <ListItem.Subtitle>
                         {/* <Text
                           style={{
@@ -97,10 +97,11 @@ export default class BusNumberRouteList extends React.Component {
                     </ListItem.Content>
                   </ListItem>
                 </TouchableOpacity>
-            ))}
+              ))}
             </View>
           </ScrollView>
         )}
-    </>;
+      </>
+    );
   }
 }

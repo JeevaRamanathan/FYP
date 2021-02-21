@@ -7,6 +7,8 @@ import RouteList from '../RouteList';
 import Map from '../Map';
 import BusNumberRouteList from '../BusNumberRouteList';
 
+import JunctionPoint from '../JunctionPoint';
+
 import BusNumberStageList from '../BusNumberStageList';
 import SelectSource from '../SelectSource';
 import RouteSearchRouteList from '../RouteSearchRouteList';
@@ -83,8 +85,6 @@ const StackNavigation = createStackNavigator(
       },
     },
 
-    
-
     RouteSearchRouteList: {
       screen: RouteSearchRouteList,
       navigationOptions: {
@@ -104,6 +104,20 @@ const StackNavigation = createStackNavigator(
       screen: BusList,
       navigationOptions: {
         title: 'Bus List',
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+
+    JunctionPoint: {
+      screen: JunctionPoint,
+      navigationOptions: {
+        // title: '###',
         headerStyle: {
           backgroundColor: '#ebc550',
         },

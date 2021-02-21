@@ -35,8 +35,8 @@ export default class RouteSearchRouteList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      source: this.props.navigation.state.params.source,
-      destination: this.props.navigation.state.params.destination,
+      // source: this.props.navigation.state.params.source,
+      // destination: this.props.navigation.state.params.destination,
       intermediate: [],
     };
   }
@@ -89,7 +89,32 @@ export default class RouteSearchRouteList extends React.Component {
                   fontWeight: 'bold',
                   fontSize: 15,
                 }}>
-                {this.state.source} - {this.state.destination}
+                {(() => {
+                  if (this.props.navigation.state.params.from == 'JPs2j') {
+                    return (
+                      <Text>
+                        {this.props.navigation.state.params.source} -{' '}
+                        {this.props.navigation.state.params.JPValue}
+                      </Text>
+                    );
+                  } else if (
+                    this.props.navigation.state.params.from == 'JPj2d'
+                  ) {
+                    return (
+                      <Text>
+                        {this.props.navigation.state.params.JPValue} -{' '}
+                        {this.props.navigation.state.params.destination}
+                      </Text>
+                    );
+                  } else {
+                    return (
+                      <Text>
+                        {this.props.navigation.state.params.source} -{' '}
+                        {this.props.navigation.state.params.destination}
+                      </Text>
+                    );
+                  }
+                })()}
               </Text>
             </View>
 

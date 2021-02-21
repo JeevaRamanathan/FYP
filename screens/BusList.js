@@ -17,6 +17,7 @@ import LottieView from 'lottie-react-native';
 import database from '@react-native-firebase/database';
 import {and} from 'react-native-reanimated';
 import SourceDes from './sourceDes';
+import JunctionPoint from './JunctionPoint';
 class BusList extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +29,13 @@ class BusList extends React.Component {
       arr: [],
       rid: [],
       via: [],
+      junctionPoint: [
+        'GH-Mahatma Gandhi Memorial Government Hospital',
+        'Chatram Bus Stand',
+        'Central Bus Stand',
+      ],
+      JPValue: '',
+      junctionPointSource: [],
       finalBusVia: [],
       refinalBusVia: [],
       flag: 0,
@@ -36,6 +44,7 @@ class BusList extends React.Component {
       selectedBusId: [],
       finalBusDetails: [],
       finalRid: [],
+      navigate: false,
     };
   }
   multipleBus(a, l) {
@@ -85,6 +94,8 @@ class BusList extends React.Component {
   }
 
   componentDidMount() {
+    var flag = 0;
+
     database()
       .ref('Routes')
       .on('value', (snapshot) => {
@@ -105,103 +116,195 @@ class BusList extends React.Component {
             this.state.routes.push(element.val());
           }
         });
+        if (this.state.routes.length == 0) {
+          var sJ = [0, 0, 0];
+          var jD = [0, 0, 0];
+          var max = [];
 
-        for (var i = 0; i < this.state.routes.length; i++) {
-          var t = this.state.routes[i].intermediate;
+          database()
+            .ref('Routes')
+            .on('value', (snapshot) => {
+              snapshot.forEach((element) => {
+                for (var x = 0; x < this.state.junctionPoint.length; x++) {
+                  if (element.val().toandfro == 1) {
+                    if (
+                      element.val().intermediate.includes(this.state.source) &&
+                      element
+                        .val()
+                        .intermediate.includes(this.state.junctionPoint[x])
+                    ) {
+                      //
+                      sJ[x] = sJ[x] + 1;
+                    } else if (
+                      element
+                        .val()
+                        .intermediate.includes(this.state.destination) &&
+                      element
+                        .val()
+                        .intermediate.includes(this.state.junctionPoint[x])
+                    ) {
+                      //
+                      jD[x] = jD[x] + 1;
+                    }
+                  } else if (
+                    (element.val().intermediate.includes(this.state.source) &&
+                      element
+                        .val()
+                        .intermediate.includes(this.state.junctionPoint[x])) ||
+                    (element
+                      .val()
+                      .intermediate.includes(this.state.destination) &&
+                      element
+                        .val()
+                        .intermediate.includes(this.state.junctionPoint[x]))
+                  ) {
+                    if (
+                      element.val().intermediate.indexOf(this.state.source) <
+                        element
+                          .val()
+                          .intermediate.indexOf(this.state.junctionPoint[x]) ||
+                      element
+                        .val()
+                        .intermediate.indexOf(this.state.junctionPoint[x]) <
+                        element
+                          .val()
+                          .intermediate.indexOf(this.state.destination)
+                    ) {
+                      if (
+                        element
+                          .val()
+                          .intermediate.includes(this.state.source) &&
+                        element
+                          .val()
+                          .intermediate.includes(this.state.junctionPoint[x])
+                      ) {
+                        //
+                        sJ[x] = sJ[x] + 1;
+                      } else if (
+                        element
+                          .val()
+                          .intermediate.includes(this.state.destination) &&
+                        element
+                          .val()
+                          .intermediate.includes(this.state.junctionPoint[x])
+                      ) {
+                        //
+                        jD[x] = jD[x] + 1;
+                      }
+                    }
+                  }
+                }
+              });
 
-          var arr = t.slice(
-            this.state.routes[i].intermediate.indexOf(this.state.source),
-            this.state.routes[i].intermediate.indexOf(this.state.destination) +
-              1,
-          );
-          let a = this.state.arr;
-          a.push(arr);
-          this.setState({arr: a});
-          let b = this.state.rid;
-          b.push(this.state.routes[i].route_id);
-          this.setState({rid: b});
-          let c = this.state.via;
-          c.push(this.state.routes[i].via);
-          this.setState({via: c});
-          this.state.finalBusVia.push([]);
-        }
+              for (var y = 0; y < this.state.junctionPoint.length; y++) {
+                max[y] = sJ[y] + jD[y];
+              }
+              this.setState({
+                JPValue: this.state.junctionPoint[
+                  max.indexOf(Math.max(...max))
+                ],
+              });
+              this.setState({navigate: true});
+            });
+        } else {
+          for (var i = 0; i < this.state.routes.length; i++) {
+            var t = this.state.routes[i].intermediate;
 
-        if (this.state.arr.length != 1) {
-          for (
-            var i = 0;
-            i < this.state.arr.length;
-            i++ //for routes
-          ) {
+            var arr = t.slice(
+              this.state.routes[i].intermediate.indexOf(this.state.source),
+              this.state.routes[i].intermediate.indexOf(
+                this.state.destination,
+              ) + 1,
+            );
+            let a = this.state.arr;
+            a.push(arr);
+            this.setState({arr: a});
+            let b = this.state.rid;
+            b.push(this.state.routes[i].route_id);
+            this.setState({rid: b});
+            let c = this.state.via;
+            c.push(this.state.routes[i].via);
+            this.setState({via: c});
+            this.state.finalBusVia.push([]);
+          }
+
+          if (this.state.arr.length != 1) {
             for (
-              var j = 0;
-              j < this.state.via[i].length;
-              j++ // for via
+              var i = 0;
+              i < this.state.arr.length;
+              i++ //for routes
             ) {
-              for (var k = 0; k < this.state.arr[i].length; k++) {
-                if (
-                  this.state.arr[i][k].includes(this.state.via[i][j]) &&
-                  !this.state.finalBusVia[i].includes(this.state.via[i][j]) &&
-                  this.state.via[i][j] != this.state.source &&
-                  this.state.via[i][j] != this.state.destination &&
-                  !this.state.source.includes(this.state.via[i][j]) &&
-                  !this.state.destination.includes(this.state.via[i][j])
-                ) {
-                  this.state.finalBusVia[i].push(this.state.via[i][j]);
+              for (
+                var j = 0;
+                j < this.state.via[i].length;
+                j++ // for via
+              ) {
+                for (var k = 0; k < this.state.arr[i].length; k++) {
+                  if (
+                    this.state.arr[i][k].includes(this.state.via[i][j]) &&
+                    !this.state.finalBusVia[i].includes(this.state.via[i][j]) &&
+                    this.state.via[i][j] != this.state.source &&
+                    this.state.via[i][j] != this.state.destination &&
+                    !this.state.source.includes(this.state.via[i][j]) &&
+                    !this.state.destination.includes(this.state.via[i][j])
+                  ) {
+                    this.state.finalBusVia[i].push(this.state.via[i][j]);
+                  }
                 }
               }
             }
-          }
-          console.log(this.state.finalBusVia);
-          console.log(this.state.rid);
-          let stringArray = this.state.finalBusVia.map(JSON.stringify);
-          let dupes = {};
-          stringArray.forEach((item, index) => {
-            dupes[item] = dupes[item] || [];
-            dupes[item].push(index);
-          });
-          for (let name in dupes) {
-            console.log(
-              name +
-                '->indexes->' +
-                dupes[name] +
-                '->count->' +
-                dupes[name].length,
-            );
-            this.state.bus.push(dupes[name]);
-            this.state.refinalBusVia.push(JSON.parse(name));
-          }
+            console.log(this.state.finalBusVia);
+            console.log(this.state.rid);
+            let stringArray = this.state.finalBusVia.map(JSON.stringify);
+            let dupes = {};
+            stringArray.forEach((item, index) => {
+              dupes[item] = dupes[item] || [];
+              dupes[item].push(index);
+            });
+            for (let name in dupes) {
+              console.log(
+                name +
+                  '->indexes->' +
+                  dupes[name] +
+                  '->count->' +
+                  dupes[name].length,
+              );
+              this.state.bus.push(dupes[name]);
+              this.state.refinalBusVia.push(JSON.parse(name));
+            }
 
-          console.log(this.state.bus);
-          console.log(this.state.refinalBusVia.length + '_5_');
-          let bb = this.state.finalBusVia.filter((item) => item.length != 0);
+            console.log(this.state.bus);
+            console.log(this.state.refinalBusVia.length + '_5_');
+            let bb = this.state.finalBusVia.filter((item) => item.length != 0);
 
-          if (bb.length == 0 || this.state.refinalBusVia.length == 1) {
-            //single route
-            for (var l = 0; l < this.state.bus[0].length; l++) {
-              let a1 = this.state.rid[this.state.bus[0][l]];
-              database()
-                .ref(`Routes/r${this.state.rid[this.state.bus[0][l]]}`)
-                .on('value', (snap) => {
-                  var arr = [];
-                  arr.push(snap.val().bus_id);
-                  this.singleBus(arr, a1);
-                });
+            if (bb.length == 0 || this.state.refinalBusVia.length == 1) {
+              //single route
+              for (var l = 0; l < this.state.bus[0].length; l++) {
+                let a1 = this.state.rid[this.state.bus[0][l]];
+                database()
+                  .ref(`Routes/r${this.state.rid[this.state.bus[0][l]]}`)
+                  .on('value', (snap) => {
+                    var arr = [];
+                    arr.push(snap.val().bus_id);
+                    this.singleBus(arr, a1);
+                  });
+              }
+            } else {
+              //multiple routes
+              this.setState({modal: !this.state.modal});
             }
           } else {
-            //multiple routes
-            this.setState({modal: !this.state.modal});
+            //single route with single value
+            console.log(this.state.routes[0].route_id);
+            database()
+              .ref(`Routes/r${this.state.routes[0].route_id}`)
+              .on('value', (snap) => {
+                var arr = [];
+                arr.push(snap.val().bus_id);
+                console.log(arr);
+                this.singleBus(arr, this.state.routes[0].route_id);
+              });
           }
-        } else {
-          //single route with single value
-          console.log(this.state.routes[0].route_id);
-          database()
-            .ref(`Routes/r${this.state.routes[0].route_id}`)
-            .on('value', (snap) => {
-              var arr = [];
-              arr.push(snap.val().bus_id);
-              console.log(arr);
-              this.singleBus(arr, this.state.routes[0].route_id);
-            });
         }
       });
   }
@@ -215,6 +318,11 @@ class BusList extends React.Component {
             {this.props.navigation.state.params.d}
           </Text>
         </View>
+        {this.state.navigate ? (
+          <JunctionPoint value={this.state} prop={this.props} />
+        ) : (
+          <></>
+        )}
         {/* <View style={{height: '100%', width: '100%'}}> */}
         {/* Activity Indicator until it fetches the data*/}
         {/* <LottieView
