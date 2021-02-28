@@ -5,7 +5,7 @@ export default class SourceDes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      val: '-',
+      val: '',
     };
   }
   componentDidMount() {
@@ -17,10 +17,12 @@ export default class SourceDes extends React.Component {
             '-' +
             snap.val().intermediate[snap.val().intermediate.length - 1],
         );
+        console.log(this.props.toandfro);
+        let toandfro = this.props.toandfro == 0 ? ' → ' : ' ⇋ ';
         this.setState({
           val:
             snap.val().intermediate[0] +
-            ' - ' +
+            toandfro +
             snap.val().intermediate[snap.val().intermediate.length - 1],
         });
       });
@@ -28,7 +30,7 @@ export default class SourceDes extends React.Component {
   render() {
     return (
       <>
-        <Text >{this.state.val}</Text>
+        <Text>{this.state.val}</Text>
       </>
     );
   }

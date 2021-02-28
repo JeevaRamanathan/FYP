@@ -23,6 +23,7 @@ class Routes extends React.Component {
       source: null,
       destination: null,
       disable: true,
+      err: false,
     };
   }
 
@@ -38,15 +39,32 @@ class Routes extends React.Component {
     });
   };
   handleSource = (value) => {
-    this.setState({source: value});
+    this.setState({source: value}, () => {
+      if (this.state.source === this.state.destination) {
+        this.setState({disable: true});
+        this.setState({err: true});
+      } else {
+        this.setState({err: false});
+      }
+    });
     if (this.state.destination != null) {
       this.setState({disable: false});
     }
   };
   handleDestination = (value) => {
-    this.setState({destination: value});
+    this.setState({destination: value}, () => {
+      if (this.state.source === this.state.destination) {
+        this.setState({disable: true});
+        this.setState({err: true});
+      } else {
+        this.setState({err: false});
+      }
+    });
     if (this.state.source != null) {
       this.setState({disable: false});
+    }
+    if (this.state.source === this.state.destination) {
+      this.setState({err: true});
     }
   };
   swap() {
@@ -147,6 +165,20 @@ class Routes extends React.Component {
               SEARCH BUSES
             </Text>
           </TouchableOpacity>
+
+          {this.state.err ? (
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 17,
+                color: '#ff3232',
+                fontFamily: 'SourceSansPro-Regular',
+              }}>
+              Source and Destination are Same!
+            </Text>
+          ) : (
+            <></>
+          )}
         </ScrollView>
         <Floating value={this.props} />
       </>

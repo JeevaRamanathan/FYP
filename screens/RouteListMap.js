@@ -178,6 +178,7 @@ class RouteListMap extends React.Component {
     };
   }
   componentDidMount() {
+    console.log('in');
     var obj = {};
     var res = [];
     var arr = this.props.navigation.state.params.value1.intermediate;
@@ -248,7 +249,25 @@ class RouteListMap extends React.Component {
                             longitude: marker.longitude,
                           }}
                           title={marker.name}
-                          >
+                          pinColor="red">
+                          {/* <Image
+                            source={require('../assets/flag.png')}
+                            style={{height: 40, width: 30}}
+                          /> */}
+                        </Marker>
+                      );
+                    } else if (
+                      marker.name == this.props.navigation.state.params.JP
+                    ) {
+                      return (
+                        <Marker
+                          key={marker.name}
+                          coordinate={{
+                            latitude: marker.latitude,
+                            longitude: marker.longitude,
+                          }}
+                          title={marker.name}
+                          pinColor="yellow">
                           {/* <Image
                             source={require('../assets/flag.png')}
                             style={{height: 40, width: 30}}

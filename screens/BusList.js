@@ -38,13 +38,14 @@ class BusList extends React.Component {
       junctionPointSource: [],
       finalBusVia: [],
       refinalBusVia: [],
-      flag: 0,
       modal: false,
       busList: [],
       selectedBusId: [],
       finalBusDetails: [],
       finalRid: [],
       navigate: false,
+      toandfro: [],
+      finaltoandfro: [],
     };
   }
   multipleBus(a, l) {
@@ -53,6 +54,10 @@ class BusList extends React.Component {
         var arr = this.state.finalRid;
         arr.push(l);
         this.setState({finalRid: arr});
+
+        let arr1 = this.state.finaltoandfro;
+        arr1.push();
+
         database()
           .ref(`bus/b${a[0][j]}`)
           .on('value', (snap1) => {
@@ -88,14 +93,20 @@ class BusList extends React.Component {
           var arr = [];
           arr.push(snap.val().bus_id);
           this.multipleBus(arr, a);
+          let arr1 = this.state.finaltoandfro;
+          let dtemp = new Array(snap.val().bus_id.length).fill(
+            snap.val().toandfro,
+          );
+          arr1.push(...dtemp);
+          this.setState({finaltoandfro: arr1}, () => {
+            console.log(this.state.finaltoandfro);
+          });
         });
     }
     this.setState({modal: false});
   }
 
   componentDidMount() {
-    var flag = 0;
-
     database()
       .ref('Routes')
       .on('value', (snapshot) => {
@@ -116,6 +127,7 @@ class BusList extends React.Component {
             this.state.routes.push(element.val());
           }
         });
+        // console.log(this.state.routes);
         if (this.state.routes.length == 0) {
           var sJ = [0, 0, 0];
           var jD = [0, 0, 0];
@@ -225,9 +237,15 @@ class BusList extends React.Component {
             let c = this.state.via;
             c.push(this.state.routes[i].via);
             this.setState({via: c});
+            let d = this.state.toandfro;
+
+            let dtemp = new Array(this.state.routes[i].bus_id.length).fill(
+              this.state.routes[i].toandfro,
+            );
+            d.push(dtemp);
+            this.setState({toandfro: d});
             this.state.finalBusVia.push([]);
           }
-
           if (this.state.arr.length != 1) {
             for (
               var i = 0;
@@ -253,8 +271,7 @@ class BusList extends React.Component {
                 }
               }
             }
-            console.log(this.state.finalBusVia);
-            console.log(this.state.rid);
+
             let stringArray = this.state.finalBusVia.map(JSON.stringify);
             let dupes = {};
             stringArray.forEach((item, index) => {
@@ -262,19 +279,19 @@ class BusList extends React.Component {
               dupes[item].push(index);
             });
             for (let name in dupes) {
-              console.log(
-                name +
-                  '->indexes->' +
-                  dupes[name] +
-                  '->count->' +
-                  dupes[name].length,
-              );
+              // console.log(
+              //   name +
+              //     '->indexes->' +
+              //     dupes[name] +
+              //     '->count->' +
+              //     dupes[name].length,
+              // );
               this.state.bus.push(dupes[name]);
               this.state.refinalBusVia.push(JSON.parse(name));
             }
 
-            console.log(this.state.bus);
-            console.log(this.state.refinalBusVia.length + '_5_');
+            // console.log(this.state.bus);
+            // console.log(this.state.refinalBusVia.length + '_5_');
             let bb = this.state.finalBusVia.filter((item) => item.length != 0);
 
             if (bb.length == 0 || this.state.refinalBusVia.length == 1) {
@@ -287,6 +304,13 @@ class BusList extends React.Component {
                     var arr = [];
                     arr.push(snap.val().bus_id);
                     this.singleBus(arr, a1);
+
+                    this.setState({
+                      finaltoandfro: [].concat.apply(
+                        [],
+                        [...this.state.toandfro],
+                      ),
+                    });
                   });
               }
             } else {
@@ -295,14 +319,18 @@ class BusList extends React.Component {
             }
           } else {
             //single route with single value
-            console.log(this.state.routes[0].route_id);
+            // console.log(this.state.routes[0].route_id);
             database()
               .ref(`Routes/r${this.state.routes[0].route_id}`)
               .on('value', (snap) => {
                 var arr = [];
                 arr.push(snap.val().bus_id);
-                console.log(arr);
+                // console.log(arr);
                 this.singleBus(arr, this.state.routes[0].route_id);
+
+                this.setState({
+                  finaltoandfro: [].concat.apply([], [...this.state.toandfro]),
+                });
               });
           }
         }
@@ -361,6 +389,7 @@ class BusList extends React.Component {
                         source={require('../assets/multiple.png')}
                         style={{height: 30, width: 30, borderRadius: 10}}
                       />
+                      {/* {console.log(this.state.finaltoandfro)} */}
                       <ListItem.Content>
                         <ListItem.Title>
                           <View syle={{flexDirection: 'row'}}>
@@ -374,7 +403,7 @@ class BusList extends React.Component {
                             </Text>
                           </View>
                         </ListItem.Title>
-                        <ListItem.Subtitle>
+                        <ListItem.Subtitle key={i}>
                           <Text
                             style={{
                               fontFamily: 'SourceSansPro-Regular',
@@ -405,15 +434,15 @@ class BusList extends React.Component {
                         source: this.state.source,
                         destination: this.state.destination,
                         name: value.busname,
+                        toandfro: this.state.finaltoandfro[i],
                       })
                     }>
                     <ListItem bottomDivider key={i}>
-                      {console.log(this.state.finalRid)}
+                      {/* {console.log(this.state.finalRid)} */}
                       <Image
                         source={require('../assets/busno.png')}
                         style={{height: 30, width: 30, borderRadius: 10}}
                       />
-                      {console.log(this.state.finalBusDetails)}
                       <ListItem.Content>
                         <ListItem.Title>
                           <View syle={{flexDirection: 'row'}}>
@@ -427,12 +456,15 @@ class BusList extends React.Component {
                             </Text>
                           </View>
                         </ListItem.Title>
-                        <ListItem.Subtitle>
+                        <ListItem.Subtitle key={i}>
                           <Text
                             style={{
                               fontFamily: 'SourceSansPro-Regular',
                             }}>
-                            <SourceDes value={this.state.finalRid[i]} />
+                            <SourceDes
+                              value={this.state.finalRid[i]}
+                              toandfro={this.state.finaltoandfro[i]}
+                            />
                           </Text>
                         </ListItem.Subtitle>
                       </ListItem.Content>

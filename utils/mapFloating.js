@@ -33,6 +33,7 @@ export default class MapFloating extends React.Component {
             : this.props.value.navigation.navigate(this.props.name, {
                 value: this.props.value,
                 value1: this.props.value1,
+                JP:this.props.JP
               });
         }}
       />

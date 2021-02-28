@@ -57,6 +57,7 @@ export default class BusNumberRouteList extends React.Component {
   }
   renderOption(settings) {
     const {item, getLabel} = settings;
+    let toandfro = item.toandfro == 0 ? ' → ' : ' ⇋ ';
     return (
       <>
         <ListItem bottomDivider>
@@ -73,7 +74,7 @@ export default class BusNumberRouteList extends React.Component {
                   fontWeight: 'bold',
                   marginRight: 10,
                 }}>
-                {getLabel(item.source + ' - ' + item.destination)}
+                {getLabel(item.source + toandfro + item.destination)}
               </Text>
             </ListItem.Title>
             <ListItem.Subtitle>
@@ -220,8 +221,13 @@ export default class BusNumberRouteList extends React.Component {
                   this.state.route_details[Number(this.state.selectedValue)][
                     'source'
                   ]
-                }{' '}
-                -{' '}
+                }
+
+                {this.state.route_details[Number(this.state.selectedValue)]
+                  .toandfro == 0
+                  ? ' → '
+                  : ' ⇋ '}
+
                 {
                   this.state.route_details[Number(this.state.selectedValue)][
                     'destination'
@@ -282,6 +288,8 @@ export default class BusNumberRouteList extends React.Component {
             <MapFloating value={this.props} value1={this.state} name={'Map'} />
           </>
         )}
+
+        
       </>
     );
   }

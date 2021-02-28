@@ -37,10 +37,12 @@ export default class JunctionPoint extends React.Component {
       r2BusDetails: [],
       r1Index: [],
       r2Index: [],
+      s2jtoandfro: [],
+      j2dtoandfro: [],
     };
   }
   componentDidMount() {
-    // console.log(this.props.prop.navigation.navigate('RouteSearchRouteList'));
+    //s2j
     database()
       .ref('Routes')
       .on('value', (snapshot) => {
@@ -69,6 +71,12 @@ export default class JunctionPoint extends React.Component {
           let b = this.state.r1BusId;
           b.push(this.state.r1[i].bus_id);
           this.setState({r1BusId: b});
+
+          let c = this.state.s2jtoandfro;
+          let tempArr = new Array(this.state.r1[i].bus_id.length).fill(
+            this.state.r1[i].toandfro,
+          );
+          this.setState({s2jtoandfro: [...this.state.s2jtoandfro, ...tempArr]});
         }
 
         let mergedBusId = [].concat.apply([], this.state.r1BusId);
@@ -89,6 +97,7 @@ export default class JunctionPoint extends React.Component {
         }
       });
 
+    //j2d
     database()
       .ref('Routes')
       .on('value', (snapshot) => {
@@ -120,6 +129,12 @@ export default class JunctionPoint extends React.Component {
           let b = this.state.r2BusId;
           b.push(this.state.r2[i].bus_id);
           this.setState({r2BusId: b});
+
+          let c = this.state.j2dtoandfro;
+          let tempArr = new Array(this.state.r2[i].bus_id.length).fill(
+            this.state.r2[i].toandfro,
+          );
+          this.setState({j2dtoandfro: [...this.state.j2dtoandfro, ...tempArr]});
         }
         let mergedBusId = [].concat.apply([], this.state.r2BusId);
 
@@ -229,6 +244,7 @@ export default class JunctionPoint extends React.Component {
                   width: '100%',
                   padding: 20,
                   paddingBottom: 22,
+
                   borderRadius: 8,
                   shadowOpacity: 80,
                   elevation: 15,
@@ -261,7 +277,7 @@ export default class JunctionPoint extends React.Component {
                           {this.state.details.JPValue}{' '}
                         </Text>
                         <MaterialIcons
-                          style={{position: 'absolute', right: 2}}
+                          style={{position: 'absolute', right: 1}}
                           name="arrow-drop-down"
                           size={30}
                         />
@@ -287,6 +303,7 @@ export default class JunctionPoint extends React.Component {
                                 JPValue: this.state.details.JPValue,
                                 name: value.busname,
                                 from: 'JPs2j',
+                                toandfro: this.state.s2jtoandfro[i],
                               },
                             )
                           }>
@@ -318,7 +335,10 @@ export default class JunctionPoint extends React.Component {
                                   style={{
                                     fontFamily: 'SourceSansPro-Regular',
                                   }}>
-                                  <SourceDes value={this.state.r1Index[i]} />
+                                  <SourceDes
+                                    value={this.state.r1Index[i]}
+                                    toandfro={this.state.s2jtoandfro[i]}
+                                  />
                                 </Text>
                               </ListItem.Subtitle>
                             </ListItem.Content>
@@ -330,6 +350,7 @@ export default class JunctionPoint extends React.Component {
                 </Collapse>
               </Card>
               {/* j2d */}
+
               <Card
                 style={{
                   alignSelf: 'center',
@@ -396,6 +417,7 @@ export default class JunctionPoint extends React.Component {
                                 name: value.busname,
                                 JPValue: this.state.details.JPValue,
                                 from: 'JPj2d',
+                                toandfro: this.state.j2dtoandfro[i],
                               },
                             );
                           }}>
@@ -427,7 +449,10 @@ export default class JunctionPoint extends React.Component {
                                   style={{
                                     fontFamily: 'SourceSansPro-Regular',
                                   }}>
-                                  <SourceDes value={this.state.r2Index[i]} />
+                                  <SourceDes
+                                    value={this.state.r2Index[i]}
+                                    toandfro={this.state.j2dtoandfro[i]}
+                                  />
                                 </Text>
                               </ListItem.Subtitle>
                             </ListItem.Content>
