@@ -30,9 +30,9 @@ class BusList extends React.Component {
       rid: [],
       via: [],
       junctionPoint: [
-        'GH-Mahatma Gandhi Memorial Government Hospital',
         'Chatram Bus Stand',
         'Central Bus Stand',
+        'GH-Mahatma Gandhi Memorial Government Hospital',
       ],
       JPValue: '',
       junctionPointSource: [],
@@ -211,6 +211,8 @@ class BusList extends React.Component {
               for (var y = 0; y < this.state.junctionPoint.length; y++) {
                 max[y] = sJ[y] + jD[y];
               }
+              console.log(max);
+              console.log(this.state.junctionPoint);
               this.setState({
                 JPValue: this.state.junctionPoint[
                   max.indexOf(Math.max(...max))

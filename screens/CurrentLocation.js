@@ -5,6 +5,7 @@ import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
 import {PermissionsAndroid} from 'react-native';
 import database from '@react-native-firebase/database';
 import * as geolib from 'geolib';
+import {Button} from 'react-native';
 navigator.geolocation = require('@react-native-community/geolocation');
 
 const mapNight = [
@@ -201,14 +202,14 @@ class CurrentLocation extends React.Component {
     } catch (err) {}
   }
 
-  componentDidMount() {
-    
+  async componentDidMount() {
     this.requestLocationPermission();
     database()
       .ref(`busstop/`)
-      .on('value', (snap) => {
-        this.setState({stages: snap.val()});
-        this.disCalculation();
+      .on('value', async (snap) => {
+        await this.setState({stages: snap.val()});
+
+        await this.disCalculation();
       });
   }
   disCalculation() {
@@ -222,6 +223,7 @@ class CurrentLocation extends React.Component {
     console.log(this.state.distance[0]);
     // console.log(this.state.distance);
   }
+
   test1() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -266,27 +268,29 @@ class CurrentLocation extends React.Component {
               }}
               style={styles.map}
               customMapStyle={mapNight}>
+              <Marker coordinate={this.state} title={'Your current location'}>
+                <Image
+                  source={require('../assets/clocation.png')}
+                  style={{height: 50, width: 40}}
+                />
+              </Marker>
 
-           <Marker coordinate={this.state} title={"Your current location"}>
-          <Image
-                    source={require('../assets/clocation.png')}
-                    style={{height: 50, width: 40}}
-                  />
-          </Marker>
-            
-         
-          <Marker coordinate={this.state.distance[0]} title={this.state.distance[0].name} >
-          <Image
-                    source={require('../assets/appicon.png')}
-                    style={{height: 30, width: 40}}
-                  />
-          </Marker>
-          <Marker coordinate={this.state.distance[1]} title={this.state.distance[1].name} >
-          <Image
-                    source={require('../assets/appicon.png')}
-                    style={{height: 30, width: 40}}
-                  />
-          </Marker>
+              <Marker
+                coordinate={this.state.distance[0]}
+                title={this.state.distance[0].name}>
+                <Image
+                  source={require('../assets/appicon.png')}
+                  style={{height: 30, width: 40}}
+                />
+              </Marker>
+              <Marker
+                coordinate={this.state.distance[1]}
+                title={this.state.distance[1].name}>
+                <Image
+                  source={require('../assets/appicon.png')}
+                  style={{height: 30, width: 40}}
+                />
+              </Marker>
             </MapView>
           </View>
         )}

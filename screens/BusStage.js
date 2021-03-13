@@ -112,7 +112,7 @@ class BusStage extends React.Component {
             </View>
           </ScrollView>
         )}
-        <Floating />
+        <Floating value={this.props} />
       </>
     );
   }

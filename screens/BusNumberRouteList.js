@@ -154,8 +154,8 @@ export default class BusNumberRouteList extends React.Component {
           <>
             <View
               style={{
-                height: 68,
                 width: '100%',
+                height: 68,
                 backgroundColor: '#393e42',
               }}>
               <View
