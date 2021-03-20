@@ -439,11 +439,11 @@ const testdata = {
     "status" : "OK"
  }
 
- const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-  }
 
-const DistanceCal=(source,destination,coordinates)=>{
+
+
+ 
+const DistanceCal=async (source,destination,coordinates)=>{
      var s,d,ress="tr"
      database()
     .ref('busstop')
@@ -456,14 +456,10 @@ const DistanceCal=(source,destination,coordinates)=>{
             des = val.val().latitude+","+val.val().longitude
         }
     });
-    // return data((src),(des),coordinates.join("|"))
-    ress="Fa"
-  
+    ress="Fa"   
     }
    
     );
-
-    await sleep(5000) 
     return ress;
    
 }

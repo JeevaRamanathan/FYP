@@ -314,7 +314,7 @@ class BusList extends React.Component {
           
             //iteration
             for (i=0; i< this.state.refinalBusViaCoordinates.length; i++){
-              // DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]);
+              DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]);
               console.log( DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]) );
                
             }
