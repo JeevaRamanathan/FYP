@@ -18,6 +18,7 @@ import database from '@react-native-firebase/database';
 import {and} from 'react-native-reanimated';
 import SourceDes from './sourceDes';
 import JunctionPoint from './JunctionPoint';
+import DistanceCal from './DistanceCalulation'
 class BusList extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +35,9 @@ class BusList extends React.Component {
         'Central Bus Stand',
         'GH-Mahatma Gandhi Memorial Government Hospital',
       ],
+      viaCoordinates:[],
+      finalViaCoordinates:[],
+      refinalBusViaCoordinates:[],
       JPValue: '',
       junctionPointSource: [],
       finalBusVia: [],
@@ -99,7 +103,7 @@ class BusList extends React.Component {
           );
           arr1.push(...dtemp);
           this.setState({finaltoandfro: arr1}, () => {
-            console.log(this.state.finaltoandfro);
+            // console.log(this.state.finaltoandfro);
           });
         });
     }
@@ -211,8 +215,8 @@ class BusList extends React.Component {
               for (var y = 0; y < this.state.junctionPoint.length; y++) {
                 max[y] = sJ[y] + jD[y];
               }
-              console.log(max);
-              console.log(this.state.junctionPoint);
+              // console.log(max);
+              // console.log(this.state.junctionPoint);
               this.setState({
                 JPValue: this.state.junctionPoint[
                   max.indexOf(Math.max(...max))
@@ -239,6 +243,7 @@ class BusList extends React.Component {
             let c = this.state.via;
             c.push(this.state.routes[i].via);
             this.setState({via: c});
+            
             let d = this.state.toandfro;
 
             let dtemp = new Array(this.state.routes[i].bus_id.length).fill(
@@ -246,7 +251,13 @@ class BusList extends React.Component {
             );
             d.push(dtemp);
             this.setState({toandfro: d});
+              
+            let e = this.state.viaCoordinates
+            e.push(this.state.routes[i].viaCoordinates)
+            this.setState({viaCoordinates:e})
+
             this.state.finalBusVia.push([]);
+            this.state.finalViaCoordinates.push([]);
           }
           if (this.state.arr.length != 1) {
             for (
@@ -260,6 +271,7 @@ class BusList extends React.Component {
                 j++ // for via
               ) {
                 for (var k = 0; k < this.state.arr[i].length; k++) {
+                  // console.log(this.state.via);
                   if (
                     this.state.arr[i][k].includes(this.state.via[i][j]) &&
                     !this.state.finalBusVia[i].includes(this.state.via[i][j]) &&
@@ -268,12 +280,14 @@ class BusList extends React.Component {
                     !this.state.source.includes(this.state.via[i][j]) &&
                     !this.state.destination.includes(this.state.via[i][j])
                   ) {
-                    this.state.finalBusVia[i].push(this.state.via[i][j]);
+                    this.state.finalBusVia[i].push(this.state.via[i][j]); 
+                    this.state.finalViaCoordinates[i].push(this.state.viaCoordinates[i][j])          
                   }
                 }
               }
             }
 
+           
             let stringArray = this.state.finalBusVia.map(JSON.stringify);
             let dupes = {};
             stringArray.forEach((item, index) => {
@@ -281,19 +295,30 @@ class BusList extends React.Component {
               dupes[item].push(index);
             });
             for (let name in dupes) {
-              // console.log(
-              //   name +
-              //     '->indexes->' +
-              //     dupes[name] +
-              //     '->count->' +
-              //     dupes[name].length,
-              // );
+             
               this.state.bus.push(dupes[name]);
               this.state.refinalBusVia.push(JSON.parse(name));
+
             }
 
-            // console.log(this.state.bus);
-            // console.log(this.state.refinalBusVia.length + '_5_');
+
+            let stringArray1 = this.state.finalViaCoordinates.map(JSON.stringify);
+            let dupes1 = {};
+            stringArray1.forEach((item, index) => {
+              dupes1[item] = dupes[item] || [];
+              dupes1[item].push(index);
+            });
+            for (let name in dupes1) {
+              this.state.refinalBusViaCoordinates.push(JSON.parse(name));
+            }
+          
+            //iteration
+            for (i=0; i< this.state.refinalBusViaCoordinates.length; i++){
+              // DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]);
+              console.log( DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]) );
+               
+            }
+
             let bb = this.state.finalBusVia.filter((item) => item.length != 0);
 
             if (bb.length == 0 || this.state.refinalBusVia.length == 1) {

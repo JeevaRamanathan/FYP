@@ -16,6 +16,7 @@ import HeaderBar from './Header';
 import Floating from '../utils/floatingAction';
 import Entypo from 'react-native-vector-icons/Entypo';
 
+
 class Routes extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +75,8 @@ class Routes extends React.Component {
     this.setState({source: b});
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+  }
   render() {
     return (
       <>
