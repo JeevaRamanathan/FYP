@@ -18,7 +18,7 @@ import database from '@react-native-firebase/database';
 import {and} from 'react-native-reanimated';
 import SourceDes from './sourceDes';
 import JunctionPoint from './JunctionPoint';
-import DistanceCal from './DistanceCalulation'
+import DistanceCalulation from './DistanceCalulation';
 class BusList extends React.Component {
   constructor(props) {
     super(props);
@@ -35,9 +35,9 @@ class BusList extends React.Component {
         'Central Bus Stand',
         'GH-Mahatma Gandhi Memorial Government Hospital',
       ],
-      viaCoordinates:[],
-      finalViaCoordinates:[],
-      refinalBusViaCoordinates:[],
+      viaCoordinates: [],
+      finalViaCoordinates: [],
+      refinalBusViaCoordinates: [],
       JPValue: '',
       junctionPointSource: [],
       finalBusVia: [],
@@ -50,6 +50,8 @@ class BusList extends React.Component {
       navigate: false,
       toandfro: [],
       finaltoandfro: [],
+      viaDistance: [],
+      viaTime:[]
     };
   }
   multipleBus(a, l) {
@@ -87,6 +89,16 @@ class BusList extends React.Component {
         });
     }
   }
+  functionpassing = (val) => {
+    // console.log(val);
+    var a = this.state.viaDistance
+    a.push(val.distance);
+    var b = this.state.viaTime
+    b.push(val.time)
+  
+    this.setState({viaDistance: a});
+    this.setState({viaTime:b})
+  };
 
   viaBusNo(i) {
     for (var j = 0; j < this.state.bus[i].length; j++) {
@@ -243,7 +255,7 @@ class BusList extends React.Component {
             let c = this.state.via;
             c.push(this.state.routes[i].via);
             this.setState({via: c});
-            
+
             let d = this.state.toandfro;
 
             let dtemp = new Array(this.state.routes[i].bus_id.length).fill(
@@ -251,10 +263,10 @@ class BusList extends React.Component {
             );
             d.push(dtemp);
             this.setState({toandfro: d});
-              
-            let e = this.state.viaCoordinates
-            e.push(this.state.routes[i].viaCoordinates)
-            this.setState({viaCoordinates:e})
+
+            let e = this.state.viaCoordinates;
+            e.push(this.state.routes[i].viaCoordinates);
+            this.setState({viaCoordinates: e});
 
             this.state.finalBusVia.push([]);
             this.state.finalViaCoordinates.push([]);
@@ -280,14 +292,15 @@ class BusList extends React.Component {
                     !this.state.source.includes(this.state.via[i][j]) &&
                     !this.state.destination.includes(this.state.via[i][j])
                   ) {
-                    this.state.finalBusVia[i].push(this.state.via[i][j]); 
-                    this.state.finalViaCoordinates[i].push(this.state.viaCoordinates[i][j])          
+                    this.state.finalBusVia[i].push(this.state.via[i][j]);
+                    this.state.finalViaCoordinates[i].push(
+                      this.state.viaCoordinates[i][j],
+                    );
                   }
                 }
               }
             }
 
-           
             let stringArray = this.state.finalBusVia.map(JSON.stringify);
             let dupes = {};
             stringArray.forEach((item, index) => {
@@ -295,14 +308,13 @@ class BusList extends React.Component {
               dupes[item].push(index);
             });
             for (let name in dupes) {
-             
               this.state.bus.push(dupes[name]);
               this.state.refinalBusVia.push(JSON.parse(name));
-
             }
 
-
-            let stringArray1 = this.state.finalViaCoordinates.map(JSON.stringify);
+            let stringArray1 = this.state.finalViaCoordinates.map(
+              JSON.stringify,
+            );
             let dupes1 = {};
             stringArray1.forEach((item, index) => {
               dupes1[item] = dupes[item] || [];
@@ -311,12 +323,19 @@ class BusList extends React.Component {
             for (let name in dupes1) {
               this.state.refinalBusViaCoordinates.push(JSON.parse(name));
             }
-          
+
             //iteration
-            for (i=0; i< this.state.refinalBusViaCoordinates.length; i++){
-              DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]);
-              console.log( DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]) );
-               
+            for (i = 0; i < this.state.refinalBusViaCoordinates.length; i++) {
+              // DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]);
+              new DistanceCalulation().DistanceCal(
+                this.state.source,
+                this.state.destination,
+                this.state.refinalBusViaCoordinates[i],
+                this.functionpassing,
+              );
+              // console.log(
+              //   new DistanceCalulation().DistanceCal(this.functionpassing),
+              // );
             }
 
             let bb = this.state.finalBusVia.filter((item) => item.length != 0);
@@ -437,7 +456,18 @@ class BusList extends React.Component {
                             }}>
                             {index.join(', ')}
                           </Text>
+                       
                         </ListItem.Subtitle>
+                        <View style={{alignSelf:'center'}}>
+                              <Text  style={{
+                              fontFamily: 'SourceSansPro-Regular',
+                            
+                            }}>
+                            {this.state.viaDistance[i]} km - {this.state.viaTime[i]} minutes
+
+                            </Text>
+                   </View>
+                           
                       </ListItem.Content>
                     </ListItem>
                   );
@@ -493,7 +523,9 @@ class BusList extends React.Component {
                               toandfro={this.state.finaltoandfro[i]}
                             />
                           </Text>
+                          
                         </ListItem.Subtitle>
+                        
                       </ListItem.Content>
                     </ListItem>
                   </TouchableOpacity>
