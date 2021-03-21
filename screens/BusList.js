@@ -20,6 +20,7 @@ import SourceDes from './sourceDes';
 import JunctionPoint from './JunctionPoint';
 import DistanceCalulation from './DistanceCalulation';
 import RouteDisTimeDetailsUI from './RouteDisTimeDetailsUI'
+import Connectivity from './Connectivity'
 class BusList extends React.Component {
   constructor(props) {
     super(props);
@@ -142,6 +143,7 @@ class BusList extends React.Component {
   }
 
   componentDidMount() {
+    new Connectivity().CheckConnectivity(this.props);
     database()
       .ref('Routes')
       .on('value', (snapshot) => {

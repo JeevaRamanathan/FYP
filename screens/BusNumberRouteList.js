@@ -8,6 +8,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import MapFloating from '../utils/mapFloating';
+import Connectivity from './Connectivity'
 
 const customStyles = {
   stepIndicatorSize: 25,
@@ -45,6 +46,7 @@ export default class BusNumberRouteList extends React.Component {
     };
   }
   async componentDidMount() {
+    new Connectivity().CheckConnectivity(this.props);
     for (var i = 0; i < this.state.route_id.length; i++) {
       await database()
         .ref(`/Routes/r${this.state.route_id[i]}`)

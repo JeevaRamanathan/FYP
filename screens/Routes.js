@@ -16,7 +16,7 @@ import {
 import HeaderBar from './Header';
 import Floating from '../utils/floatingAction';
 import Entypo from 'react-native-vector-icons/Entypo';
-
+import Connectivity from './Connectivity'
 
 class Routes extends React.Component {
   constructor(props) {
@@ -77,8 +77,11 @@ class Routes extends React.Component {
   }
 
   componentDidMount() {
+    new Connectivity().CheckConnectivity(this.props);
   }
   render() {
+  
+      
     return (
       <>
         <StatusBar backgroundColor="yellow" />

@@ -17,6 +17,7 @@ import {ListItem} from 'react-native-elements';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import database from '@react-native-firebase/database';
 import {Card} from 'react-native-paper';
+import Connectivity from './Connectivity'
 import {
   Collapse,
   CollapseHeader,
@@ -47,7 +48,7 @@ export default class JunctionPoint extends React.Component {
 
  
   componentDidMount() {
-   
+    new Connectivity().CheckConnectivity(this.props);
     database().ref('busstop').on('value',(snap)=>{
       snap.val().filter((elem)=>{
         if(elem.name===this.state.details.source){

@@ -13,7 +13,7 @@ import axios from 'axios'
 import LottieView from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import Connectivity from './Connectivity'
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCYUfRcy0BLJRO7fuhHsI0dYxJqi0_X_E8';
 
@@ -378,7 +378,7 @@ class CurrentLocation extends React.Component {
     
   }
   async componentDidMount() {
-  
+    new Connectivity().CheckConnectivity(this.props);
     // this.setState({speak:false})
     this.requestLocationPermission();
     database()

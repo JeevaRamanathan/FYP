@@ -1,6 +1,7 @@
 import database from '@react-native-firebase/database';
 import React from 'react';
 import {Text} from 'react-native';
+import Connectivity from './Connectivity'
 export default class SourceDes extends React.Component {
   constructor(props) {
     super(props);
@@ -9,6 +10,7 @@ export default class SourceDes extends React.Component {
     };
   }
   componentDidMount() {
+    new Connectivity().CheckConnectivity(this.props);
     database()
       .ref(`/Routes/r${this.props.value}`)
       .on('value', (snap) => {

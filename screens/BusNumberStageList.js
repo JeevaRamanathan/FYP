@@ -3,6 +3,7 @@ import {Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
 import database from '@react-native-firebase/database';
 import LottieView from 'lottie-react-native';
 import {ListItem, Avatar, SearchBar} from 'react-native-elements';
+import Connectivity from './Connectivity'
 export default class BusNumberRouteList extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ export default class BusNumberRouteList extends React.Component {
     };
   }
   componentDidMount() {
+    new Connectivity().CheckConnectivity(this.props);
     database()
       .ref('Routes/')
       .on('value', (snap) => {

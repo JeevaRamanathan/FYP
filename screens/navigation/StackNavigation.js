@@ -15,6 +15,7 @@ import RouteSearchRouteList from '../RouteSearchRouteList';
 import SelectDestination from '../SelectDestination';
 import OlaService from '../OlaService'
 import RouteListMap from '../RouteListMap';
+import ConnectToInternet from '../ConnectToInternet'
 import CurrentLocation from '../CurrentLocation';
 
 const StackNavigation = createStackNavigator(
@@ -170,6 +171,12 @@ const StackNavigation = createStackNavigator(
         headerTitleStyle: {
           fontFamily: 'Acme-Regular',
         },
+      },
+    },
+    ConnectToInternet:{
+      screen:ConnectToInternet,
+      navigationOptions: {
+        headerShown: null,
       },
     },
     OlaService:{

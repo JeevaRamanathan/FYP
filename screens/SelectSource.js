@@ -19,7 +19,7 @@ import {NavigationActions} from 'react-navigation';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from 'axios';
 import database from '@react-native-firebase/database';
-
+import Connectivity from './Connectivity'
 class SelectSource extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +31,7 @@ class SelectSource extends React.Component {
     };
   }
   componentDidMount() {
+    new Connectivity().CheckConnectivity(this.props);
     database()
       .ref('busstop')
       .on('value', (snapshot) => {

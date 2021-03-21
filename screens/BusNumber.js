@@ -6,6 +6,7 @@ import LottieView from 'lottie-react-native';
 import {ListItem, Avatar, SearchBar} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import database from '@react-native-firebase/database';
+import Connectivity from './Connectivity'
 
 class BusNumber extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class BusNumber extends React.Component {
   }
 
   componentDidMount() {
+    new Connectivity().CheckConnectivity(this.props);
     database()
       .ref('bus')
       .on('value', (snapshot) => {
