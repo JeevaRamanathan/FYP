@@ -231,7 +231,7 @@ class Map extends React.Component {
                 strokeWidth={4}
                 strokeColor="#ebc550"
               />
-              {console.log(this.state.finalCoordinates)}
+              
               {this.state.finalCoordinates.map((marker) => (
                 <Marker
                   key={marker.name}

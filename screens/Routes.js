@@ -10,6 +10,7 @@ import {
   Image,
   Keyboard,
   ScrollView,
+  
 } from 'react-native';
 
 import HeaderBar from './Header';

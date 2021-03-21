@@ -41,7 +41,7 @@ export default class RouteSearchRouteList extends React.Component {
     };
   }
   componentDidMount() {
-    console.log(this.props.navigation.state.params.source);
+   
     database()
       .ref(`Routes/r${this.props.navigation.state.params.value}`)
       .on('value', (snap) => {
@@ -50,6 +50,7 @@ export default class RouteSearchRouteList extends React.Component {
   }
 
   render() {
+    var value =this.props.navigation.state.params
     return (
       <>
         {this.state.intermediate.length == 0 ? (
@@ -153,16 +154,40 @@ export default class RouteSearchRouteList extends React.Component {
                     label,
                     currentPosition,
                   ) {
-                    return (
-                      <View
-                        style={{
-                          paddingLeft: 10,
-                          paddingBottom: 22,
-                          paddingTop: 22,
-                        }}>
-                        <Text>{position.label}</Text>
-                      </View>
-                    );
+                    
+            
+                 return(
+
+                  
+                    <View
+                    style={{
+                      paddingLeft: 10,
+                      paddingBottom: 22,
+                      paddingTop: 22,
+                    }}>
+                        {position.label==value.source?
+                    <Text style={{
+                     
+                      color:'red',
+                      fontWeight:'bold'
+                    }}>{position.label} (Source)</Text>:position.label==value.destination?
+                    <Text style={{
+                     
+                      color:'green',
+                      fontWeight:'bold'
+                    }}>{position.label} (Destination)</Text>:position.label==value.JPValue?
+                    <Text style={{
+               
+                      color:'#2c5061',
+                      fontWeight:'bold'
+                    }}>{position.label} (JunctionPoint)</Text>:
+                    <Text style={{
+                
+                      fontWeight:'bold'
+                    }}>{position.label}</Text>
+                  }
+                  </View>
+           );
                   }}
                 />
               </ScrollView>

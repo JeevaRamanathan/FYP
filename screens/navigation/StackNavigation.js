@@ -13,6 +13,7 @@ import BusNumberStageList from '../BusNumberStageList';
 import SelectSource from '../SelectSource';
 import RouteSearchRouteList from '../RouteSearchRouteList';
 import SelectDestination from '../SelectDestination';
+import OlaService from '../OlaService'
 import RouteListMap from '../RouteListMap';
 import CurrentLocation from '../CurrentLocation';
 
@@ -171,6 +172,15 @@ const StackNavigation = createStackNavigator(
         },
       },
     },
+    OlaService:{
+    screen:OlaService,
+    navigationOptions:{
+      title:'Book your ride',
+      headerStyle: {
+        backgroundColor: '#ebc550',
+      },
+    }
+  },
   },
   {
     initialRouteName: 'Home',

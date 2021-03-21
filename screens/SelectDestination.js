@@ -5,8 +5,6 @@ import database from '@react-native-firebase/database';
 
 import {Toolbar} from 'react-native-material-ui';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {NavigationActions} from 'react-navigation';
 import {TouchableOpacity} from 'react-native-gesture-handler';

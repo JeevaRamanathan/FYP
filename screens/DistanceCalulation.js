@@ -463,16 +463,11 @@ const testdata = {
   status: 'OK',
 };
 class DistanceCalulation {
-  data = (srcLatLng, desLatLng, wayPointLatLng) => {
-//     console.log(srcLatLng);
-//  console.log(`https://maps.googleapis.com/maps/api/directions/json?destination=${desLatLng}&origin=${srcLatLng}&waypoints=optimize:true|${wayPointLatLng}&key=AIzaSyCYUfRcy0BLJRO7fuhHsI0dYxJqi0_X_E8`);
-     axios.post(`https://maps.googleapis.com/maps/api/directions/json?destination=${desLatLng}&origin=${srcLatLng}&waypoints=optimize:true|${wayPointLatLng}&key=AIzaSyCYUfRcy0BLJRO7fuhHsI0dYxJqi0_X_E8`)
+  data = (srcLatLng, desLatLng, wayPointLatLng,fn) => {
+  axios.post(`https://maps.googleapis.com/maps/api/directions/json?destination=${desLatLng}&origin=${srcLatLng}&waypoints=optimize:true|${wayPointLatLng}&key=AIzaSyCYUfRcy0BLJRO7fuhHsI0dYxJqi0_X_E8`)
      .then((res)=>{
-        
-         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");//continre okay push//pl//ok
-        // console.log(res)
-         res = JSON.parse(res.request._response)
-        // console.log(typeof res);
+         res = res.data
+      
     var distance = 0,
       time = 0,
       obj = {};
@@ -482,7 +477,7 @@ class DistanceCalulation {
     }
     obj.distance =(distance/1000)
     obj.time = Math.round(time/60);
-    return obj;
+    fn(obj) 
   })
 }
   DistanceCal = (source, destination, coordinates, fn) => {
@@ -497,9 +492,43 @@ class DistanceCalulation {
             des = val.val().latitude + ',' + val.val().longitude;
           }
         });
-        console.log(this.data(src, des, coordinates.join("|")));
+       this.data(src, des, coordinates.join("|"),fn);
     //    await fn())
       });
   };
+
+  SingleRouteDistanceCal=(source, destination, fn)=>{
+    var src, des;
+    database()
+      .ref('busstop')
+      .on('value', async (snapshot) => {
+        snapshot.forEach((val) => {
+          if (val.val().name == source) {
+            src = val.val().latitude + ',' + val.val().longitude;
+          } else if (val.val().name == destination) {
+            des = val.val().latitude + ',' + val.val().longitude;
+          }
+        });
+       this.data1(src, des,fn);
+    });
+
+  }
+  data1 = (srcLatLng, desLatLng,fn) =>{
+      console.log("a inn");
+  axios.post(`https://maps.googleapis.com/maps/api/directions/json?destination=${desLatLng}&origin=${srcLatLng}&key=AIzaSyCYUfRcy0BLJRO7fuhHsI0dYxJqi0_X_E8`)
+    .then((res)=>{
+        res = res.data
+   console.log(res);
+   var distance = 0,
+     time = 0,
+     obj = {};
+   for (i = 0; i < res.routes[0].legs.length; i++) {
+     distance += res.routes[0].legs[i].distance.value
+     time += res.routes[0].legs[i].duration.value;
+   }
+   obj.distance =(distance/1000)
+   obj.time = Math.round(time/60);
+   fn(obj) 
+})}
 }
 export default DistanceCalulation;

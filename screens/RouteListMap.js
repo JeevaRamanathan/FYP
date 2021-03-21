@@ -178,7 +178,7 @@ class RouteListMap extends React.Component {
     };
   }
   componentDidMount() {
-    console.log('in');
+    
     var obj = {};
     var res = [];
     var arr = this.props.navigation.state.params.value1.intermediate;

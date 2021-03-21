@@ -17,7 +17,7 @@ export default class SourceDes extends React.Component {
             '-' +
             snap.val().intermediate[snap.val().intermediate.length - 1],
         );
-        console.log(this.props.toandfro);
+        
         let toandfro = this.props.toandfro == 0 ? ' → ' : ' ⇋ ';
         this.setState({
           val:

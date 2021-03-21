@@ -10,6 +10,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import axios from 'axios'
 import SourceDes from './sourceDes';
 import LottieView from 'lottie-react-native';
 import {ListItem} from 'react-native-elements';
@@ -39,9 +40,26 @@ export default class JunctionPoint extends React.Component {
       r2Index: [],
       s2jtoandfro: [],
       j2dtoandfro: [],
+      srcCoordinates:{},
+      desCoordinates:{}
     };
   }
+
+ 
   componentDidMount() {
+   
+    database().ref('busstop').on('value',(snap)=>{
+      snap.val().filter((elem)=>{
+        if(elem.name===this.state.details.source){
+          this.setState({srcCoordinates:elem})
+        }
+        else if(elem.name === this.state.details.destination)
+        {
+          this.setState({desCoordinates:elem})
+        }
+    });
+    
+    })
     //s2j
     database()
       .ref('Routes')
@@ -463,6 +481,27 @@ export default class JunctionPoint extends React.Component {
                   </CollapseBody>
                 </Collapse>
               </Card>
+              <View style={{ marginTop: 30}}>
+              <Text style={{textAlign:'center', fontFamily: 'SourceSansPro-Regular',
+                                      fontSize: 17,}}>You can also use OLA services to reach the destination</Text>
+              <TouchableOpacity
+                activeOpacity={0.7 }
+                onPress={()=>this.props.prop.navigation.navigate('OlaService',{value:{srcCoordinates:this.state.srcCoordinates,desCoordinates:this.state.desCoordinates}})}
+                style={{
+                 alignSelf: 'center',
+                 flexDirection: 'row',
+                 justifyContent: 'center',
+                 backgroundColor: '#fff',
+                 width: '90%',
+                 height:"90%", 
+                 borderRadius: 8,
+                
+              }}>
+              
+                <Image style={{height:100,width:"60%",resizeMode:'stretch'}} source={require('../assets/ola-logo.png')}/>
+              </TouchableOpacity>
+                {/* </View> */}
+                </View>
             </ScrollView>
           </>
         )}

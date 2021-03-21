@@ -19,6 +19,7 @@ import {and} from 'react-native-reanimated';
 import SourceDes from './sourceDes';
 import JunctionPoint from './JunctionPoint';
 import DistanceCalulation from './DistanceCalulation';
+import RouteDisTimeDetailsUI from './RouteDisTimeDetailsUI'
 class BusList extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,7 @@ class BusList extends React.Component {
       rid: [],
       via: [],
       junctionPoint: [
+        'Lakshmi Complex',
         'Chatram Bus Stand',
         'Central Bus Stand',
         'GH-Mahatma Gandhi Memorial Government Hospital',
@@ -38,6 +40,7 @@ class BusList extends React.Component {
       viaCoordinates: [],
       finalViaCoordinates: [],
       refinalBusViaCoordinates: [],
+      singleRouteCoordinates:[],
       JPValue: '',
       junctionPointSource: [],
       finalBusVia: [],
@@ -51,10 +54,12 @@ class BusList extends React.Component {
       toandfro: [],
       finaltoandfro: [],
       viaDistance: [],
-      viaTime:[]
+      viaTime:[],
+      selectedViaDistanceTime:{}
     };
   }
   multipleBus(a, l) {
+     
     this.setState({selectedBusId: a}, () => {
       for (var j = 0; j < a[0].length; j++) {
         var arr = this.state.finalRid;
@@ -76,6 +81,7 @@ class BusList extends React.Component {
   }
 
   singleBus(i, l) {
+    
     for (var j = 0; j < i[0].length; j++) {
       var arr = this.state.finalRid;
       arr.push(l);
@@ -90,7 +96,7 @@ class BusList extends React.Component {
     }
   }
   functionpassing = (val) => {
-    // console.log(val);
+    console.log("val", );
     var a = this.state.viaDistance
     a.push(val.distance);
     var b = this.state.viaTime
@@ -98,9 +104,22 @@ class BusList extends React.Component {
   
     this.setState({viaDistance: a});
     this.setState({viaTime:b})
+    console.log(val);
+    
+    let obj={}
+    obj.distance = this.state.viaDistance[0]
+    obj.time = this.state.viaTime[0]
+    obj.via=''
+    this.setState({selectedViaDistanceTime:obj})
+
   };
 
   viaBusNo(i) {
+    let obj={};
+    obj.distance = this.state.viaDistance[i]
+    obj.time = this.state.viaTime[i]
+    obj.via= "Via -"+this.state.refinalBusVia[i].join(", ")
+    this.setState({selectedViaDistanceTime:obj})
     for (var j = 0; j < this.state.bus[i].length; j++) {
       let a = this.state.rid[this.state.bus[i][j]];
       database()
@@ -145,8 +164,10 @@ class BusList extends React.Component {
         });
         // console.log(this.state.routes);
         if (this.state.routes.length == 0) {
-          var sJ = [0, 0, 0];
-          var jD = [0, 0, 0];
+          var sJ = new Array(this.state.junctionPoint.length).fill(0)
+          var jD = new Array(this.state.junctionPoint.length).fill(0)
+
+          console.log(sJ);
           var max = [];
 
           database()
@@ -323,8 +344,10 @@ class BusList extends React.Component {
             for (let name in dupes1) {
               this.state.refinalBusViaCoordinates.push(JSON.parse(name));
             }
-
+            // console.log(this.state.refinalBusVia);
+            // console.log(this.state.refinalBusViaCoordinates);
             //iteration
+             
             for (i = 0; i < this.state.refinalBusViaCoordinates.length; i++) {
               // DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]);
               new DistanceCalulation().DistanceCal(
@@ -355,7 +378,7 @@ class BusList extends React.Component {
                       finaltoandfro: [].concat.apply(
                         [],
                         [...this.state.toandfro],
-                      ),
+                      ), 
                     });
                   });
               }
@@ -366,7 +389,23 @@ class BusList extends React.Component {
           } else {
             //single route with single value
             // console.log(this.state.routes[0].route_id);
-            database()
+         
+            // database().ref('busstop').on('value', async (snapshot) => {
+            //   snapshot.forEach((val) => {
+         
+          
+            //     if(this.state.arr[0].includes(val.val().name) && val.val().name !== this.state.source && val.val().name!==this.state.destination){
+            //      var coordinates = this.state.singleRouteCoordinates
+            //      coordinates.push(val.val().latitude+","+val.val().longitude)
+            //      this.setState({singleRouteCoordinates:coordinates})
+            //     }
+            //   })
+              new DistanceCalulation().SingleRouteDistanceCal(
+                this.state.source,
+                this.state.destination,
+                             this.functionpassing,
+              );
+              database()
               .ref(`Routes/r${this.state.routes[0].route_id}`)
               .on('value', (snap) => {
                 var arr = [];
@@ -427,6 +466,7 @@ class BusList extends React.Component {
               <ScrollView>
                 {this.state.refinalBusVia.map((index, i) => {
                   return (
+                    <>
                     <ListItem
                       bottomDivider
                       key={i}
@@ -470,6 +510,8 @@ class BusList extends React.Component {
                            
                       </ListItem.Content>
                     </ListItem>
+
+                    </>
                   );
                 })}
               </ScrollView>
@@ -482,8 +524,11 @@ class BusList extends React.Component {
             <></>
           ) : (
             <>
+            <RouteDisTimeDetailsUI value={this.state.selectedViaDistanceTime}/>
               {this.state.finalBusDetails.map((value, i) => {
                 return (
+                  <>
+                 
                   <TouchableOpacity
                     onPress={() =>
                       this.props.navigation.navigate('RouteSearchRouteList', {
@@ -525,10 +570,11 @@ class BusList extends React.Component {
                           </Text>
                           
                         </ListItem.Subtitle>
-                        
+                      
                       </ListItem.Content>
                     </ListItem>
                   </TouchableOpacity>
+                  </>
                 );
               })}
             </>
@@ -554,15 +600,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SourceSansPro-Regular',
     textAlign: 'center',
   },
-  container: {
-    height: 140,
-    width: '100%',
-    backgroundColor: 'white',
-    elevation: 7,
-    borderRadius: 3,
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-  },
+  
   text1: {
     fontFamily: 'SourceSansPro-Regular',
     textAlignVertical: 'bottom',
