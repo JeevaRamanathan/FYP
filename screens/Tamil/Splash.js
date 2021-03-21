@@ -1,9 +1,9 @@
 import React from 'react';
-import AnimationTypingText from '../utils/AnimationTypingText';
+import AnimationTypingText from '../../utils/AnimationTypingText';
 import {StyleSheet, View, Text, ImageBackground} from 'react-native';
 import LottieView from 'lottie-react-native';
 
-class Splash extends React.Component {
+class TamilSplash extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,18 +17,18 @@ class Splash extends React.Component {
           source={require('../assets/bg.jpg')}> */}
         <View style={styles.image}>
           <LottieView
-            source={require('../assets/splash.json')}
+            source={require('../../assets/splash.json')}
             loop={true}
             autoPlay={true}
             progress={0}
             speed={2}
           />
           <View style={styles.bottom}>
-            <Text style={styles.text1}>Town Bus</Text>
+            <Text style={styles.text1}>நகரப் பேருந்து</Text>
             <AnimationTypingText
               nav={this.props}
-              val={'English'}
-              text="Exclusively for Local Buses"
+              val= {"Tamil"}
+              text="பிரத்தியேகமாக உள்ளூர் பேருந்துகளுக்கு மட்டும்"
             />
           </View>
         </View>
@@ -37,7 +37,7 @@ class Splash extends React.Component {
     );
   }
 }
-export default Splash;
+export default TamilSplash;
 const styles = StyleSheet.create({
   image: {
     flex: 1,

@@ -38,7 +38,8 @@ export default class AnimationTypingText extends React.Component {
       }
     } else {
       {
-        this.props.nav.navigation.navigate('Home');
+        console.log(this.props.val);
+        this.props.nav.navigation.navigate(this.props.val);
       }
     }
   };

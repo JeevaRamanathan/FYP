@@ -33,7 +33,7 @@ export default class ConnectToInternet extends React.Component {
               // fontFamily: 'Acme-Regular',
               fontWeight: 'bold',
             }}>
-            OOPS!
+            அச்சச்சோ!
           </Text>
           <Text
             style={{
@@ -42,7 +42,7 @@ export default class ConnectToInternet extends React.Component {
               color: '#22333b',
               fontSize: 20,
             }}>
-            Connect to Internet...
+            இணையத்துடன் இணைக்கவும்......
           </Text>
           <View
             style={{
@@ -53,7 +53,7 @@ export default class ConnectToInternet extends React.Component {
               backgroundColor: '#fffcfc',
             }}>
             <LottieView
-              source={require('../assets/InternetConnection')}
+              source={require('../../assets/InternetConnection')}
               loop={true}
               autoPlay={true}
               progress={0}
@@ -89,7 +89,7 @@ export default class ConnectToInternet extends React.Component {
                 fontFamily: 'SourceSansPro-Regular',
                 fontWeight: 'bold',
               }}>
-              RETRY
+              மீண்டும் முயற்சிக்கவும்
             </Text>
           </TouchableOpacity>
         </View>

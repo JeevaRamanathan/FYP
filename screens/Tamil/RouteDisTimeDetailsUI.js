@@ -26,7 +26,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
           }}>
           <View style={{flexDirection: 'row'}}>
             <LottieView
-              source={require('../assets/Bus.json')}
+              source={require('../../assets/Bus.json')}
               loop={true}
               autoPlay={true}
               style={{height: 50, width: 50}}
@@ -69,7 +69,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
           />
           <View style={{flexDirection: 'row', padding: 20}}>
             <Image
-              source={require('../assets/chronometer.png')}
+              source={require('../../assets/chronometer.png')}
               style={{height: 20, width: 20}}
             />
             <Text
@@ -79,7 +79,9 @@ export default class RouteDisTimeDetailsUI extends React.Component {
                 fontWeight: 'bold',
                 color: '#000',
                 fontSize: 15,
-              }}></Text>
+              }}>
+              பயண நேரம்
+            </Text>
             <Text
               style={{
                 fontFamily: 'SourceSansPro-Regular',
@@ -88,7 +90,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
                 color: '#aaa',
                 fontSize: 10,
               }}>
-              (Approx)
+              (தோராயமாக)
             </Text>
 
             <Text
@@ -103,7 +105,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
                 top: 20,
                 fontSize: 15,
               }}>
-              {this.props.value.time} minutes
+              {this.props.value.time} நிமிடங்கள்
             </Text>
           </View>
 
@@ -117,7 +119,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
               shadowRadius: 5,
             }}>
             <Image
-              source={require('../assets/distance.png')}
+              source={require('../../assets/distance.png')}
               style={{height: 20, width: 20}}
             />
             <Text
@@ -128,7 +130,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
                 color: '#000',
                 fontSize: 15,
               }}>
-              Distance
+              தூரம்
             </Text>
 
             <Text
@@ -143,7 +145,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
                 top: 0,
                 fontSize: 15,
               }}>
-              {this.props.value.distance} km{' '}
+              {this.props.value.distance} கி.மீ.{' '}
             </Text>
           </View>
         </View>

@@ -11,12 +11,12 @@ import {
   Keyboard,
   ScrollView,
 } from 'react-native';
+
 import AsyncStorage from '@react-native-community/async-storage';
 import HeaderBar from './Header';
-import Floating from '../utils/floatingAction';
+import TamilFloating from '../../utils/tamilFloatingAction';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Connectivity from './Connectivity';
-
 class Routes extends React.Component {
   constructor(props) {
     super(props);
@@ -77,6 +77,7 @@ class Routes extends React.Component {
 
   componentDidMount() {
     new Connectivity().CheckConnectivity(this.props);
+    console.log(new Connectivity().CheckConnectivity(this.props));
   }
   render() {
     return (
@@ -101,7 +102,7 @@ class Routes extends React.Component {
                 <TextInput
                   multiline
                   style={styles.text3}
-                  placeholder="Source"
+                  placeholder="புறப்படும் இடம்"
                   editable={false}>
                   {this.state.source}
                 </TextInput>
@@ -115,7 +116,7 @@ class Routes extends React.Component {
               }}>
               <View>
                 <Image
-                  source={require('../assets/swap.png')}
+                  source={require('../../assets/swap.png')}
                   style={{
                     width: 50,
                     height: 50,
@@ -140,7 +141,7 @@ class Routes extends React.Component {
                 <TextInput
                   multiline
                   style={styles.text3}
-                  placeholder="Destination"
+                  placeholder="சேரும் இடம்"
                   editable={false}>
                   {this.state.destination}
                 </TextInput>
@@ -165,7 +166,7 @@ class Routes extends React.Component {
                 styles.text1,
                 {color: this.state.disable ? '#b7ddde' : 'white'},
               ]}>
-              SEARCH BUSES
+              பேருந்துகளைத் தேடுக
             </Text>
           </TouchableOpacity>
 
@@ -177,15 +178,14 @@ class Routes extends React.Component {
                 color: '#ff3232',
                 fontFamily: 'SourceSansPro-Regular',
               }}>
-              Source and Destination are Same!
+              ஒரே இடம் சாதியமில்லை
             </Text>
           ) : (
             <></>
           )}
           <TouchableOpacity
             onPress={() => {
-              
-              this.props.navigation.navigate('TamilSplash');
+              this.props.navigation.navigate('English');
             }}
             style={{
               alignSelf: 'center',
@@ -195,11 +195,12 @@ class Routes extends React.Component {
                 width: 300,
                 height: 300,
               }}
-              source={require('../assets/tamilVersion.png')}
+              source={require('../../assets/englishVersion.png')}
             />
           </TouchableOpacity>
         </ScrollView>
-        <Floating value={this.props} />
+
+        <TamilFloating value={this.props} />
       </>
     );
   }

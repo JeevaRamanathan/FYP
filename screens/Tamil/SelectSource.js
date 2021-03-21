@@ -33,7 +33,7 @@ class SelectSource extends React.Component {
   componentDidMount() {
     new Connectivity().CheckConnectivity(this.props);
     database()
-      .ref('busstop')
+      .ref('Tamil/busstop')
       .on('value', (snapshot) => {
         this.setState({filteredSourceValue: snapshot.val()});
         this.setState({sourceValues: snapshot.val()});
@@ -63,12 +63,12 @@ class SelectSource extends React.Component {
         <View style={{marginTop: 29}}>
           <Toolbar
             color="red"
-            centerElement="Source"
+            centerElement="புறப்படும் இடம்"
             isSearchActive={true}
             searchable={{
               autoFocus: true,
               onChangeText: (value) => this.search(value),
-              placeholder: 'Source',
+              placeholder: 'புறப்படும் இடம்',
             }}
             style={{
               container: {

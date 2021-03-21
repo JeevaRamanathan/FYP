@@ -1,9 +1,9 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import Splash from '../Splash';
-import AppContainer from './bottom_navigation/Navigation';
+import AppContainer from './Navigation';
 
 import BusList from '../BusList';
-import RouteList from '../RouteList';
+// import RouteList from '../RouteList';
 import Map from '../Map';
 import BusNumberRouteList from '../BusNumberRouteList';
 
@@ -13,12 +13,11 @@ import BusNumberStageList from '../BusNumberStageList';
 import SelectSource from '../SelectSource';
 import RouteSearchRouteList from '../RouteSearchRouteList';
 import SelectDestination from '../SelectDestination';
-import OlaService from '../OlaService';
 import RouteListMap from '../RouteListMap';
 import ConnectToInternet from '../ConnectToInternet';
 import CurrentLocation from '../CurrentLocation';
 
-const StackNavigation = createStackNavigator(
+const StackNavigationTamil = createStackNavigator(
   {
     Splash: {
       screen: Splash,
@@ -32,12 +31,12 @@ const StackNavigation = createStackNavigator(
         headerShown: null,
       },
     },
-    SSource: {
-      screen: SelectSource,
-      navigationOptions: {
-        headerShown: null,
-      },
-    },
+    //   SSource: {
+    //     screen: SelectSource,
+    //     navigationOptions: {
+    //       headerShown: null,
+    //     },
+    //   },
     SSource: {
       screen: SelectSource,
       navigationOptions: {
@@ -50,17 +49,17 @@ const StackNavigation = createStackNavigator(
         headerShown: null,
       },
     },
-    SDestination: {
-      screen: SelectDestination,
-      navigationOptions: {
-        headerShown: null,
-      },
-    },
+    //   SDestination: {
+    //     screen: SelectDestination,
+    //     navigationOptions: {
+    //       headerShown: null,
+    //     },
+    //   },
 
     BusNumberRouteList: {
       screen: BusNumberRouteList,
       navigationOptions: {
-        title: 'Bus Details',
+        title: 'பேருந்து விவரங்கள்',
 
         headerStyle: {
           backgroundColor: '#ebc550',
@@ -75,7 +74,7 @@ const StackNavigation = createStackNavigator(
     BusNumberStageList: {
       screen: BusNumberStageList,
       navigationOptions: {
-        title: 'Bus Details',
+        title: 'பேருந்து விவரங்கள்',
 
         headerStyle: {
           backgroundColor: '#ebc550',
@@ -90,7 +89,7 @@ const StackNavigation = createStackNavigator(
     RouteSearchRouteList: {
       screen: RouteSearchRouteList,
       navigationOptions: {
-        title: 'Bus Details',
+        title: 'பேருந்து விவரங்கள்',
 
         headerStyle: {
           backgroundColor: '#ebc550',
@@ -105,7 +104,7 @@ const StackNavigation = createStackNavigator(
     BusList: {
       screen: BusList,
       navigationOptions: {
-        title: 'Bus List',
+        title: 'பேருந்து பட்டியல்',
         headerStyle: {
           backgroundColor: '#ebc550',
         },
@@ -130,13 +129,13 @@ const StackNavigation = createStackNavigator(
       },
     },
 
-    RouteList: {
-      screen: RouteList,
-    },
+    //   RouteList: {
+    //     screen: RouteList,
+    //   },
     Map: {
       screen: Map,
       navigationOptions: {
-        title: 'Map',
+        title: 'வரைபடம்',
         headerStyle: {
           backgroundColor: '#ebc550',
         },
@@ -149,7 +148,7 @@ const StackNavigation = createStackNavigator(
     RouteListMap: {
       screen: RouteListMap,
       navigationOptions: {
-        title: 'Map',
+        title: 'வரைபடம்',
         headerStyle: {
           backgroundColor: '#ebc550',
         },
@@ -163,7 +162,7 @@ const StackNavigation = createStackNavigator(
     CurrentLocation: {
       screen: CurrentLocation,
       navigationOptions: {
-        title: 'Nearest bus stop',
+        title: 'அருகிலுள்ள பஸ் நிறுத்தம்',
         headerStyle: {
           backgroundColor: '#ebc550',
         },
@@ -179,18 +178,9 @@ const StackNavigation = createStackNavigator(
         headerShown: null,
       },
     },
-    OlaService: {
-      screen: OlaService,
-      navigationOptions: {
-        title: 'Book your ride',
-        headerStyle: {
-          backgroundColor: '#ebc550',
-        },
-      },
-    },
   },
   {
     initialRouteName: 'Home',
   },
 );
-export default StackNavigation;
+export default StackNavigationTamil;

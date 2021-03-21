@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, Text, ScrollView, Image} from 'react-native';
-import Floating from '../utils/floatingAction';
+import Floating from '../../utils/floatingAction';
 import HeaderBar from './Header';
 import LottieView from 'lottie-react-native';
 import {ListItem, Avatar, SearchBar} from 'react-native-elements';
+import TamilFloating from '../../utils/tamilFloatingAction';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import database from '@react-native-firebase/database';
 import Connectivity from './Connectivity';
@@ -58,7 +59,7 @@ class BusNumber extends React.Component {
             round
             style={{fontFamily: 'SourceSansPro-Regular', fontSize: 17}}
             searchIcon={{size: 26}}
-            placeholder="Enter a bus number..."
+            placeholder="பஸ் எண்ணை உள்ளிடவும்..."
             onChangeText={this.updateSearch}
             value={this.state.search}
           />
@@ -67,7 +68,7 @@ class BusNumber extends React.Component {
           <View style={{height: '80%', width: '100%'}}>
             {/* Activity Indicator until it fetches the data*/}
             <LottieView
-              source={require('../assets/Bus.json')}
+              source={require('../../assets/Bus.json')}
               loop={true}
               autoPlay={true}
               progress={0}
@@ -87,7 +88,7 @@ class BusNumber extends React.Component {
                   }>
                   <ListItem bottomDivider>
                     <Image
-                      source={require('../assets/busno.png')}
+                      source={require('../../assets/busno.png')}
                       style={{height: 30, width: 30, borderRadius: 10}}
                     />
                     <ListItem.Content>
@@ -108,11 +109,8 @@ class BusNumber extends React.Component {
                           style={{
                             fontFamily: 'SourceSansPro-Regular',
                           }}>
-                          Travels in
-                          {
-                            this.state.filterSearchValues[l].route_id.length
-                          }{' '}
-                          Routes.
+                          {this.state.filterSearchValues[l].route_id.length}{' '}
+                          வழிகளில் பயணிக்கிறது.
                         </Text>
                       </ListItem.Subtitle>
                     </ListItem.Content>
@@ -122,7 +120,7 @@ class BusNumber extends React.Component {
             </View>
           </ScrollView>
         )}
-        <Floating value={this.props} />
+        <TamilFloating value={this.props} />
       </>
     );
   }

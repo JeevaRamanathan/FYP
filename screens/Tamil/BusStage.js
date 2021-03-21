@@ -1,14 +1,13 @@
 import React from 'react';
 import {View, Text, ScrollView, Image} from 'react-native';
-import Floating from '../utils/floatingAction';
+import TamilFloating from '../../utils/tamilFloatingAction';
 import HeaderBar from './Header';
 import LottieView from 'lottie-react-native';
 import {ListItem, Avatar, SearchBar} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import database from '@react-native-firebase/database';
 import Connectivity from './Connectivity';
-
-class BusNumber extends React.Component {
+class BusStage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +20,7 @@ class BusNumber extends React.Component {
   componentDidMount() {
     new Connectivity().CheckConnectivity(this.props);
     database()
-      .ref('Tamil/bus')
+      .ref('Tamil/busstop')
       .on('value', (snapshot) => {
         this.setState({values: snapshot.val()});
         this.setState({filterSearchValues: snapshot.val()});
@@ -30,17 +29,12 @@ class BusNumber extends React.Component {
 
   updateSearch = (search) => {
     this.setState({search});
-
     if (search) {
-      const newData = Object.values(this.state.filterSearchValues).filter(
-        function (item) {
-          const itemData = item.busname
-            ? item.busname.toUpperCase()
-            : ''.toUpperCase();
-          const textData = search.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        },
-      );
+      const newData = this.state.filterSearchValues.filter(function (item) {
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const textData = search.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
       this.setState({filterSearchValues: newData});
     } else {
       this.setState({filterSearchValues: this.state.values});
@@ -58,7 +52,7 @@ class BusNumber extends React.Component {
             round
             style={{fontFamily: 'SourceSansPro-Regular', fontSize: 17}}
             searchIcon={{size: 26}}
-            placeholder="Enter a bus number..."
+            placeholder="பஸ் நிறுத்தம் பெயரை உள்ளிடவும்..."
             onChangeText={this.updateSearch}
             value={this.state.search}
           />
@@ -67,7 +61,7 @@ class BusNumber extends React.Component {
           <View style={{height: '80%', width: '100%'}}>
             {/* Activity Indicator until it fetches the data*/}
             <LottieView
-              source={require('../assets/Bus.json')}
+              source={require('../../assets/Bus.json')}
               loop={true}
               autoPlay={true}
               progress={0}
@@ -77,42 +71,39 @@ class BusNumber extends React.Component {
         ) : (
           <ScrollView>
             <View style={{paddingBottom: 50}}>
-              {Object.keys(this.state.filterSearchValues).map((l, i) => (
+              {this.state.filterSearchValues.map((l, i) => (
                 <TouchableOpacity
                   key={i}
                   onPress={() =>
-                    this.props.navigation.navigate('BusNumberRouteList', {
-                      data: {value: this.state.filterSearchValues[l].route_id},
+                    this.props.navigation.navigate('BusNumberStageList', {
+                      data: {value: l},
                     })
                   }>
                   <ListItem bottomDivider>
                     <Image
-                      source={require('../assets/busno.png')}
+                      source={require('../../assets/bs3.png')}
                       style={{height: 30, width: 30, borderRadius: 10}}
                     />
                     <ListItem.Content>
-                      <ListItem.Title>
-                        <View syle={{flexDirection: 'row'}}>
+                      <View style={{marginTop: 16}}>
+                        <ListItem.Title>
                           <Text
+                            multiline
                             style={{
                               fontFamily: 'SourceSansPro-Regular',
                               fontSize: 17,
                               fontWeight: 'bold',
                             }}>
-                            {this.state.filterSearchValues[l].busname}
+                            {l.name}
                           </Text>
-                        </View>
-                      </ListItem.Title>
+                        </ListItem.Title>
+                      </View>
                       <ListItem.Subtitle>
                         <Text
                           style={{
                             fontFamily: 'SourceSansPro-Regular',
                           }}>
-                          Travels in
-                          {
-                            this.state.filterSearchValues[l].route_id.length
-                          }{' '}
-                          Routes.
+                          {/* Travels in {l.route_id.length} routes. */}
                         </Text>
                       </ListItem.Subtitle>
                     </ListItem.Content>
@@ -122,9 +113,9 @@ class BusNumber extends React.Component {
             </View>
           </ScrollView>
         )}
-        <Floating value={this.props} />
+           <TamilFloating value={this.props} />
       </>
     );
   }
 }
-export default BusNumber;
+export default BusStage;

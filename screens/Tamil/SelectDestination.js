@@ -1,84 +1,73 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Button,
-  BackHandler,
-  Alert,
-  FlatList,
-  ScrollView,
-} from 'react-native';
-import HeaderBar from './Header';
-import {Checkbox, Toolbar} from 'react-native-material-ui';
-import {SearchBar} from 'react-native-elements';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {View, Text, ScrollView} from 'react-native';
+
+import database from '@react-native-firebase/database';
+
+import {Toolbar} from 'react-native-material-ui';
+
 import Entypo from 'react-native-vector-icons/Entypo';
 import {NavigationActions} from 'react-navigation';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import axios from 'axios';
-import database from '@react-native-firebase/database';
-import Connectivity from './Connectivity';
-class SelectSource extends React.Component {
+class SelectDestination extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       search: '',
-      a: [],
-      sourceValues: [],
-      filteredSourceValue: [],
+      destinationValues: [],
+      filteredDestinationValue: [],
     };
   }
+
   componentDidMount() {
-    new Connectivity().CheckConnectivity(this.props);
     database()
-      .ref('busstop')
+      .ref('Tamil/busstop')
       .on('value', (snapshot) => {
-        this.setState({filteredSourceValue: snapshot.val()});
-        this.setState({sourceValues: snapshot.val()});
+        this.setState({filteredDestinationValue: snapshot.val()});
+        this.setState({destinationValues: snapshot.val()});
       });
+  }
+
+  destination(text) {
+    this.props.navigation.state.params.handleDestination(text);
+    this.props.navigation.goBack();
   }
   search(value) {
     if (value) {
-      const newData = this.state.sourceValues.filter(function (item) {
+      const newData = this.state.destinationValues.filter(function (item) {
         const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
         const textData = value.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
-      this.setState({filteredSourceValue: newData});
+      this.setState({filteredDestinationValue: newData});
     } else {
-      this.setState({filteredSourceValue: this.state.sourceValues});
+      this.setState({filteredDestinationValue: this.state.destinationValues});
     }
   }
-  source(text) {
-    this.props.navigation.state.params.handleSource(text);
-    this.props.navigation.goBack();
-  }
-
   render() {
     const {search} = this.state;
+
     return (
       <>
         <View style={{marginTop: 29}}>
           <Toolbar
             color="red"
-            centerElement="Source"
+            centerElement="சேரும் இடம்"
             isSearchActive={true}
             searchable={{
               autoFocus: true,
+              placeholder: 'சேரும் இடம்',
               onChangeText: (value) => this.search(value),
-              placeholder: 'Source',
             }}
             style={{
               container: {
                 backgroundColor: '#ebc550',
               },
             }}
+            searchValue={this.state.searchValue}
           />
         </View>
         <ScrollView>
-          {this.state.filteredSourceValue.map((values, i) => {
+          {this.state.filteredDestinationValue.map((values, i) => {
             return (
               <TouchableOpacity
                 style={{
@@ -89,7 +78,7 @@ class SelectSource extends React.Component {
                   borderBottomWidth: 1,
                 }}
                 key={i}
-                onPress={() => this.source(values.name)}>
+                onPress={() => this.destination(values.name)}>
                 <View
                   style={{
                     margin: 12,
@@ -120,4 +109,4 @@ class SelectSource extends React.Component {
     );
   }
 }
-export default SelectSource;
+export default SelectDestination;
