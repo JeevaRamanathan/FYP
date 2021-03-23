@@ -7,7 +7,6 @@ export default class RouteDisTimeDetailsUI extends React.Component {
   }
 
   render() {
-    
     return (
       <View
         style={{
