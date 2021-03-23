@@ -7,6 +7,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
   }
 
   render() {
+    
     return (
       <View
         style={{
@@ -41,7 +42,7 @@ export default class RouteDisTimeDetailsUI extends React.Component {
                 marginLeft: 20,
                 marginTop: 20,
               }}>
-              Route Details{' '}
+              வழி விவரங்கள்{' '}
             </Text>
           </View>
           {this.props.value.via != '' ? (

@@ -116,7 +116,7 @@ class BusList extends React.Component {
     let obj = {};
     obj.distance = this.state.viaDistance[i];
     obj.time = this.state.viaTime[i];
-    obj.via = 'Via -' + this.state.refinalBusVia[i].join(', ');
+    obj.via = 'வழி - ' + this.state.refinalBusVia[i].join(', ');
     this.setState({selectedViaDistanceTime: obj});
     for (var j = 0; j < this.state.bus[i].length; j++) {
       let a = this.state.rid[this.state.bus[i][j]];
@@ -458,7 +458,7 @@ class BusList extends React.Component {
                     textAlign: 'center',
                     textAlignVertical: 'center',
                   }}>
-                  Multiple Routes Available to reach your destination
+                  உங்கள் இலக்கை அடைய பல வழிகள் உள்ளன
                 </Text>
               </View>
               <ScrollView>
