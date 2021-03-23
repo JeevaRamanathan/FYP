@@ -399,7 +399,7 @@ class CurrentLocation extends React.Component {
       {latitude: this.state.latitude, longitude: this.state.longitude},
       this.state.stages,
     );
-    this.setState({distance: arr});
+    this.setState({distance: arr}, console.log(this.state.distance));
     axios
       .post(
         `https://maps.googleapis.com/maps/api/directions/json?destination=${this.state.distance[0].latitude},${this.state.distance[0].longitude}&origin=${this.state.latitude},${this.state.longitude}&language=ta&optimize:true&key=AIzaSyCYUfRcy0BLJRO7fuhHsI0dYxJqi0_X_E8`,
@@ -438,10 +438,10 @@ class CurrentLocation extends React.Component {
   test1() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // console.log(
-        //   position.coords.latitude,
-        //   position.coords.longitude + '-----',
-        // );
+        console.log(
+          position.coords.latitude,
+          position.coords.longitude + '-----',
+        );
 
         this.setState({
           latitude: position.coords.latitude,
