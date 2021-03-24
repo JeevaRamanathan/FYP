@@ -19,8 +19,8 @@ import {and} from 'react-native-reanimated';
 import SourceDes from './sourceDes';
 import JunctionPoint from './JunctionPoint';
 import DistanceCalulation from './DistanceCalulation';
-import RouteDisTimeDetailsUI from './RouteDisTimeDetailsUI'
-import Connectivity from './Connectivity'
+import RouteDisTimeDetailsUI from './RouteDisTimeDetailsUI';
+import Connectivity from './Connectivity';
 class BusList extends React.Component {
   constructor(props) {
     super(props);
@@ -34,14 +34,14 @@ class BusList extends React.Component {
       via: [],
       junctionPoint: [
         'Lakshmi Complex',
-        'Chatram Bus Stand',
         'Central Bus Stand',
+        'Chatram Bus Stand',
         'GH-Mahatma Gandhi Memorial Government Hospital',
       ],
       viaCoordinates: [],
       finalViaCoordinates: [],
       refinalBusViaCoordinates: [],
-      singleRouteCoordinates:[],
+      singleRouteCoordinates: [],
       JPValue: '',
       junctionPointSource: [],
       finalBusVia: [],
@@ -55,12 +55,11 @@ class BusList extends React.Component {
       toandfro: [],
       finaltoandfro: [],
       viaDistance: [],
-      viaTime:[],
-      selectedViaDistanceTime:{}
+      viaTime: [],
+      selectedViaDistanceTime: {},
     };
   }
   multipleBus(a, l) {
-     
     this.setState({selectedBusId: a}, () => {
       for (var j = 0; j < a[0].length; j++) {
         var arr = this.state.finalRid;
@@ -82,7 +81,6 @@ class BusList extends React.Component {
   }
 
   singleBus(i, l) {
-    
     for (var j = 0; j < i[0].length; j++) {
       var arr = this.state.finalRid;
       arr.push(l);
@@ -97,30 +95,29 @@ class BusList extends React.Component {
     }
   }
   functionpassing = (val) => {
-    console.log("val", );
-    var a = this.state.viaDistance
+    console.log('val');
+    var a = this.state.viaDistance;
     a.push(val.distance);
-    var b = this.state.viaTime
-    b.push(val.time)
-  
-    this.setState({viaDistance: a});
-    this.setState({viaTime:b})
-    console.log(val);
-    
-    let obj={}
-    obj.distance = this.state.viaDistance[0]
-    obj.time = this.state.viaTime[0]
-    obj.via=''
-    this.setState({selectedViaDistanceTime:obj})
+    var b = this.state.viaTime;
+    b.push(val.time);
 
+    this.setState({viaDistance: a});
+    this.setState({viaTime: b});
+    console.log(val);
+
+    let obj = {};
+    obj.distance = this.state.viaDistance[0];
+    obj.time = this.state.viaTime[0];
+    obj.via = '';
+    this.setState({selectedViaDistanceTime: obj});
   };
 
   viaBusNo(i) {
-    let obj={};
-    obj.distance = this.state.viaDistance[i]
-    obj.time = this.state.viaTime[i]
-    obj.via= "Via -"+this.state.refinalBusVia[i].join(", ")
-    this.setState({selectedViaDistanceTime:obj})
+    let obj = {};
+    obj.distance = this.state.viaDistance[i];
+    obj.time = this.state.viaTime[i];
+    obj.via = 'Via -' + this.state.refinalBusVia[i].join(', ');
+    this.setState({selectedViaDistanceTime: obj});
     for (var j = 0; j < this.state.bus[i].length; j++) {
       let a = this.state.rid[this.state.bus[i][j]];
       database()
@@ -166,8 +163,8 @@ class BusList extends React.Component {
         });
         // console.log(this.state.routes);
         if (this.state.routes.length == 0) {
-          var sJ = new Array(this.state.junctionPoint.length).fill(0)
-          var jD = new Array(this.state.junctionPoint.length).fill(0)
+          var sJ = new Array(this.state.junctionPoint.length).fill(0);
+          var jD = new Array(this.state.junctionPoint.length).fill(0);
 
           console.log(sJ);
           var max = [];
@@ -349,7 +346,7 @@ class BusList extends React.Component {
             // console.log(this.state.refinalBusVia);
             // console.log(this.state.refinalBusViaCoordinates);
             //iteration
-             
+
             for (i = 0; i < this.state.refinalBusViaCoordinates.length; i++) {
               // DistanceCal(this.state.source,this.state.destination,this.state.refinalBusViaCoordinates[i]);
               new DistanceCalulation().DistanceCal(
@@ -380,7 +377,7 @@ class BusList extends React.Component {
                       finaltoandfro: [].concat.apply(
                         [],
                         [...this.state.toandfro],
-                      ), 
+                      ),
                     });
                   });
               }
@@ -391,23 +388,22 @@ class BusList extends React.Component {
           } else {
             //single route with single value
             // console.log(this.state.routes[0].route_id);
-         
+
             // database().ref('busstop').on('value', async (snapshot) => {
             //   snapshot.forEach((val) => {
-         
-          
+
             //     if(this.state.arr[0].includes(val.val().name) && val.val().name !== this.state.source && val.val().name!==this.state.destination){
             //      var coordinates = this.state.singleRouteCoordinates
             //      coordinates.push(val.val().latitude+","+val.val().longitude)
             //      this.setState({singleRouteCoordinates:coordinates})
             //     }
             //   })
-              new DistanceCalulation().SingleRouteDistanceCal(
-                this.state.source,
-                this.state.destination,
-                             this.functionpassing,
-              );
-              database()
+            new DistanceCalulation().SingleRouteDistanceCal(
+              this.state.source,
+              this.state.destination,
+              this.functionpassing,
+            );
+            database()
               .ref(`Routes/r${this.state.routes[0].route_id}`)
               .on('value', (snap) => {
                 var arr = [];
@@ -469,50 +465,47 @@ class BusList extends React.Component {
                 {this.state.refinalBusVia.map((index, i) => {
                   return (
                     <>
-                    <ListItem
-                      bottomDivider
-                      key={i}
-                      onPress={() => this.viaBusNo(i)}>
-                      <Image
-                        source={require('../assets/multiple.png')}
-                        style={{height: 30, width: 30, borderRadius: 10}}
-                      />
-                      {/* {console.log(this.state.finaltoandfro)} */}
-                      <ListItem.Content>
-                        <ListItem.Title>
-                          <View syle={{flexDirection: 'row'}}>
+                      <ListItem
+                        bottomDivider
+                        key={i}
+                        onPress={() => this.viaBusNo(i)}>
+                        <Image
+                          source={require('../assets/multiple.png')}
+                          style={{height: 30, width: 30, borderRadius: 10}}
+                        />
+                        {/* {console.log(this.state.finaltoandfro)} */}
+                        <ListItem.Content>
+                          <ListItem.Title>
+                            <View syle={{flexDirection: 'row'}}>
+                              <Text
+                                style={{
+                                  fontFamily: 'SourceSansPro-Regular',
+                                  fontSize: 17,
+                                  fontWeight: 'bold',
+                                }}>
+                                Via
+                              </Text>
+                            </View>
+                          </ListItem.Title>
+                          <ListItem.Subtitle key={i}>
                             <Text
                               style={{
                                 fontFamily: 'SourceSansPro-Regular',
-                                fontSize: 17,
-                                fontWeight: 'bold',
                               }}>
-                              Via
+                              {index.join(', ')}
+                            </Text>
+                          </ListItem.Subtitle>
+                          <View style={{alignSelf: 'center'}}>
+                            <Text
+                              style={{
+                                fontFamily: 'SourceSansPro-Regular',
+                              }}>
+                              {this.state.viaDistance[i]} km -{' '}
+                              {this.state.viaTime[i]} minutes
                             </Text>
                           </View>
-                        </ListItem.Title>
-                        <ListItem.Subtitle key={i}>
-                          <Text
-                            style={{
-                              fontFamily: 'SourceSansPro-Regular',
-                            }}>
-                            {index.join(', ')}
-                          </Text>
-                       
-                        </ListItem.Subtitle>
-                        <View style={{alignSelf:'center'}}>
-                              <Text  style={{
-                              fontFamily: 'SourceSansPro-Regular',
-                            
-                            }}>
-                            {this.state.viaDistance[i]} km - {this.state.viaTime[i]} minutes
-
-                            </Text>
-                   </View>
-                           
-                      </ListItem.Content>
-                    </ListItem>
-
+                        </ListItem.Content>
+                      </ListItem>
                     </>
                   );
                 })}
@@ -526,56 +519,55 @@ class BusList extends React.Component {
             <></>
           ) : (
             <>
-            <RouteDisTimeDetailsUI value={this.state.selectedViaDistanceTime}/>
+              <RouteDisTimeDetailsUI
+                value={this.state.selectedViaDistanceTime}
+              />
               {this.state.finalBusDetails.map((value, i) => {
                 return (
                   <>
-                 
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate('RouteSearchRouteList', {
-                        value: this.state.finalRid[i],
-                        source: this.state.source,
-                        destination: this.state.destination,
-                        name: value.busname,
-                        toandfro: this.state.finaltoandfro[i],
-                      })
-                    }>
-                    <ListItem bottomDivider key={i}>
-                      {/* {console.log(this.state.finalRid)} */}
-                      <Image
-                        source={require('../assets/busno.png')}
-                        style={{height: 30, width: 30, borderRadius: 10}}
-                      />
-                      <ListItem.Content>
-                        <ListItem.Title>
-                          <View syle={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.props.navigation.navigate('RouteSearchRouteList', {
+                          value: this.state.finalRid[i],
+                          source: this.state.source,
+                          destination: this.state.destination,
+                          name: value.busname,
+                          toandfro: this.state.finaltoandfro[i],
+                        })
+                      }>
+                      <ListItem bottomDivider key={i}>
+                        {/* {console.log(this.state.finalRid)} */}
+                        <Image
+                          source={require('../assets/busno.png')}
+                          style={{height: 30, width: 30, borderRadius: 10}}
+                        />
+                        <ListItem.Content>
+                          <ListItem.Title>
+                            <View syle={{flexDirection: 'row'}}>
+                              <Text
+                                style={{
+                                  fontFamily: 'SourceSansPro-Regular',
+                                  fontSize: 17,
+                                  fontWeight: 'bold',
+                                }}>
+                                {value.busname}
+                              </Text>
+                            </View>
+                          </ListItem.Title>
+                          <ListItem.Subtitle key={i}>
                             <Text
                               style={{
                                 fontFamily: 'SourceSansPro-Regular',
-                                fontSize: 17,
-                                fontWeight: 'bold',
                               }}>
-                              {value.busname}
+                              <SourceDes
+                                value={this.state.finalRid[i]}
+                                toandfro={this.state.finaltoandfro[i]}
+                              />
                             </Text>
-                          </View>
-                        </ListItem.Title>
-                        <ListItem.Subtitle key={i}>
-                          <Text
-                            style={{
-                              fontFamily: 'SourceSansPro-Regular',
-                            }}>
-                            <SourceDes
-                              value={this.state.finalRid[i]}
-                              toandfro={this.state.finaltoandfro[i]}
-                            />
-                          </Text>
-                          
-                        </ListItem.Subtitle>
-                      
-                      </ListItem.Content>
-                    </ListItem>
-                  </TouchableOpacity>
+                          </ListItem.Subtitle>
+                        </ListItem.Content>
+                      </ListItem>
+                    </TouchableOpacity>
                   </>
                 );
               })}
@@ -602,7 +594,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SourceSansPro-Regular',
     textAlign: 'center',
   },
-  
+
   text1: {
     fontFamily: 'SourceSansPro-Regular',
     textAlignVertical: 'bottom',

@@ -17,6 +17,9 @@ import OlaService from '../OlaService';
 import RouteListMap from '../RouteListMap';
 import ConnectToInternet from '../ConnectToInternet';
 import CurrentLocation from '../CurrentLocation';
+import FindBusStop from '../FindBusStop';
+import AboutTheApp from '../AboutTheApp';
+import HowItWorks from '../HowItWorks';
 
 const StackNavigation = createStackNavigator(
   {
@@ -115,6 +118,32 @@ const StackNavigation = createStackNavigator(
         },
       },
     },
+    HowItWorks: {
+      screen: HowItWorks,
+      navigationOptions: {
+        title: 'How It Works',
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+    AboutTheApp: {
+      screen: AboutTheApp,
+      navigationOptions: {
+        title: 'About the App',
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
 
     JunctionPoint: {
       screen: JunctionPoint,
@@ -150,6 +179,20 @@ const StackNavigation = createStackNavigator(
       screen: RouteListMap,
       navigationOptions: {
         title: 'Map',
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+
+    FindBusStop: {
+      screen: FindBusStop,
+      navigationOptions: {
+        title: 'Find Bus Stop',
         headerStyle: {
           backgroundColor: '#ebc550',
         },

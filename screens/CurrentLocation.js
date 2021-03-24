@@ -386,10 +386,10 @@ class CurrentLocation extends React.Component {
     this.requestLocationPermission();
     database()
       .ref(`busstop/`)
-      .on('value', async (snap) => {
-        await this.setState({stages: snap.val()});
+      .on('value', (snap) => {
+        this.setState({stages: snap.val()});
 
-        await this.disCalculation();
+        this.disCalculation();
       });
   }
   disCalculation() {
@@ -406,6 +406,7 @@ class CurrentLocation extends React.Component {
         `https://maps.googleapis.com/maps/api/directions/json?destination=${this.state.distance[0].latitude},${this.state.distance[0].longitude}&origin=${this.state.latitude},${this.state.longitude}&optimize:true&key=AIzaSyCYUfRcy0BLJRO7fuhHsI0dYxJqi0_X_E8`,
       )
       .then((res) => {
+        console.log(res);
         for (var i = 0; i < res.data.routes[0].legs[0].steps.length; i++) {
           dis += res.data.routes[0].legs[0].steps[i].distance.value;
           time += res.data.routes[0].legs[0].steps[i].duration.value;
@@ -491,14 +492,14 @@ class CurrentLocation extends React.Component {
                   />
                 </Marker>
 
-                <Marker
-                  coordinate={this.state.distance[0]}
-                  title={this.state.distance[0].name}>
-                  <Image
-                    source={require('../assets/appicon.png')}
-                    style={{height: 30, width: 40}}
-                  />
-                </Marker>
+                  <Marker
+                    coordinate={this.state.distance[0]}
+                    title={this.state.distance[0].name}>
+                    <Image
+                      source={require('../assets/appicon.png')}
+                      style={{height: 30, width: 40}}
+                    />
+                  </Marker>
                 <Marker
                   coordinate={this.state.distance[1]}
                   title={this.state.distance[1].name}>
@@ -507,7 +508,7 @@ class CurrentLocation extends React.Component {
                     style={{height: 30, width: 40}}
                   />
                 </Marker>
-                
+
                 <MapViewDirections
                   origin={{
                     latitude: this.state.latitude,

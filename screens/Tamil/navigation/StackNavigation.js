@@ -16,6 +16,7 @@ import SelectDestination from '../SelectDestination';
 import RouteListMap from '../RouteListMap';
 import ConnectToInternet from '../ConnectToInternet';
 import CurrentLocation from '../CurrentLocation';
+import TFindBusStop from '../TFindBusStop';
 
 const StackNavigationTamil = createStackNavigator(
   {
@@ -154,6 +155,21 @@ const StackNavigationTamil = createStackNavigator(
         },
         headerTintColor: '#22333b',
         headerTitleStyle: {
+          fontFamily: 'Acme-Regular',
+        },
+      },
+    },
+    TFindBusStop: {
+      screen: TFindBusStop,
+      navigationOptions: {
+        title: 'பேருந்து நிறுத்ததின் பெயரைக் கண்டறியவும்',
+
+        headerStyle: {
+          backgroundColor: '#ebc550',
+        },
+        headerTintColor: '#22333b',
+        headerTitleStyle: {
+          fontSize:13,
           fontFamily: 'Acme-Regular',
         },
       },

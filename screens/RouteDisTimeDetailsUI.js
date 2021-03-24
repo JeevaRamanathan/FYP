@@ -79,7 +79,10 @@ export default class RouteDisTimeDetailsUI extends React.Component {
                 fontWeight: 'bold',
                 color: '#000',
                 fontSize: 15,
-              }}></Text>
+              }}>
+              {' '}
+              Travel Time
+            </Text>
             <Text
               style={{
                 fontFamily: 'SourceSansPro-Regular',
