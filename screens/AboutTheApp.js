@@ -63,7 +63,6 @@ export default class AboutTheApp extends React.Component {
           }}>
           <Text
             style={{
-              justifyContent: 'center',
               fontFamily: 'SourceSansPro-Regular',
             }}>
             {'       '}
@@ -83,9 +82,9 @@ export default class AboutTheApp extends React.Component {
           }}>
           <Text
             style={{
-              justifyContent: 'center',
               fontFamily: 'SourceSansPro-Regular',
             }}>
+            {'       '}
             So our app overcomes these struggles and helps the troubled
             citizens, thus making the journey easier and saving a tremendous
             amount of time.

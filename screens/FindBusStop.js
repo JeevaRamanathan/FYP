@@ -8,6 +8,7 @@ import axios from 'axios';
 import database from '@react-native-firebase/database';
 import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
 import {View} from 'react-native';
+import Connectivity from './Connectivity';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCYUfRcy0BLJRO7fuhHsI0dYxJqi0_X_E8';
 const mapNight = [
@@ -198,9 +199,11 @@ export default class FindBusStop extends React.Component {
       });
   }
   searchBusStop() {
+   
     if (this.state.search.length == 0 || this.state.search.trim().length == 0) {
       Alert.alert('Enter a location to search');
     } else {
+      new Connectivity().CheckConnectivity(this.props);
       this.setState({distance: []});
       axios
         .post(

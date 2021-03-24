@@ -11,7 +11,7 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
-import {ParallaxImage} from 'react-native-snap-carousel';
+
 import Carousel from 'react-native-anchor-carousel';
 import {ImageBackground} from 'react-native';
 const data = [
@@ -97,10 +97,11 @@ export default class HowItWorks extends React.Component {
             renderItem={this._renderItem}
             itemWidth={300}
             containerWidth={400}
-            separatorWidth={0}
+            separatorWidth={-10}
             ref={(c) => {
               this._carouselRef = c;
             }}
+            // initialIndex={}
             pagingEnable={true}
             minScrollDistance={40}
           />
